@@ -127,3 +127,13 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Settings ignore
+**/socialdistancework/settings.py
+
+# Migrations ignore
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
+# !**/migrations/__pycache__
+# !**/__pycache__/__init__.cpython-36.pyc
