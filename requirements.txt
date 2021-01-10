@@ -17,3 +17,4 @@ celery[redis]
 django-celery-results
 django-celery-beat
 flower
+django-import-export
