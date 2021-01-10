@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--  
+    Document Title
+    =============================================
+    -->
+    <title>Social Distance | {% block title %}{% endblock %}</title>
+    {% load static %}
+    <!--  
+    Favicons
+    =============================================
+    -->
+    <link rel="apple-touch-icon" sizes="57x57" href="{% static 'core/assets/images/favicons/apple-icon-57x57.png' %}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{% static 'core/assets/images/favicons/apple-icon-60x60.png' %}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'core/assets/images/favicons/apple-icon-72x72.png' %}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'core/assets/images/favicons/apple-icon-76x76.png' %}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'core/assets/images/favicons/apple-icon-114x114.png' %}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{% static 'core/assets/images/favicons/apple-icon-120x120.png' %}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{% static 'core/assets/images/favicons/apple-icon-144x144.png' %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'core/assets/images/favicons/apple-icon-152x152.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'core/assets/images/favicons/apple-icon-180x180.png' %}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{% static 'core/assets/images/favicons/android-icon-192x192.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'core/assets/images/favicons/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'core/assets/images/favicons/favicon-96x96.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'core/assets/images/favicons/favicon-16x16.png' %}">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="{% static 'core/assets/images/favicons/ms-icon-144x144.png' %}">
+    <meta name="theme-color" content="#ffffff">
+    <!--  
+    Stylesheets
+    =============================================
+    -->
+    <!-- Default stylesheets-->
+    <link href="{% static 'core/assets/lib/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Template specific stylesheets-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Volkhov:400i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+    <link href="{% static 'core/assets/lib/animate.css/animate.css' %}" rel="stylesheet">
+    <link href="{% static 'core/assets/lib/components-font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'core/assets/lib/et-line-font/et-line-font.css' %}" rel="stylesheet">
+    <link href="{% static 'core/assets/lib/flexslider/flexslider.css' %}" rel="stylesheet">
+    <link href="{% static 'core/assets/lib/owl.carousel/dist/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'core/assets/lib/owl.carousel/dist/assets/owl.theme.default.min.css' %}" rel="stylesheet">
+    <link href="{% static 'core/assets/lib/magnific-popup/dist/magnific-popup.css' %}" rel="stylesheet">
+    <link href="{% static 'core/assets/lib/simple-text-rotator/simpletextrotator.css' %}" rel="stylesheet">
+    <!-- Main stylesheet and color file-->
+    <link href="{% static 'core/assets/css/style.css' %}" rel="stylesheet">
+    <link id="color-scheme" href="{% static 'core/assets/css/colors/default.css' %}" rel="stylesheet">
+  </head>
+  <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+    <!-- Menu principal-->
+    <main>
+      <!-- Animación cargando-->
+      <div class="page-loader">
+        <div class="loader">Loading...</div>
+      </div>
+      <!-- Navegador-->
+      <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#custom-collapse">
+              <span class="sr-only">
+                Toggle navigation
+              </span>
+              <span class="icon-bar">
+              </span>
+              <span class="icon-bar">
+              </span>
+              <span class="icon-bar">
+              </span>
+            </button>
+            <a class="navbar-brand" href="{% url 'home' %}">
+              <div style="background-color: rgba(0, 0, 0, 1);border-radius:17px;border: 3px double white;padding: 4px 4px 2px 4px;">
+                <img src="{% static 'core/assets/images/logo_home.jpg' %}" width="50" height="5" style="float:left;border-radius:50%;border-style: double;border-width: 5px;border-color: #bfbfbf;">
+                <b style="margin-left:0.5em; font-size:15px; line-height:2.5; letter-spacing:1px; text-transform:capitalize; color:red;">  
+                  Social Distance
+                </b>
+              </div>
+            </a>
+          </div>
+          <div class="collapse navbar-collapse" id="custom-collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li class="nav-item">
+                <a class="btn" href="https://www.instagram.com/jorge_montiel_montiel/?hl=es-la" target="_blank"><i class="fa fa-instagram fa-2x"></i></a>
+              </li>
+              <li class="nav-item">
+                <a class="btn" href="https://www.facebook.com/distanciamientosocialcl-105186354483477" target="_blank"><i class="fa fa-facebook fa-2x"></i></a>
+              </li>
+              <!--<li class="nav-item">
+                <a class="btn btn-border-d btn-circle" href="#" data-toggle="dropdown">Inscribete</a>
+              </li>-->
+              <li class="nav-item">
+                <a class="btn btn-b btn-round" href="{% url 'home' %}">Inicio</a>
+              </li>
+              <li class="nav-item">
+                <a class="btn btn-b btn-round" href="{% url 'about' %}">Nosotros</a>
+              </li>
+              <li class="nav-item">
+                <a class="btn btn-b btn-round" href="{% url 'services' %}">Servicios</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="btn btn-b btn-round" href="{% url 'courses' %}">Proyectos</a>
+                <ul class="dropdown-menu" role="menu">
+                  {% for category in category_list %}
+                    <li class="dropdown">
+                      <a class="dropdown-toggle" href="{% url 'courses' category.id %}#filter_section">{{category.name}}</a>
+                      <ul class="dropdown-menu">
+                        {% for course in course_list %}
+                          {% if course.category.pk == category.pk %}
+                            <li><a href="{% url 'course' course.id course.name|slugify %}">{{course.name}}</a></li>
+                          {% endif %}
+                        {% endfor %}
+                      </ul>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="btn btn-b btn-round" href="{% url 'pages:pages' %}">Noticias</a>
+              </li>
+              <li class="nav-item">
+                <a class="btn btn-b btn-round" href="{% url 'profiles:list' %}">Cápsulas</a>
+              </li>
+              <li class="nav-item">
+                <a class="btn btn-b btn-round" href="{% url 'contact' %}">Contacto</a>
+              </li>
+              {% if not request.user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="btn btn-b btn-round" href="{% url 'login' %}">Acceder</a>
+                </li>
+                <li class="nav-item">
+                  <a class="btn btn-b btn-round" href="{% url 'signup' %}">Registro</a>
+                </li>
+              {% else %}
+                <li class="nav-item">
+                  <a class="btn btn-b btn-round" href="{% url 'iotmodule:iotmodule' %}">Módulo IoT</a>
+                </li>
+                <li class="nav-item">
+                  <a class="btn btn-b btn-round" href="{% url 'profile' %}">Mi Perfil</a>
+                </li>
+                {% comment %} <li class="nav-item">
+                  <a class="btn btn-b btn-round" href="{% url 'capsules:capsules' %}">Mi Cápsula</a>
+                </li> {% endcomment %}
+                <li class="nav-item">
+                  <a class="btn btn-b btn-round" href="{% url 'logout' %}">Salir</a>
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- Contenido-->
+      {% block content %}{% endblock %}
+      <!-- Pie de página-->
+      <div class="main">
+        <hr class="divider-d">
+        <div class="module-small bg-dark">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="widget">
+                  <h5 class="widget-title font-alt">Sobre Social Distance</h5>
+                  <p style="text-align: justify;font-size:14px;">
+                      &nbsp;&nbsp;&nbsp;La plataforma web SOCIAL DISTANCE apunta a ser un espacio público en el cual puedas encontrar noticias sobre el mundo 
+                      actual y ver proyectos interesantes sobre el ámbito tecnológico, además de ser el medio para guardar aquello que más quieres o amas HOY, con el objetivo 
+                      de simular una cápsula del tiempo para los recuerdos. Al publicar tu cápsula del tiempo en el mapa podrás ver la elección de 
+                      todos los usuarios de la plataforma.
+                  </p>
+                  <p>
+                    <div style="font-size:14px">
+                      <i class="fa fa-whatsapp" aria-hidden="true">  Whatsapp:</i>
+                      <ul style="text-indent: 0.6cm">
+                        <li><i class="fa fa-user">  (+569) 99123002 [ Jorge Montiel ]</i></li>
+                      </ul>
+                    </div>
+                    <br>
+                    <div style="font-size:14px">
+                      <i class="fa fa-envelope" aria-hidden="true">  Correo:  
+                        <a href="#">
+                          <br>
+                          <br>distanciamientosocial@gmail.com
+                        </a>
+                      </i>
+                      <br>
+                      <br>
+                      <i class="fa fa-address-card" aria-hidden="true">  Dirección:  
+                        <a href="#">
+                          <br>
+                          <br>Capellán Abarzúa 240
+                          <br>Providencia 
+                          <br>Santiago de Chile
+                        </a>
+                      </i>
+                    </div>
+                  </p>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="widget">
+                  <h5 class="widget-title font-alt">Categorías de Proyectos</h5>
+                  <ul class="icon-list">
+                    {% for category in category_list %}
+                      <li style="font-size:17px"><a href="{% url 'courses' category.id %}#filter_section">{{category.name}}</a></li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="widget">
+                  <h5 class="widget-title font-alt">Otros Proyectos</h5>
+                  <ul class="widget-posts">
+                    {% for course in saved_courses %}
+                      <li class="clearfix">
+                        <div class="widget-posts-image">
+                          <a href="{% url 'course' course.id course.name|slugify %}">
+                            <img src="{{course.image.url}}" alt="{{course.name}}"/>
+                          </a>
+                        </div>
+                        <div class="widget-posts-body">
+                          <div class="widget-posts-title" style="font-size:14px">
+                            <a href="{% url 'course' course.id course.name|slugify %}">
+                              {{course.name}}
+                            </a>
+                          </div>
+                          <div class="widget-posts-meta" style="font-size:12px">
+                            Por {{course.managers}}
+                          </div>
+                        </div>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr class="divider-d">
+        <footer class="footer bg-dark">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-6">
+                <p class="copyright font-alt"><a href="{% url 'home' %}"><b>SOCIAL DISTANCE</b></a> &copy; 2020 all rights reserved - WebMaster: <a href="https://www.linkedin.com/in/jorge-montiel-montiel/" target="_blank"><b style="text-transform: capitalize;">Jorge Montiel.</b></a></p>
+              </div>
+              <div class="col-sm-6">
+                <div class="footer-social-links">
+                  <a href="https://www.facebook.com/distanciamientosocialcl-105186354483477" target="_blank"><i class="fa fa-facebook"></i> Distanciamiento Social</a>
+                  <a href="https://www.instagram.com/jorge_montiel_montiel/?hl=es-la" target="_blank"><i class="fa fa-instagram"></i> jorge_montiel_montiel</a>
+                  <a href="#" target="_blank"><i class="fa fa-envelope-o"></i> distanciamientosocial@gmail.com</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+      <!-- Boton hacia arriba-->
+      <div class="scroll-up">
+        <a href="#totop"><i class="fa fa-angle-double-up"></i></a>
+      </div>
+    </main>
+    <!--  
+    JavaScripts
+    =============================================
+    -->
+    <script src="{% static 'core/assets/lib/jquery/dist/jquery.js' %}"></script>
+    <script src="{% static 'core/assets/lib/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'core/assets/lib/wow/dist/wow.js' %}"></script>
+    <script src="{% static 'core/assets/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js' %}"></script>
+    <script src="{% static 'core/assets/lib/isotope/dist/isotope.pkgd.js' %}"></script>
+    <script src="{% static 'core/assets/lib/imagesloaded/imagesloaded.pkgd.js' %}"></script>
+    <script src="{% static 'core/assets/lib/flexslider/jquery.flexslider.js' %}"></script>
+    <script src="{% static 'core/assets/lib/owl.carousel/dist/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'core/assets/lib/smoothscroll.js' %}"></script>
+    <script src="{% static 'core/assets/lib/magnific-popup/dist/jquery.magnific-popup.js' %}"></script>
+    <script src="{% static 'core/assets/lib/simple-text-rotator/jquery.simple-text-rotator.min.js' %}"></script>
+    <script src="{% static 'core/assets/js/plugins.js' %}"></script>
+    <script src="{% static 'core/assets/js/main.js' %}"></script>
+    <!--
+    GoogleMap Scripts
+    =============================================
+    -->
+    {% comment %} <script>
+      function myMap() {
+        var mapCanvas1 = document.getElementById("googleMap");
+        var myCenter1 = new google.maps.LatLng(-33.4307387,-70.6310423);
+        var mapOptions1 = {center: myCenter1, zoom: 16};
+        var map1 = new google.maps.Map(mapCanvas1,mapOptions1);
+        var marker1 = new google.maps.Marker({
+          position: myCenter1,
+          animation: google.maps.Animation.BOUNCE,
+          icon: "{% static 'core/assets/images/map-icon.png' %}"
+        });
+        marker1.setMap(map1);
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlsJMtSlwVo-ubU2vNVcmgbzH8UtOgOhU&callback=myMap"></script>
+  </body>
+</html> {% endcomment %}

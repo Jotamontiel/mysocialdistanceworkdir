@@ -132,7 +132,7 @@ dmypy.json
 **/socialdistancework/settings.py
 
 # Static Files ignore
-static/
+/static/
 
 # Migrations ignore
 **/migrations/**

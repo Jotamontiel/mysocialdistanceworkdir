@@ -1,0 +1,170 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Inicio{% endblock %}
+{% block content %}
+<!-- Home & Categorías-->
+<hr class="divider-d">
+
+{% comment %} <section class="home-section home-fade home-full-height" id="home">
+  <div class="hero-slider">
+    {% if idcategoryaux %}
+      <ul class="slides">
+        {% for category in category_list %}
+          {% if category.id == idcategoryaux %}
+            <li class="bg-dark-30 bg-dark" style="background-image:url({{category.image.url}});">
+              <div class="titan-caption">
+                <div class="caption-content">
+                  <div style="background-color: rgba(0, 0, 0, 0.9);border-bottom: 8px double white;border-top: 8px double white;padding: 5px 0px 5px 0px;">
+                    <div class="font-alt mb-40 titan-title-size-4" style="letter-spacing: 2.5px;">
+                      {{category.name}}
+                    </div>
+                    <div class="mb-30 titan-title-size-1">
+                      <div style="margin: 0% 10% 0% 10%;letter-spacing: 0.5px;">
+                        {{category.content|safe}}
+                      </div>
+                    </div>
+                    <a class="section-scroll btn btn-w btn-circle" href="{% url 'courses' category.id %}#filter_section">
+                      <i class="fa fa-cog fa-spin"></i>&nbsp;<b style="letter-spacing: 0.5px;">Ver proyectos de {{category.name}}</b>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </li>
+          {% endif %}
+        {% endfor %}
+        {% for category in category_list %}
+          {% if category.id != idcategoryaux %}
+            <li class="bg-dark-30 bg-dark" style="background-image:url({{category.image.url}});">
+              <div class="titan-caption">
+                <div class="caption-content">
+                  <div style="background-color: rgba(0, 0, 0, 0.9);border-bottom: 8px double white;border-top: 8px double white;padding: 5px 0px 5px 0px;">
+                    <div class="font-alt mb-40 titan-title-size-4" style="letter-spacing: 2.5px;">
+                      {{category.name}}
+                    </div>
+                    <div class="mb-30 titan-title-size-1">
+                      <div style="margin: 0% 10% 0% 10%;letter-spacing: 0.5px;">
+                        {{category.content|safe}}
+                      </div>
+                    </div>
+                    <a class="section-scroll btn btn-w btn-circle" href="{% url 'courses' category.id %}#filter_section">
+                      <i class="fa fa-cog fa-spin"></i>&nbsp;<b style="letter-spacing: 0.5px;">Ver proyectos de {{category.name}}</b>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </li>
+          {% endif %}
+        {% endfor %}
+        <li class="bg-dark-30 bg-dark" style="background-image:url({% static 'core/assets/images/agency/agency_bg.jpg' %});">
+          <div class="titan-caption">
+            <div class="caption-content">
+              <div style="background-color: rgba(255, 255, 255, 0.7);border-bottom: 12px double black;border-top: 12px double black;padding: 5px 0px 5px 0px;">
+                <div class="font-alt mb-40 titan-title-size-4" style="letter-spacing: 2.5px;color:black;">
+                    <b>Saludos Cordiales!!!</b>
+                  </div>
+                  <div class="mb-30 titan-title-size-1">
+                    <div style="margin: 0% 10% 0% 10%;color:black;">
+                      <p style="text-align:justify;letter-spacing: 0.5px;">
+                        <b>
+                          &nbsp;&nbsp;&nbsp;&nbsp;Esperando que este bien la empresa IOT CHILE CO le desea un buen día, Esperando que este bien la empresa 
+                          IOT CHILE CO le desea un buen día, Esperando que este bien la empresa IOT CHILE CO le desea un buen día...
+                        </b>
+                      </p>
+                    </div>
+                  </div>
+                  <a class="section-scroll btn btn-d btn-circle btn-lg" href="{% url 'courses' %}">
+                    <i class="fa fa-cog fa-spin"></i>&nbsp;<b style="letter-spacing: 0.5px;">Ver todos nuestros proyectos</b>
+                  </a>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    {% else %}
+      <ul class="slides">
+        <li class="bg-dark-30 bg-dark" style="background-image:url({% static 'core/assets/images/agency/agency_bg.jpg' %});">
+          <div class="titan-caption">
+            <div class="caption-content">
+              <div style="background-color: rgba(255, 255, 255, 0.7);border-bottom: 12px double black;border-top: 12px double black;padding: 5px 0px 5px 0px;">
+                <div class="font-alt mb-40 titan-title-size-4" style="letter-spacing: 2.5px;color:black;">
+                    <b>Saludos Cordiales!!!</b>
+                  </div>
+                  <div class="mb-30 titan-title-size-1">
+                    <div style="margin: 0% 10% 0% 10%;color:black;">
+                      <p style="text-align:justify;letter-spacing: 0.5px;">
+                        <b>
+                          &nbsp;&nbsp;&nbsp;&nbsp;Esperando que este bien la empresa IOT CHILE CO le desea un buen día, Esperando que este bien la empresa 
+                          IOT CHILE CO le desea un buen día, Esperando que este bien la empresa IOT CHILE CO le desea un buen día...
+                        </b>
+                      </p>
+                    </div>
+                  </div>
+                  <a class="section-scroll btn btn-d btn-circle btn-lg" href="{% url 'courses' %}">
+                    <i class="fa fa-cog fa-spin"></i>&nbsp;<b style="letter-spacing: 0.5px;">Ver todos nuestros proyectos</b>
+                  </a>
+              </div>
+            </div>
+          </div>
+        </li>
+        {% for category in category_list %}
+          <li class="bg-dark-30 bg-dark" style="background-image:url({{category.image.url}});">
+            <div class="titan-caption">
+              <div class="caption-content">
+                <div style="background-color: rgba(0, 0, 0, 0.9);border-bottom: 8px double white;border-top: 8px double white;padding: 5px 0px 5px 0px;">
+                  <div class="font-alt mb-40 titan-title-size-4" style="letter-spacing: 2.5px;">
+                    {{category.name}}
+                  </div>
+                  <div class="mb-30 titan-title-size-1">
+                    <div style="margin: 0% 10% 0% 10%;letter-spacing: 0.5px;">
+                      {{category.content|safe}}
+                    </div>
+                  </div>
+                  <a class="section-scroll btn btn-w btn-circle" href="{% url 'courses' category.id %}#filter_section">
+                    <i class="fa fa-cog fa-spin"></i>&nbsp;<b style="letter-spacing: 0.5px;">Ver proyectos de {{category.name}}</b>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+</section> {% endcomment %}
+
+<hr class="divider-d">
+<section class="home-section home-fade home-full-height" id="home">
+
+{% comment %} <iframe id="encoder_iframe" height=100% width=100% src="{% url 'map_display' %}"></iframe>
+</section> {% endcomment %}
+
+<!-- Category Carousel-->
+{% comment %} {% if flag_section %}
+  <hr class="divider-d">
+  <section class="module-small bg-dark p-0">
+    <div class="container">
+      <div class="row client">
+        {% if flag_amount %}
+          <div class="owl-carousel text-center" data-items="{{categories_amount}}" data-pagination="false" data-navigation="false">
+        {% else %}
+          <div class="owl-carousel text-center" data-items="{{categories_amount}}" data-pagination="false" data-navigation="false">
+        {% endif %}
+          {% for category in category_list %}
+            <div class="owl-item">
+              <div class="col-sm-12">
+                <div class="client-logo">
+                  <a href="{% url 'home' category.id %}" style="text-transform:uppercase;">
+                    <img src="{{category.image.url}}" alt="{{category.name}}"/>
+                    {{category.name}}
+                  </a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endif %} {% endcomment %}
+
+{% endblock %}
