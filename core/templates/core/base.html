@@ -98,59 +98,6 @@
               <li class="nav-item">
                 <a class="btn btn-b btn-round" href="{% url 'home' %}">Inicio</a>
               </li>
-              <li class="nav-item">
-                <a class="btn btn-b btn-round" href="{% url 'about' %}">Nosotros</a>
-              </li>
-              <li class="nav-item">
-                <a class="btn btn-b btn-round" href="{% url 'services' %}">Servicios</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="btn btn-b btn-round" href="{% url 'courses' %}">Proyectos</a>
-                <ul class="dropdown-menu" role="menu">
-                  {% for category in category_list %}
-                    <li class="dropdown">
-                      <a class="dropdown-toggle" href="{% url 'courses' category.id %}#filter_section">{{category.name}}</a>
-                      <ul class="dropdown-menu">
-                        {% for course in course_list %}
-                          {% if course.category.pk == category.pk %}
-                            <li><a href="{% url 'course' course.id course.name|slugify %}">{{course.name}}</a></li>
-                          {% endif %}
-                        {% endfor %}
-                      </ul>
-                    </li>
-                  {% endfor %}
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a class="btn btn-b btn-round" href="{% url 'pages:pages' %}">Noticias</a>
-              </li>
-              <li class="nav-item">
-                <a class="btn btn-b btn-round" href="{% url 'profiles:list' %}">Cápsulas</a>
-              </li>
-              <li class="nav-item">
-                <a class="btn btn-b btn-round" href="{% url 'contact' %}">Contacto</a>
-              </li>
-              {% if not request.user.is_authenticated %}
-                <li class="nav-item">
-                  <a class="btn btn-b btn-round" href="{% url 'login' %}">Acceder</a>
-                </li>
-                <li class="nav-item">
-                  <a class="btn btn-b btn-round" href="{% url 'signup' %}">Registro</a>
-                </li>
-              {% else %}
-                <li class="nav-item">
-                  <a class="btn btn-b btn-round" href="{% url 'iotmodule:iotmodule' %}">Módulo IoT</a>
-                </li>
-                <li class="nav-item">
-                  <a class="btn btn-b btn-round" href="{% url 'profile' %}">Mi Perfil</a>
-                </li>
-                {% comment %} <li class="nav-item">
-                  <a class="btn btn-b btn-round" href="{% url 'capsules:capsules' %}">Mi Cápsula</a>
-                </li> {% endcomment %}
-                <li class="nav-item">
-                  <a class="btn btn-b btn-round" href="{% url 'logout' %}">Salir</a>
-                </li>
-              {% endif %}
             </ul>
           </div>
         </div>
@@ -205,9 +152,9 @@
                 <div class="widget">
                   <h5 class="widget-title font-alt">Categorías de Proyectos</h5>
                   <ul class="icon-list">
-                    {% for category in category_list %}
+                    {% comment %} {% for category in category_list %}
                       <li style="font-size:17px"><a href="{% url 'courses' category.id %}#filter_section">{{category.name}}</a></li>
-                    {% endfor %}
+                    {% endfor %} {% endcomment %}
                   </ul>
                 </div>
               </div>
@@ -215,7 +162,7 @@
                 <div class="widget">
                   <h5 class="widget-title font-alt">Otros Proyectos</h5>
                   <ul class="widget-posts">
-                    {% for course in saved_courses %}
+                    {% comment %} {% for course in saved_courses %}
                       <li class="clearfix">
                         <div class="widget-posts-image">
                           <a href="{% url 'course' course.id course.name|slugify %}">
@@ -233,7 +180,7 @@
                           </div>
                         </div>
                       </li>
-                    {% endfor %}
+                    {% endfor %} {% endcomment %}
                   </ul>
                 </div>
               </div>
@@ -245,13 +192,13 @@
           <div class="container">
             <div class="row">
               <div class="col-sm-6">
-                <p class="copyright font-alt"><a href="{% url 'home' %}"><b>SOCIAL DISTANCE</b></a> &copy; 2020 all rights reserved - WebMaster: <a href="https://www.linkedin.com/in/jorge-montiel-montiel/" target="_blank"><b style="text-transform: capitalize;">Jorge Montiel.</b></a></p>
+                <p class="copyright font-alt"><a href="{% url 'home' %}"><b>SOCIAL DISTANCE</b></a> &copy; 2021 all rights reserved - WebMaster: <a href="https://www.linkedin.com/in/jorge-montiel-montiel/" target="_blank"><b style="text-transform: capitalize;">Jorge Montiel.</b></a></p>
               </div>
               <div class="col-sm-6">
                 <div class="footer-social-links">
-                  <a href="https://www.facebook.com/distanciamientosocialcl-105186354483477" target="_blank"><i class="fa fa-facebook"></i> Distanciamiento Social</a>
+                  <a href="https://www.facebook.com/distanciamientosocialcl-105186354483477" target="_blank"><i class="fa fa-facebook"></i> Social Distance</a>
                   <a href="https://www.instagram.com/jorge_montiel_montiel/?hl=es-la" target="_blank"><i class="fa fa-instagram"></i> jorge_montiel_montiel</a>
-                  <a href="#" target="_blank"><i class="fa fa-envelope-o"></i> distanciamientosocial@gmail.com</a>
+                  <a href="#" target="_blank"><i class="fa fa-envelope-o"></i> socialdistance@gmail.com</a>
                 </div>
               </div>
             </div>

@@ -2,12 +2,12 @@
 {% load static %}
 {% block title %}Inicio{% endblock %}
 {% block content %}
-<!-- Home & Categorías-->
-<hr class="divider-d">
 
-{% comment %} <section class="home-section home-fade home-full-height" id="home">
+<!-- Home -->
+<hr class="divider-d">
+<section class="home-section home-fade home-full-height" id="home">
   <div class="hero-slider">
-    {% if idcategoryaux %}
+    {% comment %} {% if idcategoryaux %}
       <ul class="slides">
         {% for category in category_list %}
           {% if category.id == idcategoryaux %}
@@ -128,43 +128,8 @@
           </li>
         {% endfor %}
       </ul>
-    {% endif %}
+    {% endif %} {% endcomment %}
   </div>
-</section> {% endcomment %}
-
-<hr class="divider-d">
-<section class="home-section home-fade home-full-height" id="home">
-
-{% comment %} <iframe id="encoder_iframe" height=100% width=100% src="{% url 'map_display' %}"></iframe>
-</section> {% endcomment %}
-
-<!-- Category Carousel-->
-{% comment %} {% if flag_section %}
-  <hr class="divider-d">
-  <section class="module-small bg-dark p-0">
-    <div class="container">
-      <div class="row client">
-        {% if flag_amount %}
-          <div class="owl-carousel text-center" data-items="{{categories_amount}}" data-pagination="false" data-navigation="false">
-        {% else %}
-          <div class="owl-carousel text-center" data-items="{{categories_amount}}" data-pagination="false" data-navigation="false">
-        {% endif %}
-          {% for category in category_list %}
-            <div class="owl-item">
-              <div class="col-sm-12">
-                <div class="client-logo">
-                  <a href="{% url 'home' category.id %}" style="text-transform:uppercase;">
-                    <img src="{{category.image.url}}" alt="{{category.name}}"/>
-                    {{category.name}}
-                  </a>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
-        </div>
-      </div>
-    </div>
-  </section>
-{% endif %} {% endcomment %}
+</section>
 
 {% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Contact{% endblock %}
+{% block content %}
+<!-- Contact Form & Info-->
+<hr class="divider-d">
+<section class="module">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <h4 class="font-alt"><b>Contact Form:</b></h4><br/>
+        {% if 'ok' in request.GET %}
+          <div class="form-group">
+            <p class="help-block text-danger" style="color:#1e7b1e;background:#99e699;padding: 20px 25px 20px 25px;border-radius: 15px"><b>Your message has been sent successfully, stay tuned ... <br> I wish you a good day !!!</b></p>
+          </div>
+        {% endif %}          
+        <form action="" method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+            <label>Name (*)</label>
+            {{form.name}}
+            <p class="help-block text-danger">{{form.name.errors}}</p>
+          </div>
+          <div class="form-group">
+            <label>Email (*)</label>
+            {{form.email}}
+            <p class="help-block text-danger">{{form.email.errors}}</p>
+          </div>
+          <div class="form-group">
+            <label>Cellphone</label>
+            {{form.phone}}
+            <p class="help-block text-danger">{{form.phone.errors}}</p>
+          </div>
+          <div class="form-group">
+            <label>Message (*)</label>
+            {{form.content}}
+            <p class="help-block text-danger">{{form.content.errors}}</p>
+          </div>
+          <div class="text-center">
+            <input class="btn btn-block btn-round btn-d" type="submit" value="Send Message" />
+          </div>
+        </form>
+      </div>
+      <div class="col-sm-6" style="text-align:justify">
+        <h4 class="font-alt"><b>Additional Info:</b></h4><br/>
+        <p style="font-size: 14px;">
+          &emsp;&emsp;&emsp;For faster communication, you can also contact me by calling or WhatsApp at the following associated number:
+          <ul>
+            <li>
+              <i class="fa fa-whatsapp">  <b>(+569) 99123002</b> [ Jorge Montiel Montiel]</i>
+            </li>
+          </ul>
+        </p>
+        <hr/>
+        <h4 class="font-alt"><b>Attention schedule:</b></h4><br/>
+        <ul class="list-unstyled" style="font-size: 14px;">
+          <li>Monday to Friday: <b>9:00 AM</b> to <b>19:00 PM</b></li>
+          <li>Saturdays: <b>10:00 AM</b> to <b>16:00 PM</b></li>
+        </ul>
+        <hr/>
+        <h4 class="font-alt"><b>Full address:</b></h4><br/>
+        <p style="font-size: 14px;">
+          <b>Capellán Abarzúa 240 (Depto. N°410)</b>, Providencia, Región Metropolitana, Chile.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<hr class="divider-d">
+{% endblock %}

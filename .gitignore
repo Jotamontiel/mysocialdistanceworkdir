@@ -10,14 +10,14 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-dist/
+# dist/
 downloads/
 eggs/
 .eggs/
-lib/
-lib64/
+# lib/
+# lib64/
 parts/
-sdist/
+# sdist/
 var/
 wheels/
 pip-wheel-metadata/
@@ -69,7 +69,7 @@ instance/
 .scrapy
 
 # Sphinx documentation
-docs/_build/
+# docs/_build/
 
 # PyBuilder
 target/
@@ -133,6 +133,15 @@ dmypy.json
 
 # Static Files ignore
 /static/
+
+# Media Files ignore
+/media/
+
+# Sent Emails ignore
+/sent_emails/
+
+# TODO_List ignore
+/TODO_List_SocialDistanceWork.txt
 
 # Migrations ignore
 **/migrations/**
