@@ -15,52 +15,113 @@
                             <div class="post-meta">
                                 <h2 style="text-align:center;text-transform:none;font-size:200%;">{{service.subtitle}}</h2>
                             </div>
-                        </div>
-                        {% comment %} {% if not service.image1 and not service.image2 and not service.image3 and not service.link %}
-                            <div class="post-thumbnail">
-                                <img src="{% static 'core/assets/images/service_default_bg.jpg' %}" alt="Blog-post Thumbnail"/>
-                            </div>
-                        {% elif not service.image1 and not service.image2 and not service.image3 and service.link %}
-                            <div class="post-video embed-responsive embed-responsive-16by9">
-                                <iframe class="embed-responsive-item" src="{{service.link}}" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
-                            </div>
-                        {% elif service.image1 or service.image2 or service.image3 %}
+                        </div>    
+                        <!-- Metadata Section -->
+                        <div class="post-meta" style="text-align:center;text-transform:none;font-size: 13px;">
+                            {% if service.tag %}
+                                Tag: <a class="tags font-serif" href="#" rel="tag">{{service.tag}}</a> |
+                            {% endif %}
+                            {% if service.order %}
+                                N° Order: {{service.order}} |
+                            {% endif %}
                             {% if service.link %}
-                                <div class="post-images-slider">
-                                    <ul class="slides">
-                                        {% if service.image1 %}
-                                            <li><img src="{{service.image1.url}}" alt="Blog Slider Image"/></li>
-                                        {% endif %}
-                                        {% if service.image2 %}
-                                            <li><img src="{{service.image2.url}}" alt="Blog Slider Image"/></li>
-                                        {% endif %}
-                                        {% if service.image3 %}
-                                            <li><img src="{{service.image3.url}}" alt="Blog Slider Image"/></li>
-                                        {% endif %}
-                                    </ul>
-                                </div>
-                                <div class="post-video embed-responsive embed-responsive-16by9">
-                                    <iframe class="embed-responsive-item" src="{{service.link}}" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+                                Referential Link: <a href="{{service.link}}" target="_blank">{{service.link}}</a> |
+                            {% endif %}
+                            {% if service.created %}
+                                Publication Date: {{service.created}}
+                            {% endif %}
+                        </div>
+                        <!-- Summary Section -->
+                        {% if service.summary %}
+                            <div class="post-entry">
+                                <h2 class="post-title" style="text-align:center;text-transform:none;">Summary</h2>
+                                <p>{{service.summary|safe}}</p>
+                            </div>
+                        {% endif %}
+                        <!-- Images Section -->
+                        {% if service.image.all %}
+                            {% if service.image.all.count == 1 %}
+                                <div class="post-entry">
+                                    <h2 class="post-title" style="text-align:center;text-transform:none;">Image</h2>
+                                    <br>
+                                    <div class="post-images-slider">
+                                        <ul class="slides">
+                                            {% for service_image in service.image.all %}
+                                                <li><img src="{{service_image.uploadlink.url}}" alt="{{service_image.name}}"/></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
                                 </div>
                             {% else %}
-                                <div class="post-images-slider">
-                                    <ul class="slides">
-                                        {% if service.image1 %}
-                                            <li><img src="{{service.image1.url}}" alt="Blog Slider Image"/></li>
-                                        {% endif %}
-                                        {% if service.image2 %}
-                                            <li><img src="{{service.image2.url}}" alt="Blog Slider Image"/></li>
-                                        {% endif %}
-                                        {% if service.image3 %}    
-                                            <li><img src="{{service.image3.url}}" alt="Blog Slider Image"/></li>
-                                        {% endif %}
-                                    </ul>
+                                <div class="post-entry">
+                                    <h2 class="post-title" style="text-align:center;text-transform:none;">Images</h2>
+                                    <br>
+                                    <div class="row multi-columns-row">
+                                        {% for service_image in service.image.all %}
+                                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                                <div class="gallery-item">
+                                                    <div class="gallery-image">
+                                                        <a class="gallery" href="{{service_image.uploadlink.url}}" title="{{service_image.name}}">
+                                                            <img src="{{service_image.uploadlink.url}}" alt="{{service_image.name}}"/>
+                                                            <div class="gallery-caption">
+                                                                <div class="gallery-icon">
+                                                                    <span class="icon-magnifying-glass"></span>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
                                 </div>
                             {% endif %}
-                        {% endif %} {% endcomment %}
-                        <div class="post-entry">
-                            <p>{{service.content|safe}}</p>
-                        </div>
+                        {% else %}
+                            <div class="post-entry">
+                                <h2 class="post-title" style="text-align:center;text-transform:none;">-- No Images --</h2>
+                                <br>
+                                <div class="post-thumbnail">
+                                    <img src="{% static 'core/assets/images/service_default_bg.jpg' %}" alt="Blog-post Thumbnail"/>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <!-- Videos Section -->
+                        {% if service.video.all %}
+                            {% if service.video.all.count == 1 %}
+                                {% for service_video in service.video.all %}
+                                    <div class="post-entry">
+                                        <h2 class="post-title" style="text-align:center;text-transform:none;">Video</h2>
+                                        <br>
+                                        <div class="post-video embed-responsive embed-responsive-16by9">
+                                            <iframe class="embed-responsive-item" src="{{service_video.link}}" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="post-entry">
+                                    <h2 class="post-title" style="text-align:center;text-transform:none;">Videos</h2>
+                                    <br>
+                                    <div class="row multi-columns-row">
+                                        {% for service_video in service.video.all %}
+                                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                                <div class="gallery-item">
+                                                    <div class="post-video embed-responsive embed-responsive-16by9">
+                                                        <iframe class="embed-responsive-item" src="{{service_video.link}}" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                        <!-- Content Section -->
+                        {% if service.content %}
+                            <div class="post-entry">
+                                <h2 class="post-title" style="text-align:center;text-transform:none;">Content</h2>
+                                <p>{{service.content|safe}}</p>
+                            </div>
+                        {% endif %}
                     </div>
                 {% endfor %}
             </div>
@@ -74,10 +135,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-6 col-sm-offset-3">
-                    <h2 class="module-title font-alt" style="color:white;text-transform:none;">My employers</h2>
-                    <div class="module-subtitle font-serif" style="color:white">
-                        “Observa, escucha y aprende. No puedes saberlo todo. Todo el que piensa que lo sabe todo está destinado a la mediocridad”<br> - Donald Trump, presidente de The Trump Organization.
-                    </div>
+                    <h2 class="module-title font-alt" style="color:white;text-transform:none;">Employers</h2>
                 </div>
             </div>
             <div class="row client">

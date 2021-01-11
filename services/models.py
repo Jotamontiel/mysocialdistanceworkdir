@@ -40,8 +40,9 @@ class Service(models.Model):
     summary = RichTextField(verbose_name="Service Summary (Optional)", null=True, blank=True)
     content = RichTextField(verbose_name="Service Content (Optional)", null=True, blank=True)
     order = models.SmallIntegerField(verbose_name="Service Order (Optional)", default=0)
-    video = models.ManyToManyField(ServiceVideo, verbose_name="Service Videos (Optional)", null=True, blank=True)
-    image = models.ManyToManyField(ServiceImage, verbose_name="Service Images (Optional)", null=True, blank=True)
+    link = models.URLField(max_length=400, verbose_name="Service Link (Optional)", null=True, blank=True)
+    video = models.ManyToManyField(ServiceVideo, verbose_name="Service Videos (Optional)", blank=True)
+    image = models.ManyToManyField(ServiceImage, verbose_name="Service Images (Optional)", blank=True)
     created = models.DateTimeField(auto_now_add=True, verbose_name="Creation Date")
     updated = models.DateTimeField(auto_now=True, verbose_name="Update Date")
 
