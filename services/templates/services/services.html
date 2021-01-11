@@ -42,8 +42,6 @@
                         {% if service.image.all %}
                             {% if service.image.all.count == 1 %}
                                 <div class="post-entry">
-                                    <h2 class="post-title" style="text-align:center;text-transform:none;">Image</h2>
-                                    <br>
                                     <div class="post-images-slider">
                                         <ul class="slides">
                                             {% for service_image in service.image.all %}
@@ -54,8 +52,6 @@
                                 </div>
                             {% else %}
                                 <div class="post-entry">
-                                    <h2 class="post-title" style="text-align:center;text-transform:none;">Images</h2>
-                                    <br>
                                     <div class="row multi-columns-row">
                                         {% for service_image in service.image.all %}
                                             <div class="col-sm-6 col-md-3 col-lg-3">
@@ -78,8 +74,6 @@
                             {% endif %}
                         {% else %}
                             <div class="post-entry">
-                                <h2 class="post-title" style="text-align:center;text-transform:none;">-- No Images --</h2>
-                                <br>
                                 <div class="post-thumbnail">
                                     <img src="{% static 'core/assets/images/service_default_bg.jpg' %}" alt="Blog-post Thumbnail"/>
                                 </div>
@@ -90,8 +84,6 @@
                             {% if service.video.all.count == 1 %}
                                 {% for service_video in service.video.all %}
                                     <div class="post-entry">
-                                        <h2 class="post-title" style="text-align:center;text-transform:none;">Video</h2>
-                                        <br>
                                         <div class="post-video embed-responsive embed-responsive-16by9">
                                             <iframe class="embed-responsive-item" src="{{service_video.link}}" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
                                         </div>
@@ -99,8 +91,6 @@
                                 {% endfor %}
                             {% else %}
                                 <div class="post-entry">
-                                    <h2 class="post-title" style="text-align:center;text-transform:none;">Videos</h2>
-                                    <br>
                                     <div class="row multi-columns-row">
                                         {% for service_video in service.video.all %}
                                             <div class="col-sm-6 col-md-3 col-lg-3">
@@ -118,7 +108,6 @@
                         <!-- Content Section -->
                         {% if service.content %}
                             <div class="post-entry">
-                                <h2 class="post-title" style="text-align:center;text-transform:none;">Content</h2>
                                 <p>{{service.content|safe}}</p>
                             </div>
                         {% endif %}

@@ -92,11 +92,30 @@
               <li class="nav-item">
                 <a class="btn" href="https://www.facebook.com/distanciamientosocialcl-105186354483477" target="_blank"><i class="fa fa-facebook fa-2x"></i></a>
               </li>
-              <!--<li class="nav-item">
-                <a class="btn btn-border-d btn-circle" href="#" data-toggle="dropdown">Inscribete</a>
-              </li>-->
               <li class="nav-item">
-                <a class="btn btn-b btn-round" href="{% url 'home' %}">Inicio</a>
+                <a class="btn btn-b btn-round" href="{% url 'home' %}">Home</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="btn btn-b btn-round" href="">About</a>
+                <ul class="dropdown-menu" role="menu">
+                  {% comment %} <li class="dropdown">
+                    <a href="{% url 'info' %}">Info</a>
+                  </li> {% endcomment %}
+                  <li class="dropdown">
+                    <a href="{% url 'services' %}">Services</a>
+                  </li>
+                  <li class="dropdown">
+                    <a href="{% url 'contact' %}">Contact</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="btn btn-b btn-round" href="">Projects</a>
+                <ul class="dropdown-menu" role="menu">
+                  <li class="dropdown">
+                    <a href="">Iot-module</a>
+                  </li>
+                </ul>
               </li>
             </ul>
           </div>
@@ -244,7 +263,7 @@
         });
         marker1.setMap(map1);
       }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlsJMtSlwVo-ubU2vNVcmgbzH8UtOgOhU&callback=myMap"></script>
+    </script> 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlsJMtSlwVo-ubU2vNVcmgbzH8UtOgOhU&callback=myMap"></script>  {% endcomment %}
   </body>
-</html> {% endcomment %}
+</html>

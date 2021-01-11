@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <title>CodePen - City 3D</title>
+        {% load static %}
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel='stylesheet' href="{% static 'core/city3D/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'core/city3D/style.css' %}">
+    </head>
+    <body>
+        <div class="container-fluid fixed-top header disable-selection">
+            <div class="row">
+                <div class="col">
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col">
+                            <h1>
+                                <strong>Destroy Humans</strong>
+                            </h1>
+                            <p class="small">– Your end –</p>
+                            <!--.btn.btn-danger(href='#',role='button', onclick='cameraSet()') + ADD LINE-->
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                </div>
+            </div>
+        </div>
+        <script src="{% static 'core/city3D/three.min.js' %}"></script>
+        <script src="{% static 'core/city3D/constants.js' %}"></script>
+        <script src="{% static 'core/city3D/bootstrap.min.js' %}"></script>
+        <script src="{% static 'core/city3D/TweenMax.min.js' %}"></script>
+        <script src="{% static 'core/city3D/script.js' %}"></script>
+    </body>
+</html>

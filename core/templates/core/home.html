@@ -3,7 +3,7 @@
 {% block title %}Inicio{% endblock %}
 {% block content %}
 
-<!-- Home -->
+<!-- Home 
 <hr class="divider-d">
 <section class="home-section home-fade home-full-height" id="home">
   <div class="hero-slider">
@@ -130,6 +130,23 @@
       </ul>
     {% endif %} {% endcomment %}
   </div>
+</section> -->
+
+<!-- City3D -->
+<hr class="divider-d">
+<section class="home-section home-fade home-full-height" id="home">
+<iframe id="encoder_iframe" height=100% width=100% src="{% url 'city3D_display' %}"></iframe>
 </section>
+
+<!-- CMD -->
+<hr class="divider-d">
+<section class="home-section home-fade home-full-height" id="home">
+<iframe id="encoder_iframe" height=100% width=100% src="{% url 'cmd_display' %}"></iframe>
+</section>
+
+<!-- Background Music -->
+<audio autoplay loop>
+  <source src="{% static 'core/city3D/music/bkg_music.mp3' %}" type="audio/mpeg">
+</audio>
 
 {% endblock %}
