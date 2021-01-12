@@ -1,0 +1,14 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Info{% endblock %}
+{% block content %}
+
+<!-- TimeLine -->
+<hr class="divider-d">
+<section class="home-section home-fade home-full-height" id="home">
+<iframe id="encoder_iframe" height=100% width=100% src="{% url 'timeLine_display' %}"></iframe>
+</section>
+
+<!-- FinalDivisor -->
+<hr class="divider-d">
+{% endblock %}
