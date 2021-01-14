@@ -1,0 +1,14 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}About Menu{% endblock %}
+{% block content %}
+
+<!-- City3DBackground -->
+<hr class="divider-d">
+<section class="home-section home-fade home-full-height" id="home">
+<iframe id="encoder_iframe" height=100% width=100% src="{% url 'selectAbout_display' %}"></iframe>
+</section>
+
+<!-- FinalDivisor -->
+<hr class="divider-d">
+{% endblock %}

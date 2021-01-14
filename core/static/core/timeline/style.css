@@ -50,7 +50,8 @@ body {
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
   perspective: 1000;
-  background:#000000;
+  /* background:#000000; */
+  background: url('/static/core/timeline/picture/building_picture.jpg') no-repeat fixed center;
 }
 .content {
   position: relative;

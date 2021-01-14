@@ -3,10 +3,37 @@
 {% block title %}Info{% endblock %}
 {% block content %}
 
+<!-- SectionDivisor -->
+<hr class="divider-d">
+<section class="module bg-dark-60 about-page-header parallax-bg" data-background="{% static 'core/assets/images/about_bg_2.jpg' %}">
+</section>
+
 <!-- TimeLine -->
 <hr class="divider-d">
 <section class="home-section home-fade home-full-height" id="home">
 <iframe id="encoder_iframe" height=100% width=100% src="{% url 'timeLine_display' %}"></iframe>
+</section>
+
+<!-- SectionDivisor -->
+<hr class="divider-d">
+<section class="module bg-dark-60 about-page-header parallax-bg" data-background="{% static 'core/assets/images/bg_about_3.jpg' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="video-box">
+                    <div class="video-box-icon"><a class="video-pop-up" href="https://www.youtube.com/watch?v=TTxZj3DZiIM"><span class="icon-video"></span></a></div>
+                    <div class="video-title font-alt">Presentation</div>
+                    <div class="video-subtitle font-alt">Watch the video about our new products</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TechTree -->
+<hr class="divider-d">
+<section class="home-section home-fade home-full-height" id="home">
+<iframe id="encoder_iframe" height=120% width=100% src="{% url 'techTree_display' %}"></iframe>
 </section>
 
 <!-- FinalDivisor -->

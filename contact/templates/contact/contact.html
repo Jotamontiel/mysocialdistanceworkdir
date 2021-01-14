@@ -2,7 +2,8 @@
 {% load static %}
 {% block title %}Contact{% endblock %}
 {% block content %}
-<!-- Contact Form & Info-->
+
+<!-- ContactForm-Info-->
 <hr class="divider-d">
 <section class="module">
   <div class="container">
@@ -66,5 +67,13 @@
     </div>
   </div>
 </section>
+
+<!-- ContactMap-->
+<hr class="divider-d">
+<section id="map-section">
+<iframe id="encoder_iframe" height=100% width=100% src="{% url 'contactMap_display' %}"></iframe>
+</section>
+
+<!-- FinalDivisor -->
 <hr class="divider-d">
 {% endblock %}
