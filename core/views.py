@@ -2,6 +2,7 @@ from django.views.generic.base import TemplateView
 from django.shortcuts import render
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 import random
+from .models import Curriculum
 
 class HomePageView(TemplateView):
     template_name = "core/home.html"
@@ -15,8 +16,10 @@ class HomePageView(TemplateView):
 class InfoPageView(TemplateView):
     template_name = "core/info.html"
 
-class HomeMenuPageView(TemplateView):
-    template_name = "core/menu_home.html"
+    def get_context_data(self, **kwargs):
+        context = super(InfoPageView, self).get_context_data(**kwargs)
+        context['curriculum_list'] = Curriculum.objects.all()
+        return context
 
 class AboutMenuPageView(TemplateView):
     template_name = "core/menu_about.html"
@@ -43,7 +46,3 @@ def techTreeDisplayView(request):
 @xframe_options_sameorigin
 def selectAboutDisplayView(request):
     return render(request, "core/displays/selectabout_display.html")
-
-@xframe_options_sameorigin
-def selectAbout_2DisplayView(request):
-    return render(request, "core/displays/selectabout_display_2.html")

@@ -3,10 +3,15 @@
 {% block title %}About Menu{% endblock %}
 {% block content %}
 
-<!-- City3DBackground -->
+<!-- SectionDivisor -->
+<hr class="divider-d">
+<section class="module-small bg-dark-60 about-page-header parallax-bg" data-background="{% static 'core/assets/images/about_bg_2.jpg' %}">
+</section>
+
+<!-- AboutSelector -->
 <hr class="divider-d">
 <section class="home-section home-fade home-full-height" id="home">
-<iframe id="encoder_iframe" height=100% width=100% src="{% url 'selectAbout2_display' %}"></iframe>
+<iframe id="encoder_iframe" height=100% width=100% src="{% url 'selectAbout_display' %}"></iframe>
 </section>
 
 <!-- FinalDivisor -->

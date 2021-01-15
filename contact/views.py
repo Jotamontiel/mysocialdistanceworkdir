@@ -43,4 +43,4 @@ def contactMapDisplayView(request):
     folium.Marker(location=[-33.4299136, -70.63142400000001], popup="socialdistance.cl", icon=folium.Icon(color="red", icon="info-sign")).add_to(m)
     figure = figure.get_root().render()
 
-    return render(request, "contact/contactmap_display.html", {'my_map':figure})
+    return render(request, "contact/displays/contactmap_display.html", {'my_map':figure})

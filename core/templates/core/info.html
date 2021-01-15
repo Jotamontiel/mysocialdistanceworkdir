@@ -8,6 +8,63 @@
 <section class="module bg-dark-60 about-page-header parallax-bg" data-background="{% static 'core/assets/images/about_bg_2.jpg' %}">
 </section>
 
+<!-- CVDownloadDivisor -->
+{% if curriculum_list %}
+    <section class="module-extra-small bg-dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="callout-btn-box" style="text-align: center;text-decoration: underline;font-weight: bold;font-size: 15px;">
+                        Name
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="callout-btn-box" style="text-align: center;text-decoration: underline;font-weight: bold;font-size: 15px;">
+                        CV Tag
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="callout-btn-box" style="text-align: center;text-decoration: underline;font-weight: bold;font-size: 15px;">
+                        CV Summary
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="callout-btn-box" style="text-align: center;text-decoration: underline;font-weight: bold;font-size: 15px;">
+                        CV Link
+                    </div>
+                </div>
+            </div>
+            {% for curriculum in curriculum_list %}
+                <hr/>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="callout-btn-box" style="text-align: center;">
+                            {{curriculum.name}}
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="callout-btn-box" style="text-align: center;">
+                            {{curriculum.tag}}
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="callout-btn-box" style="text-align: center;">
+                            {{curriculum.content|safe}}
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="callout-btn-box" style="text-align: center;">
+                            <a class="btn btn-border-w btn-circle" href="{{curriculum.uploadlink.url}}">
+                                Download
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endif %}
+
 <!-- TimeLine -->
 <hr class="divider-d">
 <section class="home-section home-fade home-full-height" id="home">

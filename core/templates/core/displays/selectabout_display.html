@@ -8,39 +8,30 @@
     </head>
     <body>
         <!-- partial:index.partial.html -->
-        <section class="container">
-            <div class="section first">
-                <div class="cont_title">
-                    <!-- div class="letter-container">
-                    <p class="lettering">Alaska, USA</p>
-                    </div -->
-                    <h1>Info</h1>
-                    <h3>Social Distance <br>& Jorge information</h3>
-                </div>
-                <div class="cont_desc">
-                    <p></p>
-                </div>
+        <div class="flex-container">
+            <div class="spinner">
+                <p>
+                    <div class="cube1"></div>
+                    <div class="cube2"></div>
+                    Loading...
+                </p>
             </div>
-            <div class="section">
-                <div class="cont_title">
-                    <h1>Services</h1>
-                    <h3>Available Services and More</h3>
-                </div>
-                <div class="cont_desc">
-                    <p></p>
-                </div>
+            <div class="flex-slide home">
+                <div class="flex-title flex-title-home">Info</div>
+                <div class="flex-about flex-about-home"><p>Click here to navigate to the home section of the website</p></div>
             </div>
-            <div class="section">
-                <div class="cont_title">
-                    <h1>Contact</h1>
-                    <h3>Contact me</h3>
-                </div>
-                <div class="cont_desc">
-                    <p></p>
-                </div>
+            <div class="flex-slide about">
+                <div class="flex-title">Services</div>
+                <div class="flex-about"><p>Click here to navigate to the About section of the website</p></div>
             </div>
-        </section>
+            <div class="flex-slide work">
+                <div class="flex-title">Contact</div>
+                <div class="flex-about"><p>Listing relevant snippets of work:</p></div>
+            </div>
+        </div>
         <!-- partial -->
         <script src="{% static 'core/selectaboutmenu/jquery.min.js' %}"></script>
+        <script src="{% static 'core/selectaboutmenu/jquery.waitforimages.min.js' %}"></script>
+        <script src="{% static 'core/selectaboutmenu/script.js' %}"></script>
     </body>
 </html>
