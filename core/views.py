@@ -43,3 +43,7 @@ def techTreeDisplayView(request):
 @xframe_options_sameorigin
 def selectAboutDisplayView(request):
     return render(request, "core/displays/selectabout_display.html")
+
+@xframe_options_sameorigin
+def selectAbout_2DisplayView(request):
+    return render(request, "core/displays/selectabout_display_2.html")

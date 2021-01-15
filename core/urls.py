@@ -13,4 +13,5 @@ urlpatterns = [
     path('timeLine_display/', views.timeLineDisplayView, name="timeLine_display"),
     path('techTree_display/', views.techTreeDisplayView, name="techTree_display"),
     path('selectAbout_display/', views.selectAboutDisplayView, name="selectAbout_display"),
+    path('selectAbout2_display/', views.selectAbout_2DisplayView, name="selectAbout2_display"),
 ]
