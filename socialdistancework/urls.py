@@ -24,6 +24,8 @@ urlpatterns = [
     path('', include('contact.urls')),
     # Services path
     path('', include('services.urls')),
+    # Celery Tasks path
+    path('', include('celery_tasks.urls')),
     # Admin path
     path('admin/', admin.site.urls),
 ]
