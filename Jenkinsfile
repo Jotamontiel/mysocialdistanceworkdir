@@ -32,7 +32,31 @@ node {
             echo "---------------- Master Branch Reset and Updated ---------------------"
             echo "----------------------------------------------------------------------"
         }
-        stage("Stage 2: Create Virtual Environment") {
+        stage("Stage 2: Clear Static & Media Files") {
+            echo "---------------------------------------------------------------------"
+            echo "---------------- Clear Static & Media Files Starting ----------------"
+            echo "---------------------------------------------------------------------"
+            sshCommand remote: remote, command: """
+            echo "**********************************************"
+            echo "****** Show Base Directory *******************"
+            echo "**********************************************"
+            pwd
+            ls -al
+            echo "**********************************************"
+            echo "****** Show Project Sub Directory ************"
+            echo "**********************************************"
+            cd mysocialdistanceworkdir
+            pwd
+            ls -al
+            rm -r media
+            rm -r static
+            rm -r sent_emails
+            """
+            echo "----------------------------------------------------------------------"
+            echo "---------------- Directory cleaned -----------------------------------"
+            echo "----------------------------------------------------------------------"
+        }
+        stage("Stage 3: Create Virtual Environment") {
             echo "----------------------------------------------------------------------"
             echo "---------------- Environment Creation Starting -----------------------"
             echo "----------------------------------------------------------------------"
@@ -51,7 +75,7 @@ node {
             echo "---------------- Environment Created ---------------------------------"
             echo "----------------------------------------------------------------------"
         }
-        stage("Stage 3: Database Reset") {
+        stage("Stage 4: Database Reset") {
             echo "----------------------------------------------------------------------"
             echo "---------------- Database Reset Starting -----------------------------"
             echo "----------------------------------------------------------------------"
@@ -62,7 +86,7 @@ node {
             echo "---------------- Database Built --------------------------------------"
             echo "----------------------------------------------------------------------"
         }
-        stage("Stage 4: Build Migrations & Migrate") {
+        stage("Stage 5: Build Migrations & Migrate") {
             echo "----------------------------------------------------------------------"
             echo "---------------- Build Migrations & Migrate Starting -----------------"
             echo "----------------------------------------------------------------------"
@@ -76,7 +100,7 @@ node {
             echo "---------------- Built & Migrated Migrations -------------------------"
             echo "----------------------------------------------------------------------"
         }
-        stage("Stage 5: Static Files Collection"){
+        stage("Stage 6: Static Files Collection"){
             echo "----------------------------------------------------------------------"
             echo "---------------- Static Files Collection Starting --------------------"
             echo "----------------------------------------------------------------------"
@@ -89,7 +113,7 @@ node {
             echo "---------------- Static Files Collected ------------------------------"
             echo "----------------------------------------------------------------------"
         }
-        stage("Stage 6: Create Superuser"){
+        stage("Stage 7: Create Superuser"){
             withCredentials([usernamePassword(credentialsId: 'the-real-user-password-for-BD-webserver-1', passwordVariable: 'JENKINS_BD_PASS', usernameVariable: 'JENKINS_BD_USER')]) {
                 echo "----------------------------------------------------------------------"
                 echo "---------------- Superuser Creation Starting -------------------------"
@@ -104,7 +128,7 @@ node {
                 echo "----------------------------------------------------------------------"
             }
         }
-        stage("Stage 7: Restart Services"){
+        stage("Stage 8: Restart Services"){
             echo "----------------------------------------------------------------------"
             echo "---------------- Restart Services Starting ---------------------------"
             echo "----------------------------------------------------------------------"
@@ -130,6 +154,10 @@ node {
 }
 
 // Recommendations before running the pipeline:
+//
+// *****************************************************
+// ********** MODULE 1: "Website Preparation" **********
+// *****************************************************
 //
 // 1°) Installing the Packages from the Ubuntu Repositories, If you are using Django with Python 3, type:
 //  sudo apt update
@@ -250,3 +278,135 @@ node {
 //  COMMAND: sudo systemctl restart nginx
 //  COMMAND: sudo ufw delete allow 8000
 //  COMMAND: sudo ufw allow 'Nginx Full'
+//
+// *****************************************************
+// ********** MODULE 2: "Celery Preparation" ***********
+// *****************************************************
+//
+// 1°) Installing the Packages from the Ubuntu Repositories:
+//
+//  COMMAND: sudo apt-get update
+//  COMMAND: sudo apt-get upgrade
+//  COMMAND: sudo apt-get install redis-server
+//  COMMAND: sudo service redis-server restart
+//
+// 2°) Others commands por redis broker:
+//
+//  COMMAND: sudo service redis-server stop
+//  COMMAND: sudo service redis-server start
+//  COMMAND: sudo service redis-server restart
+// 
+// 3°) This command take the celery workers activation:
+//
+//  COMMAND: celery -A nombre_proyecto worker --loglevel=INFO       #Windows Version
+//  COMMAND: celery -A nombre_proyecto worker --pool=solo -l info   #Linux   Version
+//
+// 4°) This command take the celery beat activation:
+//
+//  COMMAND: celery -A nombre_proyecto beat                                                                       #Original Version
+//  COMMAND: celery -A nombre_proyecto beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler   #Django   Version
+//
+// 5°) This command take the celery flower activation:
+//
+//  COMMAND: celery -A nombre_proyecto flower                                                                     #Original Version
+//
+// NOTE: Take a look for "http://localhost:5555" to see the results
+// NOTE 2: Take a look for Celery Director for better workflows views in the browser
+//
+// 6°) Celery Workers and beat Demonization using systemd:
+//
+//  COMMAND: sudo nano /etc/systemd/system/celery.service
+//
+// ********** /etc/systemd/system/celery.service **********
+// [Unit]
+// Description=Celery Service
+// After=network.target
+//
+// [Service]
+// Type=forking
+// User=celery
+// Group=celery
+// EnvironmentFile=/etc/conf.d/celery
+// WorkingDirectory=/opt/celery
+// ExecStart=/bin/sh -c '${CELERY_BIN} -A $CELERY_APP multi start $CELERYD_NODES \
+//     --pidfile=${CELERYD_PID_FILE} --logfile=${CELERYD_LOG_FILE} \
+//     --loglevel="${CELERYD_LOG_LEVEL}" $CELERYD_OPTS'
+// ExecStop=/bin/sh -c '${CELERY_BIN} multi stopwait $CELERYD_NODES \
+//     --pidfile=${CELERYD_PID_FILE} --loglevel="${CELERYD_LOG_LEVEL}"'
+// ExecReload=/bin/sh -c '${CELERY_BIN} -A $CELERY_APP multi restart $CELERYD_NODES \
+//     --pidfile=${CELERYD_PID_FILE} --logfile=${CELERYD_LOG_FILE} \
+//     --loglevel="${CELERYD_LOG_LEVEL}" $CELERYD_OPTS'
+// Restart=always
+//
+// [Install]
+// WantedBy=multi-user.target
+//
+//  COMMAND: sudo systemctl daemon-reload
+//  COMMAND: sudo systemctl enable celery.service
+//
+//  ATTENTION 1: To configure user, group, chdir change settings: User, Group, and WorkingDirectory defined in /etc/systemd/system/celery.service.
+//  ATTENTION 2: You can also use systemd-tmpfiles in order to create working directories (for logs and pid):
+// file: /etc/tmpfiles.d/celery.conf
+//  d /var/run/celery 0755 celery celery -
+//  d /var/log/celery 0755 celery celery -
+//
+//  COMMAND: sudo nano /etc/conf.d/celery
+//
+// ********** /etc/conf.d/celery **********
+// # Name of nodes to start
+// # here we have a single node
+// CELERYD_NODES="w1"
+// # or we could have three nodes:
+// #CELERYD_NODES="w1 w2 w3"
+//
+// # Absolute or relative path to the 'celery' command:
+// CELERY_BIN="/usr/local/bin/celery"
+// #CELERY_BIN="/virtualenvs/def/bin/celery"
+//
+// # App instance to use
+// # comment out this line if you don't use an app
+// CELERY_APP="proj"
+// # or fully qualified:
+// #CELERY_APP="proj.tasks:app"
+//
+// # How to call manage.py
+// CELERYD_MULTI="multi"
+//
+// # Extra command-line arguments to the worker
+// CELERYD_OPTS="--time-limit=300 --concurrency=8"
+//
+// # - %n will be replaced with the first part of the nodename.
+// # - %I will be replaced with the current child process index
+// #   and is important when using the prefork pool to avoid race conditions.
+// CELERYD_PID_FILE="/var/run/celery/%n.pid"
+// CELERYD_LOG_FILE="/var/log/celery/%n%I.log"
+// CELERYD_LOG_LEVEL="INFO"
+//
+// # you may wish to add these options for Celery Beat
+// CELERYBEAT_PID_FILE="/var/run/celery/beat.pid"
+// CELERYBEAT_LOG_FILE="/var/log/celery/beat.log"
+//
+//  COMMAND: sudo nano /etc/systemd/system/celerybeat.service
+//
+// ********** /etc/systemd/system/celerybeat.service **********
+// [Unit]
+// Description=Celery Beat Service
+// After=network.target
+//
+// [Service]
+// Type=simple
+// User=celery
+// Group=celery
+// EnvironmentFile=/etc/conf.d/celery
+// WorkingDirectory=/opt/celery
+// ExecStart=/bin/sh -c '${CELERY_BIN} -A ${CELERY_APP} beat  \
+//     --pidfile=${CELERYBEAT_PID_FILE} \
+//     --logfile=${CELERYBEAT_LOG_FILE} --loglevel=${CELERYD_LOG_LEVEL}'
+// Restart=always
+//
+// [Install]
+// WantedBy=multi-user.target
+//
+//  COMMAND: sudo systemctl daemon-reload
+//  COMMAND: sudo systemctl enable celerybeat.service
+//

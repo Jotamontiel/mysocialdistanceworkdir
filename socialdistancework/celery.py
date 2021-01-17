@@ -5,14 +5,7 @@ from celery.schedules import crontab
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'socialdistancework.settings')
 app = Celery('socialdistancework')
-app.conf.timezone = 'UTC'
-app.conf.broker_url = 'redis://localhost:6379'
-app.conf.result_backend = 'django-db'
-app.conf.cache_backend = 'django-cache'
-app.conf.accept_content = ['application/json']
-app.conf.task_serializer = 'json'
-app.conf.result_serializer = 'json'
-#app.config_from_object('django.conf:settings', namespace='CELERY')
+app.config_from_object('django.conf:settings', namespace='CELERY')
 
 app.autodiscover_tasks()
 app.conf.beat_schedule = {
