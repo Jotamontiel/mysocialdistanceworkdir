@@ -48,9 +48,9 @@ node {
             cd mysocialdistanceworkdir
             pwd
             ls -al
-            rm -r media
-            rm -r static
-            rm -r sent_emails
+            sudo rm -r media
+            sudo rm -r static
+            sudo rm -r sent_emails
             """
             echo "----------------------------------------------------------------------"
             echo "---------------- Directory cleaned -----------------------------------"
