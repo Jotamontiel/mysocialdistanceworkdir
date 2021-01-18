@@ -7,7 +7,25 @@ node {
     withCredentials([sshUserPrivateKey(credentialsId: 'the-real-user-for-webserver-1', keyFileVariable: 'WEBSERVER_KEYFILE', passphraseVariable: '', usernameVariable: 'WEBSERVER_USER')]) {
         remote.user = WEBSERVER_USER
         remote.identityFile = WEBSERVER_KEYFILE
-        stage("Stage 1: Reset & Update Master Branch") {
+        stage("Stage 1: Stop Processes") {
+            echo "---------------------------------------------------------------------"
+            echo "---------------- Stop Processes Starting ----------------------------"
+            echo "---------------------------------------------------------------------"
+            sshCommand remote: remote, command: """
+            echo "**********************************************"
+            echo "****** Stop Celery Service *******************"
+            echo "**********************************************"
+            sudo systemctl stop celery.service
+            echo "**********************************************"
+            echo "****** Stop Celery Beat Service **************"
+            echo "**********************************************"
+            sudo systemctl stop celerybeat.service
+            """
+            echo "----------------------------------------------------------------------"
+            echo "---------------- Stopped Processes -----------------------------------"
+            echo "----------------------------------------------------------------------"
+        }
+        stage("Stage 2: Reset & Update Master Branch") {
             echo "---------------------------------------------------------------------"
             echo "---------------- Reset & Update Master Branch Starting --------------"
             echo "---------------------------------------------------------------------"
@@ -32,30 +50,30 @@ node {
             echo "---------------- Master Branch Reset and Updated ---------------------"
             echo "----------------------------------------------------------------------"
         }
-        // stage("Stage 2: Clear Static & Media Files") {
-        //     echo "---------------------------------------------------------------------"
-        //     echo "---------------- Clear Static & Media Files Starting ----------------"
-        //     echo "---------------------------------------------------------------------"
-        //     sshCommand remote: remote, command: """
-        //     echo "**********************************************"
-        //     echo "****** Show Base Directory *******************"
-        //     echo "**********************************************"
-        //     pwd
-        //     ls -al
-        //     echo "**********************************************"
-        //     echo "****** Show Project Sub Directory ************"
-        //     echo "**********************************************"
-        //     cd mysocialdistanceworkdir
-        //     pwd
-        //     ls -al
-        //     sudo rm -r media
-        //     sudo rm -r static
-        //     """
-        //     echo "----------------------------------------------------------------------"
-        //     echo "---------------- Directory cleaned -----------------------------------"
-        //     echo "----------------------------------------------------------------------"
-        // }
-        stage("Stage 3: Create Virtual Environment") {
+        stage("Stage 3: Clear Static & Media Files") {
+            echo "---------------------------------------------------------------------"
+            echo "---------------- Clear Static & Media Files Starting ----------------"
+            echo "---------------------------------------------------------------------"
+            sshCommand remote: remote, command: """
+            echo "**********************************************"
+            echo "****** Show Base Directory *******************"
+            echo "**********************************************"
+            pwd
+            ls -al
+            echo "**********************************************"
+            echo "****** Show Project Sub Directory ************"
+            echo "**********************************************"
+            cd mysocialdistanceworkdir
+            pwd
+            ls -al
+            sudo rm -r media
+            sudo rm -r static
+            """
+            echo "----------------------------------------------------------------------"
+            echo "---------------- Directory cleaned -----------------------------------"
+            echo "----------------------------------------------------------------------"
+        }
+        stage("Stage 4: Create Virtual Environment") {
             echo "----------------------------------------------------------------------"
             echo "---------------- Environment Creation Starting -----------------------"
             echo "----------------------------------------------------------------------"
@@ -74,7 +92,7 @@ node {
             echo "---------------- Environment Created ---------------------------------"
             echo "----------------------------------------------------------------------"
         }
-        stage("Stage 4: Database Reset") {
+        stage("Stage 5: Database Reset") {
             echo "----------------------------------------------------------------------"
             echo "---------------- Database Reset Starting -----------------------------"
             echo "----------------------------------------------------------------------"
@@ -85,7 +103,7 @@ node {
             echo "---------------- Database Built --------------------------------------"
             echo "----------------------------------------------------------------------"
         }
-        stage("Stage 5: Build Migrations & Migrate") {
+        stage("Stage 6: Build Migrations & Migrate") {
             echo "----------------------------------------------------------------------"
             echo "---------------- Build Migrations & Migrate Starting -----------------"
             echo "----------------------------------------------------------------------"
@@ -99,7 +117,7 @@ node {
             echo "---------------- Built & Migrated Migrations -------------------------"
             echo "----------------------------------------------------------------------"
         }
-        stage("Stage 6: Static Files Collection"){
+        stage("Stage 7: Static Files Collection"){
             echo "----------------------------------------------------------------------"
             echo "---------------- Static Files Collection Starting --------------------"
             echo "----------------------------------------------------------------------"
@@ -112,7 +130,7 @@ node {
             echo "---------------- Static Files Collected ------------------------------"
             echo "----------------------------------------------------------------------"
         }
-        stage("Stage 7: Create Superuser"){
+        stage("Stage 8: Create Superuser"){
             withCredentials([usernamePassword(credentialsId: 'the-real-user-password-for-BD-webserver-1', passwordVariable: 'JENKINS_BD_PASS', usernameVariable: 'JENKINS_BD_USER')]) {
                 echo "----------------------------------------------------------------------"
                 echo "---------------- Superuser Creation Starting -------------------------"
@@ -127,7 +145,7 @@ node {
                 echo "----------------------------------------------------------------------"
             }
         }
-        stage("Stage 8: Restart Services"){
+        stage("Stage 9: Restart Services"){
             echo "----------------------------------------------------------------------"
             echo "---------------- Restart Services Starting ---------------------------"
             echo "----------------------------------------------------------------------"

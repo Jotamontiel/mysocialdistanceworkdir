@@ -9,10 +9,10 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 
 app.autodiscover_tasks()
 app.conf.beat_schedule = {
-    # execute daily at midnight
+    # Execute every three hours
     'scraping-task-one-min': {
         'task': 'celery_tasks.tasks.hackernews_rss',
-        'schedule': crontab(minute=0, hour=0),
+        'schedule': crontab(minute=0, hour='*/3'),
     },
     # # executes every 15 minutes
     # 'scraping-task-fifteen-min': {
