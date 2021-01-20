@@ -144,15 +144,6 @@
 <iframe id="encoder_iframe" height=100% width=100% src="{% url 'cmd_display' %}"></iframe>
 </section>
 
-<!-- BackgroundMusic -->
-<audio autoplay loop>
-  {% if choice_song == 0 %}
-    <source src="{% static 'core/city3D/music/bkg_music.mp3' %}" type="audio/mpeg">
-  {% elif choice_song == 1 %}
-    <source src="{% static 'core/city3D/music/bkg_music_2.mp3' %}" type="audio/mpeg">
-  {% endif %}
-</audio>
-
 <!-- FinalDivisor -->
 <hr class="divider-d">
 {% endblock %}

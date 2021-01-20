@@ -1,0 +1,35 @@
+<!DOCTYPE html> 
+<html> 
+<body> 
+<div> 
+  Opposite of ? 
+  <input type="text" id="input" placeholder="Input"> 
+  <input type="submit" id='opp' value="Submit" onclick="opposite()"> 
+  <br><br>Result : <h1 id='result'></h1> 
+</div> 
+</body> 
+</html> 
+<script> 
+/* 
+  function opposite(){ 
+    var data = JSON.parse("{{data|escapejs}}"); 
+    var input = document.getElementById("input").value; 
+    var result = document.getElementById("result") 
+    var flag = 1; 
+    console.log(data);
+    for(var x in data){ 
+      if(input.toLowerCase()==data[x][0].toLowerCase()){ 
+        result.innerHTML = data[x][1]; 
+        flag=0; 
+      } 
+      else if(input.toLowerCase()==data[x][1].toLowerCase()){ 
+        result.innerHTML = data[x][0]; 
+        flag=0; 
+      } 
+    } 
+    if(flag){ 
+      result.innerHTML = "No results found" 
+    } 
+  } 
+  */
+</script>

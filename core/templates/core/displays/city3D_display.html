@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel='stylesheet' href="{% static 'core/city3D/bootstrap.css' %}">
         <link rel="stylesheet" href="{% static 'core/city3D/style.css' %}">
+        <link rel="stylesheet" href="{% static 'core/buttoneffects/style.css' %}">
     </head>
     <body>
         <div class="container-fluid fixed-top header disable-selection">
@@ -16,7 +17,13 @@
                 <div class="col-md-6">
                     <div class="row">
                         <div class="col">
-                            <img src="{% static 'core/timeline/picture/timeline_picture.jpg' %}" width="330" style="border-radius: 100%;border-style: double;border-width: 20px;border-color: white;">
+                            <!--img src="{% static 'core/timeline/picture/timeline_picture.jpg' %}" width="330" style="border-radius: 100%;border-style: double;border-width: 20px;border-color: white;"-->
+                            <div class='wrap'>
+                                <audio id="music">
+                                    <source src="{% static 'core/city3D/music/bkg_music.mp3' %}" type="audio/mpeg">
+                                </audio>
+                                <a href="#" class='button button2' id="play_music_button">Song of the day</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -24,10 +31,12 @@
                 </div>
             </div>
         </div>
+        <script src="{% static 'core/city3D/jquery.min.js' %}"></script>
         <script src="{% static 'core/city3D/three.min.js' %}"></script>
         <script src="{% static 'core/city3D/constants.js' %}"></script>
         <script src="{% static 'core/city3D/bootstrap.min.js' %}"></script>
         <script src="{% static 'core/city3D/TweenMax.min.js' %}"></script>
         <script src="{% static 'core/city3D/script.js' %}"></script>
+        <script src="{% static 'core/city3D/music/script.js' %}"></script>
     </body>
 </html>

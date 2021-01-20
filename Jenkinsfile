@@ -340,6 +340,57 @@ node {
 //
 // 6°) Celery Workers and beat Demonization using systemd:
 //
+// 6.1) Make you sure to add the nexts code lines in the "settings.py" django project in the file end:
+//
+//  COMMAND: sudo nano /home/jorge/mysocialdistanceworkdir/socialdistancework/settings.py
+//
+// ********** /home/jorge/mysocialdistanceworkdir/socialdistancework/settings.py **********
+// # project name : socialdistancework
+// # project directory : /home/jorge/mysocialdistanceworkdir/
+// # project env : /home/jorge/mysocialdistanceworkdir/mysocialdistanceworkenv/
+//
+// # Celeryd Configuration
+// CELERY_APP="socialdistancework"
+// CELERY_BIN="/home/jorge/mysocialdistanceworkdir/mysocialdistanceworkenv/bin/celery"
+// CELERYD_NODES="worker"
+// #CELERYD_OPTS=
+// CELERYD_CHDIR="/home/jorge/mysocialdistanceworkdir"
+// CELERYD_PID_FILE="/var/run/celery/%n.pid"
+// CELERYD_LOG_FILE="/var/log/celery/%n%I.log"
+// CELERYD_LOG_LEVEL="INFO"
+// CELERYD_USER="celery"
+// CELERYD_GROUP="celery"
+// CELERY_CREATE_DIRS=1
+// #CELERY_CREATE_RUNDIR=
+// #CELERY_CREATE_LOGDIR=
+//
+// # Celerybeat Configuration
+// CELERYBEAT_OPTS="--scheduler django_celery_beat.schedulers:DatabaseScheduler"
+// CELERYBEAT_PID_FILE="/var/run/celery/beat.pid"
+// CELERYBEAT_LOG_FILE="/var/log/celery/beat.log"
+// CELERYBEAT_LOG_LEVEL="INFO"
+// CELERYBEAT_USER="celery"
+// CELERYBEAT_GROUP="celery"
+// CELERYBEAT_CHDIR="/home/jorge/mysocialdistanceworkdir"
+//
+//
+// 6.2) Now we can create the "celery" user to use the services, later add the user to "sudo" permission list in the end of sudoers file:
+//
+//  COMMAND: sudo adduser celery
+//  COMMAND: nano etc/sudoers
+//  ADD_LINE: celery ALL=(ALL) NOPASSWD: ALL
+//
+//
+// 6.3) Now we need create the logs directories and grant to "celery" user the owner level:
+//
+//  COMMAND: sudo mkdir /var/log/celery
+//  COMMAND: sudo mkdir /var/run/celery
+//  COMMAND: sudo chown -R celery: /var/log/celery
+//  COMMAND: sudo chown -R celery: /var/run/celery
+//
+//
+// 6.4) Now we can create the "celery.service":
+//
 //  COMMAND: sudo nano /etc/systemd/system/celery.service
 //
 // ********** /etc/systemd/system/celery.service **********
@@ -348,68 +399,23 @@ node {
 // After=network.target
 //
 // [Service]
-// Type=forking
+// Type=simple
 // User=celery
 // Group=celery
-// EnvironmentFile=/etc/conf.d/celery
-// WorkingDirectory=/opt/celery
-// ExecStart=/bin/sh -c '${CELERY_BIN} -A $CELERY_APP multi start $CELERYD_NODES \
-//     --pidfile=${CELERYD_PID_FILE} --logfile=${CELERYD_LOG_FILE} \
-//     --loglevel="${CELERYD_LOG_LEVEL}" $CELERYD_OPTS'
-// ExecStop=/bin/sh -c '${CELERY_BIN} multi stopwait $CELERYD_NODES \
-//     --pidfile=${CELERYD_PID_FILE} --loglevel="${CELERYD_LOG_LEVEL}"'
-// ExecReload=/bin/sh -c '${CELERY_BIN} -A $CELERY_APP multi restart $CELERYD_NODES \
-//     --pidfile=${CELERYD_PID_FILE} --logfile=${CELERYD_LOG_FILE} \
-//     --loglevel="${CELERYD_LOG_LEVEL}" $CELERYD_OPTS'
-// Restart=always
+// EnvironmentFile=/home/jorge/mysocialdistanceworkdir/socialdistancework/settings.py
+// WorkingDirectory=/home/jorge/mysocialdistanceworkdir
+// ExecStart=/bin/sh -c '${CELERY_BIN} -A ${CELERY_APP} ${CELERYD_NODES} --pidfile=${CELERYD_PID_FILE} --logfile=${CELERYD_LOG_FILE} --loglevel=${CELERYD_LOG_LEVEL}'
+// Restart=on-failure
 //
 // [Install]
 // WantedBy=multi-user.target
 //
 //  COMMAND: sudo systemctl daemon-reload
 //  COMMAND: sudo systemctl enable celery.service
+//  COMMAND: sudo systemctl restart celery.service
 //
-//  ATTENTION 1: To configure user, group, chdir change settings: User, Group, and WorkingDirectory defined in /etc/systemd/system/celery.service.
-//  ATTENTION 2: You can also use systemd-tmpfiles in order to create working directories (for logs and pid):
-// file: /etc/tmpfiles.d/celery.conf
-//  d /var/run/celery 0755 celery celery -
-//  d /var/log/celery 0755 celery celery -
 //
-//  COMMAND: sudo nano /etc/conf.d/celery
-//
-// ********** /etc/conf.d/celery **********
-// # Name of nodes to start
-// # here we have a single node
-// CELERYD_NODES="w1"
-// # or we could have three nodes:
-// #CELERYD_NODES="w1 w2 w3"
-//
-// # Absolute or relative path to the 'celery' command:
-// CELERY_BIN="/usr/local/bin/celery"
-// #CELERY_BIN="/virtualenvs/def/bin/celery"
-//
-// # App instance to use
-// # comment out this line if you don't use an app
-// CELERY_APP="proj"
-// # or fully qualified:
-// #CELERY_APP="proj.tasks:app"
-//
-// # How to call manage.py
-// CELERYD_MULTI="multi"
-//
-// # Extra command-line arguments to the worker
-// CELERYD_OPTS="--time-limit=300 --concurrency=8"
-//
-// # - %n will be replaced with the first part of the nodename.
-// # - %I will be replaced with the current child process index
-// #   and is important when using the prefork pool to avoid race conditions.
-// CELERYD_PID_FILE="/var/run/celery/%n.pid"
-// CELERYD_LOG_FILE="/var/log/celery/%n%I.log"
-// CELERYD_LOG_LEVEL="INFO"
-//
-// # you may wish to add these options for Celery Beat
-// CELERYBEAT_PID_FILE="/var/run/celery/beat.pid"
-// CELERYBEAT_LOG_FILE="/var/log/celery/beat.log"
+// 6.5) Now we can create the "celerybeat.service":
 //
 //  COMMAND: sudo nano /etc/systemd/system/celerybeat.service
 //
@@ -422,16 +428,14 @@ node {
 // Type=simple
 // User=celery
 // Group=celery
-// EnvironmentFile=/etc/conf.d/celery
-// WorkingDirectory=/opt/celery
-// ExecStart=/bin/sh -c '${CELERY_BIN} -A ${CELERY_APP} beat  \
-//     --pidfile=${CELERYBEAT_PID_FILE} \
-//     --logfile=${CELERYBEAT_LOG_FILE} --loglevel=${CELERYD_LOG_LEVEL}'
-// Restart=always
+// EnvironmentFile=/home/jorge/mysocialdistanceworkdir/socialdistancework/settings.py
+// WorkingDirectory=/home/jorge/mysocialdistanceworkdir
+// ExecStart=/bin/sh -c '${CELERY_BIN} -A ${CELERY_APP} beat --pidfile=${CELERYBEAT_PID_FILE} --logfile=${CELERYBEAT_LOG_FILE} --loglevel=${CELERYBEAT_LOG_LEVEL} ${CELERYBEAT_OPTS}'
+// Restart=on-failure
 //
 // [Install]
 // WantedBy=multi-user.target
 //
 //  COMMAND: sudo systemctl daemon-reload
 //  COMMAND: sudo systemctl enable celerybeat.service
-//
+//  COMMAND: sudo systemctl restart celerybeat.service
