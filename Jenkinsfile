@@ -374,11 +374,13 @@ node {
 // CELERYBEAT_CHDIR="/home/jorge/mysocialdistanceworkdir"
 //
 //
-// 6.2) Now we can create the "celery" user to use the services, later add the user to "sudo" permission list in the end of sudoers file:
+// 6.2) (OPTIONAL) Now we can create the "celery" user to use the services, later add the user to "sudo" permission list in the end of sudoers file:
 //
 //  COMMAND: sudo adduser celery
 //  COMMAND: nano etc/sudoers
 //  ADD_LINE: celery ALL=(ALL) NOPASSWD: ALL
+//
+// NOTE: Remmember use secure password !!
 //
 //
 // 6.3) Now we need create the logs directories and grant to "celery" user the owner level:

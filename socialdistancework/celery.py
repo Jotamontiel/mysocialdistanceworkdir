@@ -17,7 +17,8 @@ app.conf.beat_schedule = {
     # Execute: daily at midnight
     'scraping-nytimesnews-task-daily-at-midnight': {
         'task': 'celery_tasks.tasks.nytimesnews_mostpopular_viewed_api_scraper',
-        'schedule': crontab(minute=0, hour=0),
+        # 'schedule': crontab(minute=0, hour=0),
+        'schedule': crontab(minute='*/10'),
     },
     # # executes daily at midnight
     # 'scraping-task-midnight-daily': {

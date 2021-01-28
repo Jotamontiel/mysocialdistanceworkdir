@@ -298,7 +298,7 @@ def nytimesnews_mostpopular_viewed_api_scraper_save_function(article_mostpopular
 def nytimesnews_mostpopular_viewed_api_scraper():
 
     try:
-        nyt = NYTAPI(settings.NYTIMES_APP_KEY, https=False)
+        nyt = NYTAPI(settings.NYTIMES_APP_KEY, https=True)
         article_mostpopular_viewed_api_scraper_list = nyt.most_viewed()
         return nytimesnews_mostpopular_viewed_api_scraper_save_function(article_mostpopular_viewed_api_scraper_list)
     except Exception as e:
