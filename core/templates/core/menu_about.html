@@ -2,47 +2,51 @@
 {% load static %}
 {% block title %}About Menu{% endblock %}
 {% block content %}
-<!-- SectionDivisor -->
-<hr class="divider-d">
-<section class="module-small bg-dark-60 about-page-header parallax-bg" data-background="{% static 'core/assets/images/about_bg_2.jpg' %}">
-</section>
 
 <!-- AboutSelector -->
 <hr class="divider-d">
-<link rel="stylesheet" href="{% static 'core/selectaboutmenu/style.css' %}">
-<section class="home-section home-fade home-full-height" id="home">
-    <div class="flex-container">
-        <div class="spinner">
-            <p>
-                <div class="cube1"></div>
-                <div class="cube2"></div>
-                Loading...
-            </p>
-        </div>
-        <div class="flex-slide home">
-            <a href="{% url 'info' %}">
-                <div class="flex-title flex-title-home">Info</div>
-                <div class="flex-about flex-about-home"><p>Click here to navigate to the home section of the website</p></div>
-            </a>
-        </div>
-        <div class="flex-slide about">
-            <a href="{% url 'services' %}">
-                <div class="flex-title">Services</div>
-                <div class="flex-about"><p>Click here to navigate to the About section of the website</p></div>
-            </a>
-        </div>
-        <div class="flex-slide work">
-            <a href="{% url 'contact' %}">
-                <div class="flex-title">Contact</div>
-                <div class="flex-about"><p>Listing relevant snippets of work:</p></div>
-            </a>
+<section class="module">
+    <div class="container">
+        <div class="row">  
+            <div class="col-sm-6 col-sm-offset-3">
+                <h4 class="font-alt mb-0">About Selection</h4>
+                <hr class="divider-w mt-10 mb-20">
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title font-alt"><a data-toggle="collapse" data-parent="#accordion" href="#information" aria-expanded="true" class="collapsed">Info</a></h4>
+                        </div>
+                        <div class="panel-collapse collapse" id="information" aria-expanded="true" style="height: 0px;">
+                            <div class="panel-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.<br><br>
+                            <a class="btn btn-b btn-circle" href="{% url 'info' %}">Go to Info</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title font-alt"><a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#services" aria-expanded="false">Services</a></h4>
+                        </div>
+                        <div class="panel-collapse collapse" id="services" aria-expanded="false" style="height: 0px;">
+                            <div class="panel-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.<br><br>
+                            <a class="btn btn-b btn-circle" href="{% url 'services' %}">Go to Services</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title font-alt"><a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#contact" aria-expanded="false">Contact</a></h4>
+                        </div>
+                        <div class="panel-collapse collapse" id="contact" aria-expanded="false" style="height: 0px;">
+                            <div class="panel-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.<br><br>
+                            <a class="btn btn-b btn-circle" href="{% url 'contact' %}">Go to Contact</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
-<script src="{% static 'core/selectaboutmenu/jquery.min.js' %}"></script>
-<script src="{% static 'core/selectaboutmenu/jquery.waitforimages.min.js' %}"></script>
-<script src="{% static 'core/selectaboutmenu/script.js' %}"></script>
-
 
 <!-- FinalDivisor -->
 <hr class="divider-d">
