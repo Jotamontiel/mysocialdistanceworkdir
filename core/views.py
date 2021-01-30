@@ -35,7 +35,3 @@ def timeLineDisplayView(request):
 @xframe_options_sameorigin
 def techTreeDisplayView(request):
     return render(request, "core/displays/techtree_display.html")
-
-@xframe_options_sameorigin
-def selectAboutDisplayView(request):
-    return render(request, "core/displays/selectabout_display.html")

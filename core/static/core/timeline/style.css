@@ -81,6 +81,19 @@ body {
   background: url('/static/core/timeline/picture/timeline_picture.jpg');
   background-size: 100%;
 }
+.content .history_1 {
+  display: block;
+  position: relative;
+  width: 265px;
+  height: 265px;
+  border-radius: 100px;
+  border: solid 8px #cc0000;
+  margin: 20px auto 0 auto;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.08), inset 0 4px 12px rgba(0, 0, 0, 0.05);
+  z-index: 0;
+  background: url('/static/core/timeline/picture/timeline_picture_1.jpg') no-repeat center;
+  background-size: 100%;
+}
 .content .quote {
   opacity: 1;
 }

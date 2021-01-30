@@ -2,7 +2,6 @@
 {% load static %}
 {% block title %}About Menu{% endblock %}
 {% block content %}
-
 <!-- SectionDivisor -->
 <hr class="divider-d">
 <section class="module-small bg-dark-60 about-page-header parallax-bg" data-background="{% static 'core/assets/images/about_bg_2.jpg' %}">
@@ -10,9 +9,40 @@
 
 <!-- AboutSelector -->
 <hr class="divider-d">
+<link rel="stylesheet" href="{% static 'core/selectaboutmenu/style.css' %}">
 <section class="home-section home-fade home-full-height" id="home">
-<iframe id="encoder_iframe" height=100% width=100% src="{% url 'selectAbout_display' %}"></iframe>
+    <div class="flex-container">
+        <div class="spinner">
+            <p>
+                <div class="cube1"></div>
+                <div class="cube2"></div>
+                Loading...
+            </p>
+        </div>
+        <div class="flex-slide home">
+            <a href="{% url 'info' %}">
+                <div class="flex-title flex-title-home">Info</div>
+                <div class="flex-about flex-about-home"><p>Click here to navigate to the home section of the website</p></div>
+            </a>
+        </div>
+        <div class="flex-slide about">
+            <a href="{% url 'services' %}">
+                <div class="flex-title">Services</div>
+                <div class="flex-about"><p>Click here to navigate to the About section of the website</p></div>
+            </a>
+        </div>
+        <div class="flex-slide work">
+            <a href="{% url 'contact' %}">
+                <div class="flex-title">Contact</div>
+                <div class="flex-about"><p>Listing relevant snippets of work:</p></div>
+            </a>
+        </div>
+    </div>
 </section>
+<script src="{% static 'core/selectaboutmenu/jquery.min.js' %}"></script>
+<script src="{% static 'core/selectaboutmenu/jquery.waitforimages.min.js' %}"></script>
+<script src="{% static 'core/selectaboutmenu/script.js' %}"></script>
+
 
 <!-- FinalDivisor -->
 <hr class="divider-d">

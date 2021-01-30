@@ -11,5 +11,4 @@ urlpatterns = [
     path('city3D_display/', views.city3DDisplayView, name="city3D_display"),
     path('timeLine_display/', views.timeLineDisplayView, name="timeLine_display"),
     path('techTree_display/', views.techTreeDisplayView, name="techTree_display"),
-    path('selectAbout_display/', views.selectAboutDisplayView, name="selectAbout_display"),
 ]
