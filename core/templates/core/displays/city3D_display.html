@@ -10,34 +10,15 @@
         <link rel="stylesheet" href="{% static 'core/buttoneffects/style.css' %}">
     </head>
     <body>
-        <div class="container-fluid fixed-top disable-selection">
-            <div class="row">
-                <div class="col-sm-12">
-                    <audio id="music">
-                        <source src="{% static 'core/city3D/music/bkg_audioslave_beyourself.mp3' %}" type="audio/mpeg">
-                    </audio>
-                    <a href="#" class='button button2' id="play_music_button">Song of the day</a>
-                    <p style="color:white">
-                        Someone falls to pieces, sleeping all alone, someone kills the pain<br>
-                        Spinning in the silence, she finally drift away<br>
-                        Someone gets excited in a chapel yard and catches a bouquet<br>
-                        Another lays a dozen white roses on a grave<br>
-                        And <b style="color:red">be yourself is all that you can do</b>...<br>
-                    </p>
-                    <p style="color:white">
-                        Someone finds salvation in everyone, another only pain<br>
-                        Someone tries to hide themself, down inside himself, he prays<br>
-                        Someone swears his true love until the end of time, another runs away<br>
-                        Separate or united, healthy or insane<br>
-                        And <b style="color:red">be yourself is all that you can do</b>...<br>
-                    </p>
-                    <p style="color:white">
-                        Even when you've paid enough, been pulled apart, or been held up,<br>
-                        Every single memory of the good or bad... faces of luck<br>
-                        Don't lose any sleep tonight, i'm sure everything will end up alright<br>
-                        You may win or lose<br>
-                        But to <b style="color:red">be yourself is all that you can do</b>...<br>
-                    </p>
+        <div class="container-fluid fixed-top header disable-selection">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <audio id="music">
+                            <source src="{% static 'core/city3D/music/bkg_audioslave_beyourself.mp3' %}" type="audio/mpeg">
+                        </audio>
+                        <a href="#" class='button button2' id="play_music_button">Song of the day</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -48,5 +29,7 @@
         <script src="{% static 'core/city3D/TweenMax.min.js' %}"></script>
         <script src="{% static 'core/city3D/script.js' %}"></script>
         <script src="{% static 'core/city3D/music/script.js' %}"></script>
+        <script src="{% static 'core/mqtt/mqtt.min.js' %}"></script>
+        <script src="{% static 'core/mqtt/music_button/script.js' %}"></script>
     </body>
 </html>
