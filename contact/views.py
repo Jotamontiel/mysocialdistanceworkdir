@@ -4,6 +4,7 @@ from django.core.mail import EmailMessage
 from .forms import ContactForm
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 import folium
+from core.models import Curriculum
 
 # Create your views here.
 def contact(request):
@@ -31,8 +32,10 @@ def contact(request):
             except:
                 # Algo no ha salido bien, redireccionamos a FAIL
                 return redirect(reverse('contact')+"?fail")
+    
+    curriculum_list = Curriculum.objects.all()
 
-    return render(request, "contact/contact.html", {'form':contact_form})
+    return render(request, "contact/contact.html", {'form':contact_form, 'curriculum_list':curriculum_list})
 
 @xframe_options_sameorigin
 def contactMapDisplayView(request):

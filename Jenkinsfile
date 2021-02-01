@@ -68,6 +68,7 @@ node {
             ls -al
             sudo rm -r media
             sudo rm -r static
+            sudo mkdir media
             """
             echo "----------------------------------------------------------------------"
             echo "---------------- Directory cleaned -----------------------------------"
