@@ -13,6 +13,7 @@
                 <div role="tabpanel">
                     <ul class="nav nav-tabs font-alt" role="tablist">
                         <li class="active"><a href="#category_iot" data-toggle="tab" aria-expanded="false">IoT World <span class="fa fa-connectdevelop"></span></a></li>
+                        <li class=""><a href="#category_hackernews" data-toggle="tab" aria-expanded="true">Hackernews World <span class="icon-laptop"></span></a></li>
                         <li class=""><a href="#category_webdev" data-toggle="tab" aria-expanded="true">Web-Dev World <span class="icon-laptop"></span></a></li>
                         <li class=""><a href="#category_3d" data-toggle="tab" aria-expanded="true">3D World <span class="icon-tools"></span></a></li>
                         <li class=""><a href="#category_others" data-toggle="tab" aria-expanded="true">Others <span class="icon-beaker"></span></a></li>
@@ -52,6 +53,10 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="tab-pane" id="category_hackernews">
+                            This is the "Hackernews" web platform space, it's possible to capture these news thanks to a "scraper" built in bs4, it runs every three hours every day (thanks to celery library), extracts the latest news published and accumulates them in a postgres database incrementally (leaving only unique news and avoiding duplicates).<br><br>
+                            <a class="btn btn-b btn-circle" href="{% url 'hackernewsdashboard_display' %}">Go to Hackernews</a>
                         </div>
                         <div class="tab-pane" id="category_webdev">
                             To achieve this, it would be necessary to have uniform grammar, pronunciation and more common words.

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
+from .models import News
 
 ## TEMPORAL ##
 # import requests
@@ -14,6 +15,11 @@ from django.views.generic.base import TemplateView
 # Create your views here.
 class HackerNewsDashboardView(TemplateView):
     template_name = "celery_tasks/display_hackernews/hackernews_dashboard.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(HackerNewsDashboardView, self).get_context_data(**kwargs)
+        context['hackernews_list'] = News.objects.all().order_by('-published')
+        return context
 
 class NYTMenuPageView(TemplateView):
     template_name = "celery_tasks/displays/nytimes_display.html"
