@@ -1,0 +1,138 @@
+{% extends 'celery_tasks/includes/celerytasks_menu.html' %}
+{% load static %}
+{% block title %}Hackernews Dashboard{% endblock %}
+{% block content %}
+<div class="padding">
+    <div class="row">
+        <div class="col-xs-12 col-sm-4">
+            <div class="box p-a">
+            <div class="pull-left m-r">
+                <span class="w-48 rounded  accent">
+                <i class="fa fa-desktop"></i>
+                </span>
+            </div>
+            <div class="clear">
+                <h4 class="m-0 text-lg _300"><b id="display_temp1">-- </b><span class="text-sm">C</span></h4>
+                <small class="text-muted">Promedio: 500 C</small>
+            </div>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-4">
+            <div class="box p-a">
+            <div class="pull-left m-r">
+                <span class="w-48 rounded primary">
+                <i class="fa fa-laptop"></i>
+                </span>
+            </div>
+            <div class="clear">
+                <h4 class="m-0 text-lg _300"><b id="display_temp2">-- </b><span class="text-sm">C</span></h4>
+                <small class="text-muted">Temp Pico: 100 C</small>
+            </div>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-4">
+            <div class="box p-a">
+            <div class="pull-left m-r">
+                <span class="w-48 rounded warn">
+                <i class="fa fa-flash"></i>
+                </span>
+            </div>
+            <div class="clear">
+                <h4 class="m-0 text-lg _300"><b id="display_volt">-- </b><span class="text-sm">V</span></h4>
+                <small class="text-muted">Tensión Pico: 10 V</small>
+            </div>
+            </div>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-xs-12 col-sm-4">
+            <div class="box p-a">
+            <div class="pull-left m-r">
+                <span class="w-48 rounded warn">
+                <i class="fa fa-flag"></i>
+                </span>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 form-control-label">LED 1</label>
+                <div class="col-sm-10">
+                <label class="ui-switch ui-switch-md info m-t-xs">
+                    <input id="input_led1" onchange="process_led1()" type="checkbox">
+                    <i></i>
+                </label>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+            <div class="box p-a">
+            <div class="pull-left m-r">
+                <span class="w-48 rounded warn">
+                <i class="fa fa-flag"></i>
+                </span>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 form-control-label">LED 2</label>
+                <div class="col-sm-10">
+                <label class="ui-switch ui-switch-md info m-t-xs">
+                    <input id="input_led2" onchange="process_led2()" type="checkbox">
+                    <i></i>
+                </label>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-xs-12 col-sm-4">
+            <div class="box">
+            <div class="box-header">
+                <h3>Estatus Temperatura1 Computador Jorge</h3>
+                <small>Temperatura GPU en °C</small>
+            </div>
+            <div class="box-body">
+                <div id="placeholder1" ui-jp="plot" ui-refresh="app.setting.color" style="height: 200px; padding: 0px; position: relative;">
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+            <div class="box">
+            <div class="box-header">
+                <h3>Estatus Temperatura2 Computador Jorge</h3>
+                <small>Temperatura CPU en °C</small>
+            </div>
+            <div class="box-body">
+                <div id="placeholder2" ui-jp="plot" ui-refresh="app.setting.color" style="height: 200px; padding: 0px; position: relative;">
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+            <div class="box">
+            <div class="box-header">
+                <h3>Estatus Voltaje Computador Jorge</h3>
+                <small>Voltaje en V</small>
+            </div>
+            <div class="box-body">
+                <div id="placeholder3" ui-jp="plot" ui-refresh="app.setting.color" style="height: 200px; padding: 0px; position: relative;">
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-xs-12 col-sm-12">
+            <div class="box">
+            <div class="box-header">
+                <h3>Estatus General Jorge</h3>
+                <small>Temperatura Corporal en °C</small>
+            </div>
+            <div class="box-body">
+                <div id="placeholder" ui-jp="plot" ui-refresh="app.setting.color" style="height: 200px; padding: 0px; position: relative;">
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

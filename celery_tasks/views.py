@@ -12,6 +12,9 @@ from django.views.generic.base import TemplateView
 ## TEMPORAL ##
 
 # Create your views here.
+class HackerNewsDashboardView(TemplateView):
+    template_name = "celery_tasks/display_hackernews/hackernews_dashboard.html"
+
 class NYTMenuPageView(TemplateView):
     template_name = "celery_tasks/displays/nytimes_display.html"
 
