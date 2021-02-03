@@ -56,7 +56,7 @@
                         </div>
                         <div class="tab-pane" id="category_hackernews">
                             This is the "Hackernews" web platform space, it's possible to capture these news thanks to a "scraper" built in bs4, it runs every three hours every day (thanks to celery library), extracts the latest news published and accumulates them in a postgres database incrementally (leaving only unique news and avoiding duplicates).<br><br>
-                            <a class="btn btn-b btn-circle" href="{% url 'hackernewsdashboard_display' %}">Go to Hackernews</a>
+                            <a id="to_hackernews_from_projectsmenu" class="btn btn-b btn-circle" href="{% url 'hackernewsdashboard_display' %}" onclick='addTmpUserToLink("to_hackernews_from_projectsmenu")'>Go to Hackernews</a>
                         </div>
                         <div class="tab-pane" id="category_webdev">
                             To achieve this, it would be necessary to have uniform grammar, pronunciation and more common words.

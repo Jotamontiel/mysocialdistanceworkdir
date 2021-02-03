@@ -75,7 +75,7 @@
               <span class="icon-bar">
               </span>
             </button>
-            <a class="navbar-brand" href="{% url 'home' %}">
+            <a id="to_homemenu_from_logo" class="navbar-brand" href="{% url 'home' %}" onclick='addTmpUserToLink("to_homemenu_from_logo")'>
               <div style="background-color: rgba(0, 0, 0, 1);border-radius:17px;border: 3px double white;padding: 4px 4px 2px 4px;">
                 <img src="{% static 'core/assets/images/logo_home.jpg' %}" width="50" height="5" style="float:left;border-radius:50%;border-style: double;border-width: 5px;border-color: #bfbfbf;">
                 <b style="margin-left:0.5em; font-size:15px; line-height:2.5; letter-spacing:1px; text-transform:capitalize; color:red;">  
@@ -93,27 +93,27 @@
                 <a class="btn" href="https://www.facebook.com/distanciamientosocialcl-105186354483477" target="_blank"><i class="fa fa-facebook fa-2x"></i></a>
               </li>
               <li class="nav-item">
-                <a class="btn btn-b btn-round" href="{% url 'home' %}">Home</a>
+                <a id="to_homemenu_from_navbar" class="btn btn-b btn-round" href="{% url 'home' %}" onclick='addTmpUserToLink("to_homemenu_from_navbar")'>Home</a>
               </li>
               <li class="nav-item dropdown">
-                <a class="btn btn-b btn-round" href="{% url 'menu_about' %}">About</a>
+                <a id="to_aboutmenu_from_navbar" class="btn btn-b btn-round" href="{% url 'menu_about' %}" onclick='addTmpUserToLink("to_aboutmenu_from_navbar")'>About</a>
                 <ul class="dropdown-menu" role="menu">
                   <li class="dropdown">
-                    <a href="{% url 'info' %}">Info</a>
+                    <a id="to_info_from_navbar" href="{% url 'info' %}" onclick='addTmpUserToLink("to_info_from_navbar")'>Info</a>
                   </li>
                   <li class="dropdown">
-                    <a href="{% url 'services' %}">Services</a>
+                    <a id="to_services_from_navbar" href="{% url 'services' %}" onclick='addTmpUserToLink("to_services_from_navbar")'>Services</a>
                   </li>
                   <li class="dropdown">
-                    <a href="{% url 'contact' %}">Contact</a>
+                    <a id="to_contact_from_navbar" href="{% url 'contact' %}" onclick='addTmpUserToLink("to_contact_from_navbar")'>Contact</a>
                   </li>
                 </ul>
               </li>
               <li class="nav-item dropdown">
-                <a class="btn btn-b btn-round" href="{% url 'menu_projects' %}">Projects</a>
+                <a id="to_projectsmenu_from_navbar" class="btn btn-b btn-round" href="{% url 'menu_projects' %}" onclick='addTmpUserToLink("to_projectsmenu_from_navbar")'>Projects</a>
                 <ul class="dropdown-menu" role="menu">
                   <li class="dropdown">
-                    <a href="{% url 'hackernewsdashboard_display' %}">Hackernews</a>
+                    <a id="to_hackernews_from_navbar" href="{% url 'hackernewsdashboard_display' %}" onclick='addTmpUserToLink("to_hackernews_from_navbar")'>Hackernews</a>
                   </li>
                 </ul>
               </li>
@@ -243,6 +243,8 @@
     <script src="{% static 'core/assets/lib/simple-text-rotator/jquery.simple-text-rotator.min.js' %}"></script>
     <script src="{% static 'core/assets/js/plugins.js' %}"></script>
     <script src="{% static 'core/assets/js/main.js' %}"></script>
+    <script src="{% static 'core/mqtt/mqtt.min.js' %}"></script>
+    <script src="{% static 'core/mqtt/tmp_user_tracking/script.js' %}"></script>
     <!--
     GoogleMap Scripts
     =============================================
