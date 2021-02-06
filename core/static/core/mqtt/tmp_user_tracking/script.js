@@ -30,7 +30,6 @@ client.on('connect', () => {
     })
     user_number = tmpClientUser.match(/tmpClient_(\d+)/);
     user_section = document.title.split(" | ");
-    console.log(user_section);
     client.publish('conn_channel', 'User '+user_number[1]+' en '+user_section[1], (error) => {
         console.log(error || 'Mensaje enviado !!')
     })

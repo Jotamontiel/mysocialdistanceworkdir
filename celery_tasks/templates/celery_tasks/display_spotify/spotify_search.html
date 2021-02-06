@@ -1,0 +1,97 @@
+{% extends 'celery_tasks/includes/celerytasks_menu.html' %}
+{% load static %}
+{% block title %}Spotify{% endblock %}
+{% block content %}
+<div class="padding">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="col-sm-12">
+                <div class="b-b b-primary nav-active-primary">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a id="track_id" class="nav-link" data-toggle="tab" aria-expanded="false">Track</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="album_id" class="nav-link" data-toggle="tab" aria-expanded="false">Album</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="artist_id" class="nav-link" data-toggle="tab" aria-expanded="false">Artist</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="playlist_id" class="nav-link" data-toggle="tab" aria-expanded="false">Playlist</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <br>
+            <div class="input-group input-group-lg">
+                <input id="keyword_query_id" type="text" name="q" class="form-control" placeholder="Type the keyword..." value="{{q|default_if_none:""}}">
+                <a id="spotify_searching" class="btn btn-outline b-success text-success" href="{% url 'spotifysearch_display' %}" onclick='buildQueryToLink("spotify_searching")'>
+                    <i class="fa fa-spotify"></i><br>Search
+                </a>
+            </div>
+            <br>
+            {% if not q %}
+                <div class="col-md-12">
+                    <div class="box" style="align-text:center">
+                        <p class="m-b-md">
+                            <strong>
+                                Please fill out the form...
+                            </strong>
+                        </p>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-md-12">
+                    <div class="box" style="align-text:center">
+                        <p class="m-b-md" >
+                            <span class="label rounded primary">
+                                <strong>{{ count }}</strong>
+                            </span> 
+                            results found for 
+                            <span class="label rounded primary">
+                                <strong>{{ q }}</strong>
+                            </span>  
+                            in 
+                            <span class="label rounded primary">
+                                <strong>{{ filter }}s</strong>
+                            </span>  
+                        </p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="tab-content">
+                <div class="box m-t p-a-sm">
+                    <ul class="list">
+                        {% for item in items %}
+                            <li class="list-item">
+                                <div class="clear">
+                                    <h5 class="m-0 m-b-sm"><a href="">{{ item.name }}</a></h5>
+                                    <p class="text-muted">{{ item.type }}</p>
+                                    <p><span class="label m-r">Tags:</span> <a href="" class="m-r-sm">admin</a> <a href="">app</a></p>
+                                </div>
+                                <iframe src="https://open.spotify.com/embed/track/{{ item.id }}" width="100%" height="90" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="p-x">
+                        <ul class="pagination">
+                            <li><a href=""><i class="fa fa-chevron-left"></i></a></li>
+                            <li class="active"><a href="">1</a></li>
+                            <li><a href="">2</a></li>
+                            <li><a href="">3</a></li>
+                            <li><a href="">4</a></li>
+                            <li><a href="">5</a></li>
+                            <li><a href=""><i class="fa fa-chevron-right"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

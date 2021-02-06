@@ -12,11 +12,12 @@
                 <h4 class="font-alt mb-0">Project Categories</h4>
                 <div role="tabpanel">
                     <ul class="nav nav-tabs font-alt" role="tablist">
-                        <li class="active"><a href="#category_iot" data-toggle="tab" aria-expanded="false">IoT World <span class="fa fa-connectdevelop"></span></a></li>
-                        <li class=""><a href="#category_hackernews" data-toggle="tab" aria-expanded="true">Hackernews World <span class="icon-laptop"></span></a></li>
-                        <li class=""><a href="#category_webdev" data-toggle="tab" aria-expanded="true">Web-Dev World <span class="icon-laptop"></span></a></li>
-                        <li class=""><a href="#category_3d" data-toggle="tab" aria-expanded="true">3D World <span class="icon-tools"></span></a></li>
-                        <li class=""><a href="#category_others" data-toggle="tab" aria-expanded="true">Others <span class="icon-beaker"></span></a></li>
+                        <li class="active"><a href="#category_iot" data-toggle="tab" aria-expanded="false"><span class="fa fa-connectdevelop fa-lg"></span> IoT</a></li>
+                        <li class=""><a href="#category_hackernews" data-toggle="tab" aria-expanded="true"><span class="fa fa-hacker-news fa-lg"></span> Hackernews</a></li>
+                        <li class=""><a href="#category_spotify" data-toggle="tab" aria-expanded="true"><span class="fa fa-spotify fa-lg"></span> Spotify</a></li>
+                        <li class=""><a href="#category_webdev" data-toggle="tab" aria-expanded="true"><span class="icon-laptop"></span> Web-Dev</a></li>
+                        <li class=""><a href="#category_3d" data-toggle="tab" aria-expanded="true"><span class="icon-tools"></span> 3D World</a></li>
+                        <li class=""><a href="#category_others" data-toggle="tab" aria-expanded="true"><span class="icon-beaker"></span> Others</a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="category_iot">
@@ -55,8 +56,12 @@
                             </div>
                         </div>
                         <div class="tab-pane" id="category_hackernews">
-                            This is the "Hackernews" web platform space, it's possible to capture these news thanks to a "scraper" built in bs4, it runs every three hours every day (thanks to celery library), extracts the latest news published and accumulates them in a postgres database incrementally (leaving only unique news and avoiding duplicates).<br><br>
-                            <a id="to_hackernews_from_projectsmenu" class="btn btn-b btn-circle" href="{% url 'hackernewsdashboard_display' %}" onclick='addTmpUserToLink("to_hackernews_from_projectsmenu")'>Go to Hackernews</a>
+                            This is the "Hackernews timeline news", it's a timeline to show hackersnews publications extracted from the official web portal, it's possible to capture these news thanks to a "Scraper" built in bs4 library for Python, it runs every three hours every day (thanks to celery library for Python), extracts the latest news published and accumulates them in a postgres database incrementally (leaving only unique news and avoiding duplicates) using django's ORM.<br><br>
+                            <a id="to_hackernews_from_projectsmenu" class="btn btn-b btn-circle" href="{% url 'hackernewsdashboard_display' %}" onclick='addTmpUserToLink("to_hackernews_from_projectsmenu")'><i class="fa fa-hacker-news"></i> Go to Hackernews Project</a>
+                        </div>
+                        <div class="tab-pane" id="category_spotify">
+                            This is the "Spotify search engine", it's possible get songs titles, albums, artists and playlists. This thanks to spotify api wrapped in "spotipy" library built in Python, the queries are a combination of keywords and a predefined filter (track, artist, album or playlist).<br><br>
+                            <a id="to_spotify_from_projectsmenu" class="btn btn-b btn-circle" href="{% url 'spotifysearch_display' %}" onclick='addTmpUserToLink("to_spotify_from_projectsmenu")'><i class="fa fa-spotify"></i> Go to Spotify Project</a>
                         </div>
                         <div class="tab-pane" id="category_webdev">
                             To achieve this, it would be necessary to have uniform grammar, pronunciation and more common words.

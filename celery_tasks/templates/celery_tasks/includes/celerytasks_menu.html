@@ -43,7 +43,7 @@
                         <a class="navbar-brand">
                             <div ui-include="{% static 'celery_tasks/celerytasks_menu/assets/images/logo.svg' %}"></div>
                             <img src="{% static 'celery_tasks/celerytasks_menu/assets/images/logo.png' %}" alt="." class="hide">
-                            <span class="hidden-folded inline">Hackernews<br>Dashboard</span>
+                            <span class="hidden-folded inline">Projects Panel</span>
                         </a>
                     </div>
                     <div class="hide-scroll" data-flex>
@@ -53,18 +53,23 @@
                                     <small class="text-muted">Menu</small>
                                 </li>
                                 <li>
-                                    <a id="to_hackernews_from_hackernews" href="{% url 'hackernewsdashboard_display' %}" onclick='addTmpUserToLink("to_hackernews_from_hackernews")'>
-                                        <span class="nav-icon"><i class="fa fa-bar-chart-o"></i></span><span class="nav-text">Dashboard</span>
+                                    <a id="to_hackernews_from_projectspanel" href="{% url 'hackernewsdashboard_display' %}" onclick='addTmpUserToLink("to_hackernews_from_projectspanel")'>
+                                        <span class="nav-icon"><i class="fa fa-hacker-news"></i></span><span class="nav-text">Hackernews</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a id="to_projectsmenu_from_hackernews" href="{% url 'menu_projects' %}" onclick='addTmpUserToLink("to_projectsmenu_from_hackernews")'>
-                                        <span class="nav-icon"><i class="fa fa-bar-chart-o"></i></span><span class="nav-text">Return to Projects</span>
+                                    <a id="to_spotify_from_projectspanel" href="{% url 'spotifysearch_display' %}" onclick='addTmpUserToLink("to_spotify_from_projectspanel")'>
+                                        <span class="nav-icon"><i class="fa fa-spotify"></i></span><span class="nav-text">Spotify</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a id="to_homemenu_from_hackernews" href="{% url 'home' %}" onclick='addTmpUserToLink("to_homemenu_from_hackernews")'>
-                                        <span class="nav-icon"><i class="fa fa-bar-chart-o"></i></span><span class="nav-text">Return to Home</span>
+                                    <a id="to_projectsmenu_from_projectspanel" href="{% url 'menu_projects' %}" onclick='addTmpUserToLink("to_projectsmenu_from_projectspanel")'>
+                                        <span class="nav-icon"><i class="fa fa-folder-open"></i></span><span class="nav-text">Projects</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a id="to_homemenu_from_projectspanel" href="{% url 'home' %}" onclick='addTmpUserToLink("to_homemenu_from_projectspanel")'>
+                                        <span class="nav-icon"><i class="fa fa-home"></i></span><span class="nav-text">Home</span>
                                     </a>
                                 </li>
                             </ul>
@@ -251,5 +256,6 @@
         <script src="{% static 'celery_tasks/celerytasks_menu/scripts/ajax.js' %}"></script>
         <script src="{% static 'core/mqtt/mqtt.min.js' %}"></script>
         <script src="{% static 'core/mqtt/tmp_user_tracking/script.js' %}"></script>
+        <script src="{% static 'core/mqtt/spotify_query/script.js' %}"></script>
     </body>
 </html>

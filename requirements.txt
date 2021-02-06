@@ -19,3 +19,4 @@ django-celery-beat
 flower
 django-import-export
 paho-mqtt
+spotipy

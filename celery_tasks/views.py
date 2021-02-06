@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from .models import News
+from .my_api_wrappers.my_api_wrapper_spotify import get_spotify_data_category
 
 ## TEMPORAL ##
 # import requests
@@ -19,6 +20,54 @@ class HackerNewsDashboardView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(HackerNewsDashboardView, self).get_context_data(**kwargs)
         context['hackernews_list'] = News.objects.all().order_by('-published')
+        return context
+
+class SpotifySearchView(TemplateView):
+    template_name = "celery_tasks/display_spotify/spotify_search.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(SpotifySearchView, self).get_context_data(**kwargs)
+
+        # Get query and filter from the form
+        load_search_query = self.request.GET.get('q')
+        load_query_filter = self.request.GET.get('filter')
+
+        # Validation filter and set default filter
+        if not load_query_filter:
+            load_query_filter = 'artist'
+
+        # Artist set context
+        if load_query_filter == 'artist':           
+            count, items = get_spotify_data_category(load_search_query, load_query_filter)
+            context['count'] = count
+            context['items'] = items
+            context['q'] = load_search_query
+            context['filter'] = load_query_filter
+
+        # Track set context
+        if load_query_filter == 'track':           
+            count, items = get_spotify_data_category(load_search_query, load_query_filter)
+            context['count'] = count
+            context['items'] = items
+            context['q'] = load_search_query
+            context['filter'] = load_query_filter
+
+        # Album set context
+        if load_query_filter == 'album':           
+            count, items = get_spotify_data_category(load_search_query, load_query_filter)
+            context['count'] = count
+            context['items'] = items
+            context['q'] = load_search_query
+            context['filter'] = load_query_filter
+
+        # Playlist set context
+        if load_query_filter == 'playlist':           
+            count, items = get_spotify_data_category(load_search_query, load_query_filter)
+            context['count'] = count
+            context['items'] = items
+            context['q'] = load_search_query
+            context['filter'] = load_query_filter
+
         return context
 
 class NYTMenuPageView(TemplateView):
