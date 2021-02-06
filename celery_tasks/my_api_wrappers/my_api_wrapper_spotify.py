@@ -3,6 +3,7 @@ import sys
 import json
 import spotipy
 import spotipy.util as util
+from spotipy.oauth2 import SpotifyClientCredentials
 from json.decoder import JSONDecodeError
 from django.conf import settings
 
@@ -69,18 +70,28 @@ def get_spotify_data_user(load_new_username):
 
 def get_spotify_data_category(search_query, query_filter):
 
-    # Get the user token
-    util.prompt_for_user_token(load_username,load_scope,client_id=load_client_id,client_secret=load_client_secret,redirect_uri=load_redirect_uri)
+    ##############################################################
+    ########## SPOTIFY API USING USER TOKEN ######################
+    ##############################################################
+    #util.prompt_for_user_token(load_username,load_scope,client_id=load_client_id,client_secret=load_client_secret,redirect_uri=load_redirect_uri)
     
     # Erase cache and prompt for user permission
-    try:
-        token = util.prompt_for_user_token(load_username)
-    except:
-        os.remove(f".cache-{load_username}")
-        token = util.prompt_for_user_token(load_username)
+    #try:
+    #    token = util.prompt_for_user_token(load_username)
+    #except:
+    #    os.remove(f".cache-{load_username}")
+    #    token = util.prompt_for_user_token(load_username)
     
     # Create our spotifyObject
-    spotipyObject = spotipy.Spotify(auth=token)
+    #spotipyObject = spotipy.Spotify(auth=token)
+
+    ##############################################################
+    ########## SPOTIFY API USING USER ############################
+    ##############################################################
+    auth_manager = SpotifyClientCredentials()
+
+    # Create our spotifyObject
+    spotipyObject = spotipy.Spotify(auth_manager=auth_manager)
 
     # Validate the search_query query for empty field
     if search_query == None or search_query == '':
