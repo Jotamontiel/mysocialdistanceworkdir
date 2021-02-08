@@ -2,89 +2,74 @@
 {% load static %}
 {% block title %}Hackernews{% endblock %}
 {% block content %}
+<div class="item">
+    <div class="item-bg">
+        <img src="{% static 'celery_tasks/celerytasks_menu/assets/images/hackernews_banner.jpg' %}" class="blur opacity-3">
+    </div>
+    <div class="p-a-md">
+        <div class="row m-t">
+            <div class="col-sm-7">
+                <a href="" class="pull-left m-r-md">
+                    <span class="avatar w-96">
+                        <img src="{% static 'celery_tasks/celerytasks_menu/assets/images/hackernews_logo.jpg' %}">
+                    </span>
+                </a>
+                <div class="clear m-b">
+                    <h3 class="m-0 m-b-xs">Hackernews</h3>
+                    <p class="text-muted"><span class="m-r">Hackernews timeline news project</span><br><small><i class="fa fa-user"></i> Jorge Montiel M.</small></p>
+                    <div class="block clearfix m-b">
+                        <a href="" class="btn btn-icon btn-social rounded white btn-sm">
+                            <i class="fa fa-facebook"></i>
+                            <i class="fa fa-facebook indigo"></i>
+                        </a>
+                        <a href="" class="btn btn-icon btn-social rounded white btn-sm">
+                            <i class="fa fa-twitter"></i>
+                            <i class="fa fa-twitter light-blue"></i>
+                        </a>
+                        <a href="" class="btn btn-icon btn-social rounded white btn-sm">
+                            <i class="fa fa-google-plus"></i>
+                            <i class="fa fa-google-plus red"></i>
+                        </a>
+                        <a href="" class="btn btn-icon btn-social rounded white btn-sm">
+                            <i class="fa fa-linkedin"></i>
+                            <i class="fa fa-linkedin cyan-600"></i>
+                        </a>
+                    </div>
+                    <a href="" class="btn btn-sm warn btn-rounded m-b">Go to Official Website</a>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <p class="text-md profile-status">Project Description...</p>
+                <button class="btn btn-sm white" data-toggle="collapse" data-target="#editor">Edit</button>
+                <div class="collapse box m-t-sm" id="editor">
+                    <textarea class="form-control no-border" rows="2" placeholder="Type something..."></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="padding">
     <div class="row">
         <div class="padding col-md-12">
             <ul class="timeline">
                 <li class="tl-header">
-                    <div class="btn white" ui-toggle-class="timeline-center" ui-target=".timeline">Center</div>
+                    <div class="btn" style="background-color:orange;color:black;"><b>{{first_date.published|date:"D M Y"}} at {{first_date.published|date:"h:m:s"}}</b></div>
                 </li>
                 {% for hackernews in hackernews_list %}
                     <li class="tl-item">
-                        <div class="tl-wrap b-info">
-                            <span class="tl-date text-muted">{{hackernews.published}}</span>
-                            <div class="tl-content"><a target="_blank" href="{{hackernews.link}}">{{hackernews.title}}</a></div>
+                        <div class="tl-wrap" style="border-color: #ff6600;">
+                            <span class="tl-date" style="color:orange">{{hackernews.published|date:"d-m-y"}}</span>
+                            <div class="tl-content">
+                                <a target="_blank" href="{{hackernews.link}}">
+                                    <i class="ui-icon fa fa-hacker-news b-orange b-2x" style="color:orange"></i> 
+                                    {{hackernews.title}}
+                                </a>
+                            </div>
                         </div>
                     </li>
                 {% endfor %}
-                <li class="tl-item">
-                    <div class="tl-wrap b-success">
-                        <span class="tl-date text-muted">2h ago</span>
-                        <div class="tl-content box-color text-color  p-a-sm">
-                            <span class="arrow b-white left pull-top"></span>
-                            <div>Content in a box with arrow</div>
-                        </div>
-                    </div>
-                </li>
-                <li class="tl-item tl-left">
-                    <div class="tl-wrap b-primary">
-                        <span class="tl-date text-muted">7:30 am</span>
-                        <div class="tl-content box-color primary p-a-sm">
-                            <span class="arrow b-primary left pull-top hidden-left"></span>
-                            <span class="arrow b-primary right pull-top visible-left"></span>
-                            <div class="text-lt">Content with background</div>
-                        </div>
-                    </div>
-                </li>
-                <li class="tl-item">
-                    <div class="tl-wrap b-primary">
-                        <span class="tl-date text-muted">04.2014</span>
-                        <div class="tl-content box-color text-color w-xl w-auto-xs">
-                            <span class="arrow b-white left pull-top"></span>
-                            <div class="text-lt p-x m-b-sm">With Title</div>
-                            <div class="p-a b-t b-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis ipsum ac feugiat. Vestibulum ullamcorper</div>
-                        </div>
-                    </div>
-                </li>
-                <li class="tl-item tl-left">
-                    <div class="tl-wrap b-success">
-                        <span class="tl-date text-muted">04.2014</span>
-                        <div class="tl-content box-color info block">
-                            <span class="arrow b-info left pull-top hidden-left"></span>
-                            <span class="arrow b-info right pull-top visible-left"></span>
-                            <div class="p-x m-b-sm font-bold">Block</div>
-                            <div class="box-body b-t b-info">Consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis ipsum ac feugiat. Vestibulum ullamcorper</div>             
-                        </div>
-                    </div>
-                </li>
                 <li class="tl-header">
-                    <div class="btn btn-sm white btn-rounded">2014</div>
-                </li>
-                <li class="tl-item">
-                    <div class="tl-wrap b-primary">
-                        <span class="tl-date text-muted">10.08.2013</span>
-                        <div class="tl-content box-color text-color p-a-sm">
-                            <span class="arrow b-white left pull-up hidden-left"></span>
-                            <span class="arrow b-white right pull-up visible-left"></span>
-                            <div class="text-lt">A good story to hear.</div>
-                        </div>
-                    </div>
-                </li>
-                <li class="tl-header">
-                    <i class="ui-icon fa fa-twitter b-white b-2x info"></i>
-                </li>
-                <li class="tl-item tl-left">
-                    <div class="tl-wrap b-warn">
-                        <span class="tl-date text-muted">5.07.2013</span>
-                        <div class="tl-content box-color text-color p-a-sm">
-                            <span class="arrow b-white left pull-up hidden-left"></span>
-                            <span class="arrow b-white right pull-up visible-left"></span>
-                            <div class="text-lt">Yesterday is History</div>
-                        </div>
-                    </div>
-                </li>
-                <li class="tl-header">
-                    <div class="btn btn-sm white btn-rounded">more</div>
+                    <div class="btn" style="background-color:orange;color:black;"><b>{{last_date.published|date:"D M Y"}} at {{last_date.published|date:"h:m:s"}}</b></div>
                 </li>
             </ul>
         </div>

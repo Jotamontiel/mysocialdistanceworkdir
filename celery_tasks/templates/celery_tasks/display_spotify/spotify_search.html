@@ -2,6 +2,52 @@
 {% load static %}
 {% block title %}Spotify{% endblock %}
 {% block content %}
+<div class="item">
+    <div class="item-bg">
+        <img src="{% static 'celery_tasks/celerytasks_menu/assets/images/spotify_banner.jpg' %}" class="blur opacity-3">
+    </div>
+    <div class="p-a-md">
+        <div class="row m-t">
+            <div class="col-sm-7">
+                <a href="" class="pull-left m-r-md">
+                    <span class="avatar w-96">
+                        <img src="{% static 'celery_tasks/celerytasks_menu/assets/images/spotify_logo.jpg' %}">
+                    </span>
+                </a>
+                <div class="clear m-b">
+                    <h3 class="m-0 m-b-xs">Spotify</h3>
+                    <p class="text-muted"><span class="m-r">Spotify search engine project</span><br><small><i class="fa fa-user"></i> Jorge Montiel M.</small></p>
+                    <div class="block clearfix m-b">
+                        <a href="" class="btn btn-icon btn-social rounded white btn-sm">
+                            <i class="fa fa-facebook"></i>
+                            <i class="fa fa-facebook indigo"></i>
+                        </a>
+                        <a href="" class="btn btn-icon btn-social rounded white btn-sm">
+                            <i class="fa fa-twitter"></i>
+                            <i class="fa fa-twitter light-blue"></i>
+                        </a>
+                        <a href="" class="btn btn-icon btn-social rounded white btn-sm">
+                            <i class="fa fa-google-plus"></i>
+                            <i class="fa fa-google-plus red"></i>
+                        </a>
+                        <a href="" class="btn btn-icon btn-social rounded white btn-sm">
+                            <i class="fa fa-linkedin"></i>
+                            <i class="fa fa-linkedin cyan-600"></i>
+                        </a>
+                    </div>
+                    <a href="" class="btn btn-sm warn btn-rounded m-b">Go to Official Website</a>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <p class="text-md profile-status">Project Description...</p>
+                <button class="btn btn-sm white" data-toggle="collapse" data-target="#editor">Edit</button>
+                <div class="collapse box m-t-sm" id="editor">
+                    <textarea class="form-control no-border" rows="2" placeholder="Type something..."></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="padding">
     <div class="row">
         <div class="col-md-6 offset-md-3">
@@ -32,32 +78,22 @@
             </div>
             <br>
             {% if not q %}
-                <div class="col-md-12">
-                    <div class="box" style="align-text:center">
-                        <p class="m-b-md">
-                            <strong>
-                                Please fill out the form...
-                            </strong>
-                        </p>
-                    </div>
+                <div class="col-md-12" style="display:flex;justify-content:center;align-items:center;height:30px;border:2px solid transparent;border-radius:4px;color:#a94442;background-color:#f2dede;border-color:#ebccd1;">
+                    <strong>Please enter a keyword...</strong>
                 </div>
             {% else %}
-                <div class="col-md-12">
-                    <div class="box" style="align-text:center">
-                        <p class="m-b-md" >
-                            <span class="label rounded primary">
-                                <strong>{{ count }}</strong>
-                            </span> 
-                            results found for 
-                            <span class="label rounded primary">
-                                <strong>{{ q }}</strong>
-                            </span>  
-                            in 
-                            <span class="label rounded primary">
-                                <strong>{{ filter }}s</strong>
-                            </span>  
-                        </p>
-                    </div>
+                <div class="col-md-12" style="display: flex;justify-content:center;align-items:center;height:30px;border:2px solid transparent;border-radius:4px;color:#3c763d;background-color:#dff0d8;border-color:#d6e9c6;">
+                    <span class="label rounded primary">
+                        <strong>{{ count }}</strong>
+                    </span> 
+                     results found for 
+                    <span class="label rounded primary">
+                        <strong>{{ q }}</strong>
+                    </span>  
+                     in 
+                    <span class="label rounded primary">
+                        <strong>{{ filter }}s</strong>
+                    </span>  
                 </div>
             {% endif %}
         </div>

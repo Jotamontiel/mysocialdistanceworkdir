@@ -20,6 +20,8 @@ class HackerNewsDashboardView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(HackerNewsDashboardView, self).get_context_data(**kwargs)
         context['hackernews_list'] = News.objects.all().order_by('-published')
+        context['first_date'] = News.objects.all().order_by('-published').first()
+        context['last_date'] = News.objects.all().order_by('published').first()
         return context
 
 class SpotifySearchView(TemplateView):
