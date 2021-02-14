@@ -30,51 +30,65 @@ node {
             echo "---------------- Reset & Update Master Branch Starting --------------"
             echo "---------------------------------------------------------------------"
             sshCommand remote: remote, command: """
-            echo "**********************************************"
-            echo "****** Show Base Directory *******************"
-            echo "**********************************************"
-            pwd
-            ls -al
-            echo "**********************************************"
-            echo "****** Show Project Sub Directory ************"
-            echo "**********************************************"
             cd mysocialdistanceworkdir
-            pwd
-            ls -al
             git reset --hard
             git pull origin main
-            pwd
-            ls -al
             """
             echo "----------------------------------------------------------------------"
             echo "---------------- Master Branch Reset and Updated ---------------------"
             echo "----------------------------------------------------------------------"
         }
-        stage("Stage 3: Clear Static & Media Files") {
+        stage("Stage 3: Create Media Files Backup") {
             echo "---------------------------------------------------------------------"
-            echo "---------------- Clear Static & Media Files Starting ----------------"
+            echo "---------------- Create Media Files Backup --------------------------"
             echo "---------------------------------------------------------------------"
             sshCommand remote: remote, command: """
-            echo "**********************************************"
-            echo "****** Show Base Directory *******************"
-            echo "**********************************************"
-            pwd
-            ls -al
-            echo "**********************************************"
-            echo "****** Show Project Sub Directory ************"
-            echo "**********************************************"
-            cd mysocialdistanceworkdir
-            pwd
-            ls -al
+            cd mysocialdistanceworkpackage
+            cd prod_mediafiles_bkp
             sudo rm -r media
+            """
+            sshCommand remote: remote, command: """
+            cd mysocialdistanceworkdir
+            sudo cp -R media /home/jorge/mysocialdistanceworkpackage/prod_mediafiles_bkp/
+            """
+            echo "----------------------------------------------------------------------"
+            echo "---------------- Media Files Backup Created --------------------------"
+            echo "----------------------------------------------------------------------"
+        }
+        stage("Stage 4: Create Prod Tables & Full Database Backups") {
+            echo "---------------------------------------------------------------------"
+            echo "---------------- Create Prod Tables & Full Database Backups ---------"
+            echo "---------------------------------------------------------------------"
+            sshCommand remote: remote, command: """
+            cd mysocialdistanceworkpackage
+            sudo rm -r prod_tables_bkp
+            sudo rm -r full_database_bkp
+            sudo mkdir prod_tables_bkp
+            sudo mkdir full_database_bkp
+            """
+            sshCommand remote: remote, command: """
+            cd mysocialdistanceworkpackage
+            cd trigger_queries
+            sudo ./prod_tables_bkp_script
+            sudo ./full_database_bkp_script
+            """
+            echo "----------------------------------------------------------------------"
+            echo "---------------- Prod Tables & Full Database Backups Created ---------"
+            echo "----------------------------------------------------------------------"
+        }
+        stage("Stage 5: Clear Static Files") {
+            echo "---------------------------------------------------------------------"
+            echo "---------------- Clear Static Files Starting ------------------------"
+            echo "---------------------------------------------------------------------"
+            sshCommand remote: remote, command: """
+            cd mysocialdistanceworkdir
             sudo rm -r static
-            sudo mkdir media
             """
             echo "----------------------------------------------------------------------"
             echo "---------------- Directory cleaned -----------------------------------"
             echo "----------------------------------------------------------------------"
         }
-        stage("Stage 4: Create Virtual Environment") {
+        stage("Stage 6: Create Virtual Environment") {
             echo "----------------------------------------------------------------------"
             echo "---------------- Environment Creation Starting -----------------------"
             echo "----------------------------------------------------------------------"
@@ -93,18 +107,20 @@ node {
             echo "---------------- Environment Created ---------------------------------"
             echo "----------------------------------------------------------------------"
         }
-        stage("Stage 5: Database Reset") {
+        stage("Stage 7: Database Reset") {
             echo "----------------------------------------------------------------------"
             echo "---------------- Database Reset Starting -----------------------------"
             echo "----------------------------------------------------------------------"
             sshCommand remote: remote, command: """
-                sudo -h 167.172.149.133 -u postgres bash -c "psql -f queries.sql"
+                cd mysocialdistanceworkpackage
+                cd trigger_queries
+                sudo -h 167.172.149.133 -u postgres bash -c "psql -f db_reset_query.sql"
                 """
             echo "----------------------------------------------------------------------"
             echo "---------------- Database Built --------------------------------------"
             echo "----------------------------------------------------------------------"
         }
-        stage("Stage 6: Build Migrations & Migrate") {
+        stage("Stage 8: Build Migrations & Migrate") {
             echo "----------------------------------------------------------------------"
             echo "---------------- Build Migrations & Migrate Starting -----------------"
             echo "----------------------------------------------------------------------"
@@ -118,7 +134,7 @@ node {
             echo "---------------- Built & Migrated Migrations -------------------------"
             echo "----------------------------------------------------------------------"
         }
-        stage("Stage 7: Static Files Collection"){
+        stage("Stage 9: Static Files Collection"){
             echo "----------------------------------------------------------------------"
             echo "---------------- Static Files Collection Starting --------------------"
             echo "----------------------------------------------------------------------"
@@ -131,7 +147,7 @@ node {
             echo "---------------- Static Files Collected ------------------------------"
             echo "----------------------------------------------------------------------"
         }
-        stage("Stage 8: Create Superuser"){
+        stage("Stage 10: Create Superuser"){
             withCredentials([usernamePassword(credentialsId: 'the-real-user-password-for-BD-webserver-1', passwordVariable: 'JENKINS_BD_PASS', usernameVariable: 'JENKINS_BD_USER')]) {
                 echo "----------------------------------------------------------------------"
                 echo "---------------- Superuser Creation Starting -------------------------"
@@ -146,7 +162,20 @@ node {
                 echo "----------------------------------------------------------------------"
             }
         }
-        stage("Stage 9: Restart Services"){
+        stage("Stage 11: Database Repopulate") {
+            echo "---------------------------------------------------------------------"
+            echo "---------------- Database Repopulate --------------------------------"
+            echo "---------------------------------------------------------------------"
+            sshCommand remote: remote, command: """
+            cd mysocialdistanceworkpackage
+            cd trigger_queries
+            sudo ./repopulate_database_script
+            """
+            echo "----------------------------------------------------------------------"
+            echo "---------------- Database Repopulated --------------------------------"
+            echo "----------------------------------------------------------------------"
+        }
+        stage("Stage 12: Restart Services"){
             echo "----------------------------------------------------------------------"
             echo "---------------- Restart Services Starting ---------------------------"
             echo "----------------------------------------------------------------------"

@@ -72,8 +72,11 @@ class SpotifySearchView(TemplateView):
 
         return context
 
+class LikeTradingView(TemplateView):
+    template_name = "celery_tasks/display_liketrading/liketrading_dashboard.html"
+
 class NYTMenuPageView(TemplateView):
-    template_name = "celery_tasks/displays/nytimes_display.html"
+    template_name = "celery_tasks/display_nytimesnews/nytimesnews_dashboard.html"
 
     # def get_context_data(self, **kwargs):
     #     context = super(NYTMenuPageView, self).get_context_data(**kwargs)

@@ -15,6 +15,7 @@
                         <!--li class="active"><a href="#category_iot" data-toggle="tab" aria-expanded="false"><span class="fa fa-connectdevelop fa-lg"></span> IoT</a></li-->
                         <li class="active"><a href="#category_hackernews" data-toggle="tab" aria-expanded="true"><span class="fa fa-hacker-news fa-lg"></span> Hackernews</a></li>
                         <li class=""><a href="#category_spotify" data-toggle="tab" aria-expanded="true"><span class="fa fa-spotify fa-lg"></span> Spotify</a></li>
+                        <li class=""><a href="#category_liketrading" data-toggle="tab" aria-expanded="true"><span class="fa fa-dollar fa-lg"></span> LikeTrading</a></li>
                         <!--li class=""><a href="#category_webdev" data-toggle="tab" aria-expanded="true"><span class="icon-laptop"></span> Web-Dev</a></li>
                         <li class=""><a href="#category_3d" data-toggle="tab" aria-expanded="true"><span class="icon-tools"></span> 3D World</a></li>
                         <li class=""><a href="#category_others" data-toggle="tab" aria-expanded="true"><span class="icon-beaker"></span> Others</a></li-->
@@ -62,6 +63,10 @@
                         <div class="tab-pane" id="category_spotify">
                             This is the "Spotify search engine", it's possible get songs titles, albums, artists and playlists. This thanks to spotify api wrapped in "spotipy" library built in Python, the queries are a combination of keywords and a predefined filter (track, artist, album or playlist).<br><br>
                             <a id="to_spotify_from_projectsmenu" class="btn btn-b btn-circle" href="{% url 'spotifysearch_display' %}" onclick='addTmpUserToLink("to_spotify_from_projectsmenu")'><i class="fa fa-spotify"></i> Go to Spotify Project</a>
+                        </div>
+                        <div class="tab-pane" id="category_liketrading">
+                            This is the "Like trading collector"...<br><br>
+                            <a id="to_liketrading_from_projectsmenu" class="btn btn-b btn-circle" href="{% url 'liketrading_display' %}" onclick='addTmpUserToLink("to_liketrading_from_projectsmenu")'><i class="fa fa-dollar"></i> Go to LikeTrading Project</a>
                         </div>
                         <!--div class="tab-pane" id="category_webdev">
                             To achieve this, it would be necessary to have uniform grammar, pronunciation and more common words.
