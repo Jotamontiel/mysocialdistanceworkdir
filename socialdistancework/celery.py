@@ -19,9 +19,9 @@ app.conf.beat_schedule = {
         'task': 'celery_tasks.tasks.nytimesnews_mostpopular_viewed_api_scraper',
         'schedule': crontab(minute=0, hour=0),
     },
-    # # executes daily at midnight
-    # 'scraping-task-midnight-daily': {
-    #     'task': 'tasks.hackernews_rss',
-    #     'schedule': crontab(minute=0, hour=0)
-    # }
+    # Execute: every 1 hour
+    'scraping-liketrading-task-every-one-hour': {
+        'task': 'celery_tasks.tasks.liketrading_create_or_update_tickers_scraper',
+        'schedule': crontab(minute=0, hour='*/1'),
+    },
 }

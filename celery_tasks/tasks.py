@@ -22,6 +22,7 @@ from bs4 import BeautifulSoup
 import json
 from datetime import datetime
 import lxml
+from wallstreet import Stock, Call, Put
 
 ######################################
 ########## MY API WRAPPERS ###########
@@ -31,7 +32,8 @@ from .my_api_wrappers.my_api_wrapper_nytimes import NYTAPI
 ######################################
 ########## DJANGO MODELS #############
 ######################################
-from .models import News, NYTimesNews
+from .models import News, NYTimesNews, LikeTradingTicker
+from django.db.models import Q
 
 ######################################
 ########## CREDENTIALS IMPORT ########
@@ -303,4 +305,42 @@ def nytimesnews_mostpopular_viewed_api_scraper():
         return nytimesnews_mostpopular_viewed_api_scraper_save_function(article_mostpopular_viewed_api_scraper_list)
     except Exception as e:
         print('The nytimesnews mostpopular viewed api scraper job failed. See exception:')
+        print(e)
+
+#############################################################################################
+########## TASK 1: LIKE TRADING - LIKETRADING_CREATE_OR_UPDATE_TICKERS_SCRAPER ##############
+#############################################################################################
+@shared_task
+def liketrading_create_or_update_tickers_scraper():
+
+    mytickers = ['TSLA', 'AAPL', 'TWLO', 'GOOG']
+
+    try:
+        for myticker in mytickers:
+            if (Stock(myticker)):
+                if (LikeTradingTicker.objects.filter(Q(ticker_name__icontains=myticker))):
+                    s = Stock(myticker)
+                    LikeTradingTicker.objects.filter(ticker_name=myticker).update(
+                        ticker_name = str(s.ticker),
+                        price = str(s.price),
+                        exchange = str(s.exchange),
+                        last_trade = str(s.last_trade),
+                        change = str(s.change),
+                        ticker_cp = str(s.cp)
+                    )
+                else:
+                    s = Stock(myticker)
+                    LikeTradingTicker.objects.create(
+                        ticker_name = str(s.ticker),
+                        price = str(s.price),
+                        exchange = str(s.exchange),
+                        last_trade = str(s.last_trade),
+                        change = str(s.change),
+                        ticker_cp = str(s.cp)
+                    )
+            else:
+                print("ticker no exists in the wallstreet python library!!")
+
+    except Exception as e:
+        print('The liketrading create or update tickers scraper job failed. See exception:')
         print(e)

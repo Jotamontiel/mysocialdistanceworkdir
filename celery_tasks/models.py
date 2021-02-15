@@ -44,3 +44,49 @@ class NYTimesNews(models.Model):
 
     def __str__(self):
         return self.title
+
+class LikeTradingUserBlackList(models.Model):
+    user_ip = models.TextField(default="", null=True, blank=True)
+    user_alias = models.TextField(default="", null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Creation Date")
+    updated = models.DateTimeField(auto_now=True, verbose_name="Update Date")
+
+    class Meta:
+        verbose_name = "liketrading_user_blacklist"
+        verbose_name_plural = "liketrading_users_blacklist"
+        ordering = ['user_ip']
+
+    def __str__(self):
+        return self.user_ip
+
+class LikeTradingTicker(models.Model):
+    ticker_name = models.TextField(default="", null=True, blank=True)
+    price = models.TextField(default="", null=True, blank=True)
+    exchange = models.TextField(default="", null=True, blank=True)
+    last_trade = models.TextField(default="", null=True, blank=True)
+    change = models.TextField(default="", null=True, blank=True)
+    ticker_cp = models.TextField(default="", null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Creation Date")
+    updated = models.DateTimeField(auto_now=True, verbose_name="Update Date")
+
+    class Meta:
+        verbose_name = "liketrading_ticker"
+        verbose_name_plural = "liketrading_tickers"
+        ordering = ['ticker_name']
+    
+    def __str__(self):
+        return self.ticker_name
+
+class LikeTradingUserVote(models.Model):
+    userblacklist_id = models.OneToOneField(LikeTradingUserBlackList, on_delete=models.CASCADE, primary_key=True)
+    ticker_id = models.ForeignKey(LikeTradingTicker, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Creation Date")
+    updated = models.DateTimeField(auto_now=True, verbose_name="Update Date")
+
+    class Meta:
+        verbose_name = "liketrading_user_vote"
+        verbose_name_plural = "liketrading_users_votes"
+        ordering = ['userblacklist_id']
+    
+    def __str__(self):
+        return self.userblacklist_id

@@ -4,14 +4,14 @@
 {% block content %}
 <div class="item">
     <div class="item-bg">
-        <img src="{% static 'celery_tasks/celerytasks_menu/assets/images/hackernews_banner.jpg' %}" class="blur opacity-3">
+        <img src="{% static 'celery_tasks/celerytasks_menu/assets/images/liketrading_banner.jpg' %}" class="blur opacity-3">
     </div>
     <div class="p-a-md">
         <div class="row m-t">
             <div class="col-sm-7">
                 <a href="" class="pull-left m-r-md">
                     <span class="avatar w-96">
-                        <img src="{% static 'celery_tasks/celerytasks_menu/assets/images/hackernews_logo.jpg' %}">
+                        <img src="{% static 'celery_tasks/celerytasks_menu/assets/images/liketrading_logo.jpg' %}">
                     </span>
                 </a>
                 <div class="clear m-b">
@@ -54,4 +54,33 @@
         </div>
     </div>
 </div>
+{% for ticker in tickers_list %}
+    {{ticker.ticker_name}}
+    <br>
+    {{ticker.price}}
+    <br>
+    {{ticker.exchange}}
+    <br>
+    {{ticker.last_trade}}
+    <br>
+    {{ticker.change}}
+    <br>
+    {{ticker.ticker_cp}}
+    <br>
+    {{ticker.updated}}
+    <br>
+    {{ticker.created}}
+    <br>
+{% endfor %}
+<br><br><br><br><br><br>
+{% for user in users_list %}
+    {{user.user_ip}}
+    <br>
+    {{user.updated}}
+    <br>
+    {{user.created}}
+    <br>
+{% endfor %}
+Total Distinct Visitors: {{users_count}}
+
 {% endblock %}
