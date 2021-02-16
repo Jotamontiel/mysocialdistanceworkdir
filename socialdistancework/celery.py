@@ -22,6 +22,6 @@ app.conf.beat_schedule = {
     # Execute: every 1 hour
     'scraping-liketrading-task-every-one-hour': {
         'task': 'celery_tasks.tasks.liketrading_create_or_update_tickers_scraper',
-        'schedule': crontab(minute=10, hour='9,2,19,23'),
+        'schedule': crontab(minute=10, hour='9,15,23'),
     },
 }
