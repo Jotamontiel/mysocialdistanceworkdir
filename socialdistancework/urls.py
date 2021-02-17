@@ -26,8 +26,13 @@ urlpatterns = [
     path('', include('services.urls')),
     # Celery Tasks path
     path('', include('celery_tasks.urls')),
+    # IoT Module path
+    path('', include('iot_module.urls')),
     # Admin path
     path('admin/', admin.site.urls),
+    # Auth paths
+    path('accounts/', include('django.contrib.auth.urls')),
+    #path('accounts/', include('registration.urls')),
 ]
 
 # Media Files for Debug Mood

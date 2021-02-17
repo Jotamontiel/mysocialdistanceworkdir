@@ -92,6 +92,15 @@
               <li class="nav-item">
                 <a class="btn" href="https://www.facebook.com/distanciamientosocialcl-105186354483477" target="_blank"><i class="fa fa-facebook fa-2x"></i></a>
               </li>
+              {% if not request.user.is_authenticated %}
+                <li class="nav-item">
+                  <a id="to_login_from_navbar" class="btn btn-danger btn-round" href="{% url 'login' %}" onclick='addTmpUserToLink("to_login_from_navbar")'>Login</a>
+                </li>
+              {% else %}
+                <li>
+                  <a id="to_logouthomemenu_from_navbar" class="btn btn-danger btn-round" href="{% url 'logout' %}" onclick='addTmpUserToLink("to_logouthomemenu_from_navbar")'>Sign Out</a>
+                </li>
+              {% endif %}
               <li class="nav-item">
                 <a id="to_homemenu_from_navbar" class="btn btn-b btn-round" href="{% url 'home' %}" onclick='addTmpUserToLink("to_homemenu_from_navbar")'>Home</a>
               </li>

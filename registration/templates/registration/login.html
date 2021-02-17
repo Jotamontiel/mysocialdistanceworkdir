@@ -1,0 +1,54 @@
+{% extends 'iot_module/includes/iotmodule_login_menu.html' %}
+{% load static %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<style>.errorlist{color:red;}</style>
+<div class="center-block w-xxl w-auto-xs p-y-md">
+    <div class="navbar">
+        <div class="pull-center">
+            <div ui-include="{% static 'celery_tasks/celerytasks_menu/views/blocks/navbar.brand.html' %}"></div>
+        </div>
+    </div>
+    <div class="p-a-md box-color r box-shadow-z1 text-color m-a">
+        {% if 'register' in request.GET %}
+          <div class="alert alert-success" role="alert">
+            <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button><i class="fa fa-cog fa-spin"></i><strong>Alert!</strong> User registered successfully, you can now identify yourself.
+          </div>
+        {% endif %}
+        <div class="m-b text-sm" style="color:#0cc2aa">
+            <b>Sign In with your account to IoT Module</b>
+        </div>
+        <form name="form" action="" method="post">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">
+                <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button><i class="fa fa-coffee"></i><strong>Alert!</strong> Incorrect username or password, try again.
+                </div>
+            {% endif %}
+            <div class="md-form-group float-label">
+                <input id="id_username" type="text" name="username" class="md-input" autofocus maxlength="254" ng-model="user.name" style="text-transform:none" required>
+                <label>Username</label>
+            </div>
+            <div class="md-form-group float-label">
+                <input id="id_password" type="password" name="password" class="md-input" ng-model="user.password" style="text-transform:none" required>
+                <label>Password</label>
+            </div>      
+            <!--div class="m-b-md">        
+                <label class="md-check">
+                    <input type="checkbox"><i class="primary"></i> Keep me signed in
+                </label>
+            </div-->
+            <button type="submit" class="btn primary btn-block p-x-md">Sign in</button>
+            <a ui-sref="access.forgot-password" href="{% url 'home' %}" class="btn b-primary btn-block p-x-md" style="color:#0cc2aa">Return to Home</a>
+        </form>
+    </div>
+    <!--div class="p-v-lg text-center">
+        <div class="m-b">
+            <a ui-sref="access.forgot-password" href="{% url 'password_reset' %}" class="text-primary _600">Forgot password?</a>
+        </div>
+        <div>
+            Do not have an account? <a ui-sref="access.signup" href="#" class="text-primary _600">Sign up</a>
+        </div>
+    </div-->
+</div>
+{% endblock %}

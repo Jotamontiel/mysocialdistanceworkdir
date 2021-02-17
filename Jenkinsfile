@@ -20,6 +20,10 @@ node {
             echo "****** Stop Celery Beat Service **************"
             echo "**********************************************"
             sudo systemctl stop celerybeat.service
+            echo "**********************************************"
+            echo "****** Restart Redis-server Service **********"
+            echo "**********************************************"
+            sudo service redis-server restart
             """
             echo "----------------------------------------------------------------------"
             echo "---------------- Stopped Processes -----------------------------------"
