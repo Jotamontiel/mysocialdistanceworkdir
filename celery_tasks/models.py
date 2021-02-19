@@ -60,12 +60,9 @@ class LikeTradingUserBlackList(models.Model):
         return self.user_ip
 
 class LikeTradingTicker(models.Model):
-    ticker_name = models.TextField(default="", null=True, blank=True)
-    price = models.TextField(default="", null=True, blank=True)
-    exchange = models.TextField(default="", null=True, blank=True)
-    last_trade = models.TextField(default="", null=True, blank=True)
-    change = models.TextField(default="", null=True, blank=True)
-    ticker_cp = models.TextField(default="", null=True, blank=True)
+    ticker_symbol = models.CharField(max_length=500, verbose_name="Ticker Symbol (Optional)", default="", blank=True, null=True)
+    ticker_name = models.CharField(max_length=500, verbose_name="Ticker Name (Optional)", default="", blank=True, null=True)
+    source = models.CharField(max_length=500, verbose_name="Ticker Source (Optional)", default="", blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True, verbose_name="Creation Date")
     updated = models.DateTimeField(auto_now=True, verbose_name="Update Date")
 

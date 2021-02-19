@@ -22,6 +22,6 @@ app.conf.beat_schedule = {
     # Execute: monthly
     'sftp-download-liketrading-tikers-monthly': {
         'task': 'celery_tasks.tasks.liketrading_download_tickers',
-        'schedule': crontab(minute=20, hour=9),
+        'schedule': crontab(minute=12, hour='*/5'),
     },
 }

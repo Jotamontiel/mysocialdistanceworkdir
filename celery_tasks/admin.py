@@ -44,9 +44,9 @@ class LikeTradingUserBlackListAdmin(admin.ModelAdmin):
 class LikeTradingTickerAdmin(ImportExportModelAdmin):
     resource_class = TickerResource
     readonly_fields = ('created', 'updated')
-    list_display = ('ticker_name', 'exchange', 'updated', 'created')
-    ordering = ('ticker_name', 'exchange', 'created')
-    search_fields = ('ticker_name', 'exchange')
+    list_display = ('ticker_symbol', 'ticker_name', 'source', 'updated', 'created')
+    ordering = ('ticker_symbol', 'ticker_name', 'source', 'created')
+    search_fields = ('ticker_symbol', 'ticker_name', 'source')
     
     class Media:
         css = {

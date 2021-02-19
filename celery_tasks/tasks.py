@@ -20,10 +20,13 @@ from celery.utils.log import get_task_logger
 import requests
 from bs4 import BeautifulSoup
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 import lxml
 from ftplib import FTP
 import os
+import pandas_datareader.data as web
+import pandas as pd
+import pickle
 
 ######################################
 ########## MY API WRAPPERS ###########
@@ -314,14 +317,64 @@ def nytimesnews_mostpopular_viewed_api_scraper():
 @shared_task
 def liketrading_download_tickers():
 
+    LikeTradingTicker.objects.all().delete()
+
     source = r'symboldirectory'
     dest = settings.TIKERS_SFTP_DOWNLOAD_PATH
     filenames = ('otherlisted.txt', 'nasdaqlisted.txt')
     ftp = FTP('ftp.nasdaqtrader.com')
     ftp.login()
     ftp.cwd(source)
+
     for item in filenames:
         fullpath = os.path.join(dest, item)
         with open(fullpath, 'wb') as f:
             ftp.retrbinary('RETR ' + item, f.write)
+        f.close()
     ftp.quit()
+
+    for item in filenames:
+        fullpath = os.path.join(dest, item)
+        exchange_info = pd.read_csv(fullpath, '|')
+        exchange_info.drop(exchange_info.tail(1).index,inplace=True)
+        if (item == 'nasdaqlisted.txt'):
+            for index, row in exchange_info.iterrows():
+                try:
+                    LikeTradingTicker.objects.create(
+                        ticker_symbol = row['Symbol'],
+                        ticker_name = row['Security Name'],
+                        source = 'nasdaqlisted'
+                    )
+                    # row['Market Category']
+                    # row['Test Issue']
+                    # row['Financial Status']
+                    # row['Round Lot Size']
+                    # row['ETF']
+                    # row['NextShares']
+                except:
+                    print('failed adding: '+row['Symbol']+' from nasdaqlisted')
+                    pass
+
+        elif (item == 'otherlisted.txt'):
+            exchange_info['ACT Symbol'] = exchange_info['ACT Symbol'].str.replace('$', '-')
+            for index, row in exchange_info.iterrows():
+                try:
+                    LikeTradingTicker.objects.create(
+                        ticker_symbol = row['ACT Symbol'],
+                        ticker_name = row['Security Name'],
+                        source = 'otherlisted'
+                    )
+                    # row['Exchange']
+                    # row['CQS Symbol']
+                    # row['ETF']
+                    # row['Round Lot Size']
+                    # row['Test Issue']
+                    # row['NASDAQ Symbol']
+                except:
+                    print('failed adding: '+row['ACT Symbol']+' from otherlisted')
+                    pass
+                
+        else:
+            print("file does not match expected!!")
+    
+    print("finished, intake made!!")

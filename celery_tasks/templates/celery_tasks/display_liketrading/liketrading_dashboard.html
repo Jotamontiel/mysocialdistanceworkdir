@@ -55,17 +55,11 @@
     </div>
 </div>
 {% for ticker in tickers_list %}
+    {{ticker.ticker_symbol}}
+    <br>
     {{ticker.ticker_name}}
     <br>
-    {{ticker.price}}
-    <br>
-    {{ticker.exchange}}
-    <br>
-    {{ticker.last_trade}}
-    <br>
-    {{ticker.change}}
-    <br>
-    {{ticker.ticker_cp}}
+    {{ticker.source}}
     <br>
     {{ticker.updated}}
     <br>

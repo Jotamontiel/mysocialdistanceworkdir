@@ -78,7 +78,7 @@ class LikeTradingView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(LikeTradingView, self).get_context_data(**kwargs)
-        context["tickers_list"] = LikeTradingTicker.objects.all().order_by('ticker_name')
+        context["tickers_list"] = LikeTradingTicker.objects.all().order_by('ticker_symbol')
 
         def get_ip(request):
             address = request.META.get('HTTP_X_FORWARDED_FOR')
