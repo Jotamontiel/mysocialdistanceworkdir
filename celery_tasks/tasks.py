@@ -22,7 +22,8 @@ from bs4 import BeautifulSoup
 import json
 from datetime import datetime
 import lxml
-from wallstreet import Stock, Call, Put
+from ftplib import FTP
+import os
 
 ######################################
 ########## MY API WRAPPERS ###########
@@ -308,39 +309,19 @@ def nytimesnews_mostpopular_viewed_api_scraper():
         print(e)
 
 #############################################################################################
-########## TASK 1: LIKE TRADING - LIKETRADING_CREATE_OR_UPDATE_TICKERS_SCRAPER ##############
+########## TASK 1: LIKE TRADING - LIKETRADING_DOWNLOAD_TICKERS ##############################
 #############################################################################################
 @shared_task
-def liketrading_create_or_update_tickers_scraper():
+def liketrading_download_tickers():
 
-    mytickers = ['TSLA', 'AAPL', 'TWLO', 'GOOG']
-
-    try:
-        for myticker in mytickers:
-            if (Stock(myticker)):
-                if (LikeTradingTicker.objects.filter(Q(ticker_name__icontains=myticker))):
-                    s = Stock(myticker)
-                    LikeTradingTicker.objects.filter(ticker_name=myticker).update(
-                        ticker_name = str(s.ticker),
-                        price = str(s.price),
-                        exchange = str(s.exchange),
-                        last_trade = str(s.last_trade),
-                        change = str(s.change),
-                        ticker_cp = str(s.cp)
-                    )
-                else:
-                    s = Stock(myticker)
-                    LikeTradingTicker.objects.create(
-                        ticker_name = str(s.ticker),
-                        price = str(s.price),
-                        exchange = str(s.exchange),
-                        last_trade = str(s.last_trade),
-                        change = str(s.change),
-                        ticker_cp = str(s.cp)
-                    )
-            else:
-                print("ticker no exists in the wallstreet python library!!")
-
-    except Exception as e:
-        print('The liketrading create or update tickers scraper job failed. See exception:')
-        print(e)
+    source = r'symboldirectory'
+    dest = settings.TIKERS_SFTP_DOWNLOAD_PATH
+    filenames = ('otherlisted.txt', 'nasdaqlisted.txt')
+    ftp = FTP('ftp.nasdaqtrader.com')
+    ftp.login()
+    ftp.cwd(source)
+    for item in filenames:
+        fullpath = os.path.join(dest, item)
+        with open(fullpath, 'wb') as f:
+            ftp.retrbinary('RETR ' + item, f.write)
+    ftp.quit()

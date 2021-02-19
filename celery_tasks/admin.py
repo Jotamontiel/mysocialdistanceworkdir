@@ -1,5 +1,11 @@
 from django.contrib import admin
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin
 from .models import News, NYTimesNews, LikeTradingUserBlackList, LikeTradingTicker, LikeTradingUserVote
+
+class TickerResource(resources.ModelResource):
+    class Meta:
+        model = LikeTradingTicker
 
 # Register your models here.
 class NewsAdmin(admin.ModelAdmin):
@@ -35,7 +41,8 @@ class LikeTradingUserBlackListAdmin(admin.ModelAdmin):
             'all': ('services/css/custom_ckeditor.css',)
         }
 
-class LikeTradingTickerAdmin(admin.ModelAdmin):
+class LikeTradingTickerAdmin(ImportExportModelAdmin):
+    resource_class = TickerResource
     readonly_fields = ('created', 'updated')
     list_display = ('ticker_name', 'exchange', 'updated', 'created')
     ordering = ('ticker_name', 'exchange', 'created')

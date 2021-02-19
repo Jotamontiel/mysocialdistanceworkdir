@@ -20,5 +20,4 @@ flower
 django-import-export
 paho-mqtt
 spotipy
-scipy
-wallstreet
+pandas-datareader
