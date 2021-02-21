@@ -19,9 +19,9 @@ app.conf.beat_schedule = {
         'task': 'celery_tasks.tasks.nytimesnews_mostpopular_viewed_api_scraper',
         'schedule': crontab(minute=30, hour=0),
     },
-    # Execute: monthly
-    'sftp-download-liketrading-tikers-monthly': {
-        'task': 'celery_tasks.tasks.liketrading_download_tickers',
-        'schedule': crontab(minute=12, hour='*/5'),
+    # Execute: weekly on Fridays at 20:15 pm
+    'sftp-download-liketrading-tikers-weekly': {
+        'task': 'celery_tasks.tasks.liketrading_tickers_automatic_update',
+        'schedule': crontab(minute=15, hour='17,20,23'),
     },
 }

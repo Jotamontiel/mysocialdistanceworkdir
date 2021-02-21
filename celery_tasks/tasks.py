@@ -312,12 +312,23 @@ def nytimesnews_mostpopular_viewed_api_scraper():
         print(e)
 
 #############################################################################################
-########## TASK 1: LIKE TRADING - LIKETRADING_DOWNLOAD_TICKERS ##############################
+########## TASK 1: LIKE TRADING - CLEAR_LIKETRADING_TICKERS_DB ##############################
 #############################################################################################
 @shared_task
-def liketrading_download_tickers():
+def clear_liketrading_tickers_db():
 
-    LikeTradingTicker.objects.all().delete()
+    sources = ('otherlisted', 'nasdaqlisted')
+
+    for source in sources:
+        LikeTradingTicker.objects.filter(source=source).delete()
+    
+    return print("Data Base Cleaned !!!")
+
+#############################################################################################
+########## TASK 2: LIKE TRADING - SFTP_DOWNLOAD_LIKETRADING_TICKERS #########################
+#############################################################################################
+@shared_task
+def sftp_download_liketrading_tickers():
 
     source = r'symboldirectory'
     dest = settings.TIKERS_SFTP_DOWNLOAD_PATH
@@ -331,12 +342,24 @@ def liketrading_download_tickers():
         with open(fullpath, 'wb') as f:
             ftp.retrbinary('RETR ' + item, f.write)
         f.close()
+
     ftp.quit()
+    return print("Files Downloaded !!!")
+
+#############################################################################################
+########## TASK 3: LIKE TRADING - UPDATE_LIKETRADING_TICKERS_DB #############################
+#############################################################################################
+@shared_task
+def update_liketrading_tickers_db():
+
+    dest = settings.TIKERS_SFTP_DOWNLOAD_PATH
+    filenames = ('otherlisted.txt', 'nasdaqlisted.txt')
 
     for item in filenames:
         fullpath = os.path.join(dest, item)
         exchange_info = pd.read_csv(fullpath, '|')
         exchange_info.drop(exchange_info.tail(1).index,inplace=True)
+
         if (item == 'nasdaqlisted.txt'):
             for index, row in exchange_info.iterrows():
                 try:
@@ -377,4 +400,25 @@ def liketrading_download_tickers():
         else:
             print("file does not match expected!!")
     
-    print("finished, intake made!!")
+    return print("finished, intake made!!")
+
+#############################################################################################
+########## TASK 4: LIKE TRADING - LIKETRADING_TICKERS_AUTOMATIC_UPDATE ######################
+#############################################################################################
+@shared_task
+def liketrading_tickers_automatic_update():
+
+    try:
+        clear_liketrading_tickers_db()
+    except Exception as e:
+        print('Liketrading tickers db clear job failed. See exception:')
+        print(e)
+    
+    try:
+        sftp_download_liketrading_tickers()
+        update_liketrading_tickers_db()
+    except Exception as e:
+        print('Liketrading tickers download and db update jobs failed. See exception:')
+        print(e)
+    
+    return print("finished, automatic update completed!!")

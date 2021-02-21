@@ -2,16 +2,16 @@ from django.db import models
 
 # Create your models here.
 class News(models.Model):
-    title = models.CharField(max_length=200)
-    link = models.CharField(max_length=2083, default="", unique=True)
-    published = models.DateTimeField()
-    source = models.CharField(max_length=30, default="", blank=True, null=True)
+    title = models.CharField(verbose_name="Title New", max_length=200, default="")
+    link = models.CharField(verbose_name="Link New", max_length=2083, default="", unique=True)
+    published = models.DateTimeField(verbose_name="Published Date")
+    source = models.CharField(verbose_name="Source New", max_length=30, default="", blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True, verbose_name="Creation Date")
     updated = models.DateTimeField(auto_now=True, verbose_name="Update Date")
 
     class Meta:
-        verbose_name = "news"
-        verbose_name_plural = "news"
+        verbose_name = "hackernews new"
+        verbose_name_plural = "hackernews news"
         ordering = ['title']
 
     def __str__(self):
@@ -38,8 +38,8 @@ class NYTimesNews(models.Model):
     updated = models.DateTimeField(auto_now=True, verbose_name="Update Date")
 
     class Meta:
-        verbose_name = "nytimes_new"
-        verbose_name_plural = "nytimes_news"
+        verbose_name = "nytimesnew new"
+        verbose_name_plural = "nytimesnew news"
         ordering = ['title']
 
     def __str__(self):
@@ -52,8 +52,8 @@ class LikeTradingUserBlackList(models.Model):
     updated = models.DateTimeField(auto_now=True, verbose_name="Update Date")
 
     class Meta:
-        verbose_name = "liketrading_user_blacklist"
-        verbose_name_plural = "liketrading_users_blacklist"
+        verbose_name = "liketrading user blacklist"
+        verbose_name_plural = "liketrading users blacklist"
         ordering = ['user_ip']
 
     def __str__(self):
@@ -67,8 +67,8 @@ class LikeTradingTicker(models.Model):
     updated = models.DateTimeField(auto_now=True, verbose_name="Update Date")
 
     class Meta:
-        verbose_name = "liketrading_ticker"
-        verbose_name_plural = "liketrading_tickers"
+        verbose_name = "liketrading ticker"
+        verbose_name_plural = "liketrading tickers"
         ordering = ['ticker_name']
     
     def __str__(self):
@@ -81,9 +81,6 @@ class LikeTradingUserVote(models.Model):
     updated = models.DateTimeField(auto_now=True, verbose_name="Update Date")
 
     class Meta:
-        verbose_name = "liketrading_user_vote"
-        verbose_name_plural = "liketrading_users_votes"
+        verbose_name = "liketrading user vote"
+        verbose_name_plural = "liketrading users votes"
         ordering = ['userblacklist_id']
-    
-    def __str__(self):
-        return self.userblacklist_id

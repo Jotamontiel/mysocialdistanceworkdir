@@ -54,18 +54,45 @@
         </div>
     </div>
 </div>
-{% for ticker in tickers_list %}
-    {{ticker.ticker_symbol}}
-    <br>
-    {{ticker.ticker_name}}
-    <br>
-    {{ticker.source}}
-    <br>
-    {{ticker.updated}}
-    <br>
-    {{ticker.created}}
-    <br>
-{% endfor %}
+
+<div class="btn-group dropdown">
+    <button class="btn white">nas</button>
+    <button class="btn white dropdown-toggle" data-toggle="dropdown"></button>
+    <div class="dropdown-menu">
+        {% for ticker in nas_tickers_list %}
+            <a class="dropdown-item" href="">{{ticker.ticker_symbol}}</a>
+{% comment %} 
+            {{ticker.ticker_name}}
+            <br>
+            {{ticker.source}}
+            <br>
+            {{ticker.updated}}
+            <br>
+            {{ticker.created}}
+            <br> {% endcomment %}
+        {% endfor %}
+    </div>
+</div>
+
+<div class="btn-group dropdown">
+    <button class="btn white">oth</button>
+    <button class="btn white dropdown-toggle" data-toggle="dropdown"></button>
+    <div class="dropdown-menu">
+        {% for ticker in oth_tickers_list %}
+            <a class="dropdown-item" href="">{{ticker.ticker_symbol}}</a>
+{% comment %} 
+            {{ticker.ticker_name}}
+            <br>
+            {{ticker.source}}
+            <br>
+            {{ticker.updated}}
+            <br>
+            {{ticker.created}}
+            <br> {% endcomment %}
+        {% endfor %}
+    </div>
+</div>
+
 <br><br><br><br><br><br>
 {% for user in users_list %}
     {{user.user_ip}}
@@ -76,5 +103,11 @@
     <br>
 {% endfor %}
 Total Distinct Visitors: {{users_count}}
+<br><br><br><br><br><br>
 
+<script src="{% static 'core/d3js/d3.v6.js' %}"></script>
+<script type='text/javascript'>
+var data= {{nas_tickers_list_formatted|safe}};
+</script>
+<script type='text/javascript' src="{% static 'core/d3js/treemap/script.js' %}"></script>
 {% endblock %}

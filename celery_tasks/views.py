@@ -3,6 +3,8 @@ from django.views.generic.base import TemplateView
 from .models import News, LikeTradingUserBlackList, LikeTradingTicker
 from .my_api_wrappers.my_api_wrapper_spotify import get_spotify_data_category
 from django.db.models import Q
+from django.core.serializers import serialize
+import json
 
 ## TEMPORAL ##
 # import requests
@@ -78,7 +80,12 @@ class LikeTradingView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(LikeTradingView, self).get_context_data(**kwargs)
-        context["tickers_list"] = LikeTradingTicker.objects.all().order_by('ticker_symbol')
+        context["nas_tickers_list"] = LikeTradingTicker.objects.filter(source="nasdaqlisted").order_by('ticker_symbol')
+        context["oth_tickers_list"] = LikeTradingTicker.objects.filter(source="otherlisted").order_by('ticker_symbol')
+
+        data = LikeTradingTicker.objects.all()
+        formattedData= json.loads(serialize('json', data))
+        context["nas_tickers_list_formatted"] = formattedData
 
         def get_ip(request):
             address = request.META.get('HTTP_X_FORWARDED_FOR')
