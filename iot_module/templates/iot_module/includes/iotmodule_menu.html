@@ -34,6 +34,8 @@
         <link rel="stylesheet" href="{% static 'celery_tasks/celerytasks_menu/libs/js/dropzone/dist/min/dropzone.min.css' %}" type="text/css" />
         <link rel="stylesheet" href="{% static 'celery_tasks/celerytasks_menu/assets/styles/app.css' %}" type="text/css" />
         <link rel="stylesheet" href="{% static 'celery_tasks/celerytasks_menu/assets/styles/font.css' %}" type="text/css" />
+        <!-- CSS for datetimepicker -->
+        <link rel="stylesheet" href="{% static 'core/jqueryDateTimePicker/jquery-ui.css' %}" type="text/css" /> 
     </head>
     <body class="pace-done black" ui-class="black">
         <div class="app" id="app">
@@ -52,14 +54,177 @@
                                 <li class="nav-header hidden-folded">
                                     <small class="text-muted">Menu</small>
                                 </li>
-                                <li>
-                                    <a id="to_iotdashboard_from_iotmodulepanel" href="{% url 'iotmodule_dashboard_display' %}" onclick='addTmpUserToLink("to_iotdashboard_from_iotmodulepanel")'>
-                                        <span class="nav-icon"><i class="fa fa-bar-chart"></i></span><span class="nav-text">IoT Dashboard</span>
-                                    </a>
-                                </li>
+                                {% if not request.user.profile or not request.user.profile.nickName or not request.user.profile.rut %}
+                                    <li>
+                                        <a id="to_iotdashboard_from_iotmodulepanel" href="{% url 'iotmodule_dashboard_display' %}" onclick='addTmpUserToLink("to_iotdashboard_from_iotmodulepanel")'>
+                                            <span class="nav-icon"><i class="fa fa-user"></i></span><span class="nav-text">Create Profile</span>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li>
+                                        <a id="to_iotdashboard_from_iotmodulepanel" href="{% url 'iotmodule_dashboard_display' %}" onclick='addTmpUserToLink("to_iotdashboard_from_iotmodulepanel")'>
+                                            <span class="nav-icon"><i class="fa fa-bar-chart"></i></span><span class="nav-text">IoT Dashboard</span>
+                                        </a>
+                                    </li>
+                                    {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
+                                        <li>
+                                            <a href="#">
+                                                <span class="nav-icon"><i class="fa fa-users"></i></span><span class="nav-text">Profiles</span>
+                                            </a>
+                                            <ul class="nav-sub">
+                                                <li>
+                                                    <a href="#" >
+                                                        <span class="nav-text"><i class="fa fa-list"></i> List</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" >
+                                                        <span class="nav-text"><i class="fa fa-plus"></i> Add</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    {% else %}
+                                        <li>
+                                            <a href="#">
+                                                <span class="nav-icon"><i class="fa fa-user"></i></span><span class="nav-text">My Profile</span>
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                    {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
+                                        <li>
+                                            <a href="#">
+                                                <span class="nav-icon"><i class="fa fa-building-o"></i></span><span class="nav-text">Companies</span>
+                                            </a>
+                                            <ul class="nav-sub">
+                                                <li>
+                                                    <a href="#" >
+                                                        <span class="nav-text"><i class="fa fa-list"></i> List</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" >
+                                                        <span class="nav-text"><i class="fa fa-plus"></i> Add</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    {% else %}
+                                        <li>
+                                            <a href="#">
+                                                <span class="nav-icon"><i class="fa fa-building-o"></i></span><span class="nav-text">My Companies</span>
+                                            </a>
+                                            <ul class="nav-sub">
+                                                <li>
+                                                    <a href="#" >
+                                                        <span class="nav-text"><i class="fa fa-list"></i> List</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" >
+                                                        <span class="nav-text"><i class="fa fa-plus"></i> Add</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                    {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
+                                        <li>
+                                            <a href="#">
+                                                <span class="nav-icon"><i class="fa fa-gears"></i></span><span class="nav-text">Component Types</span>
+                                            </a>
+                                            <ul class="nav-sub">
+                                                <li>
+                                                    <a href="#" >
+                                                        <span class="nav-text"><i class="fa fa-list"></i> List</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" >
+                                                        <span class="nav-text"><i class="fa fa-plus"></i> Add</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                    {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
+                                        <li>
+                                            <a href="#">
+                                                <span class="nav-icon"><i class="fa fa-gears"></i></span><span class="nav-text">Components</span>
+                                            </a>
+                                            <ul class="nav-sub">
+                                                <li>
+                                                    <a href="{% url 'iotmodule_componentlist_display' %}" >
+                                                        <span class="nav-text"><i class="fa fa-list"></i> List</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{% url 'iotmodule_componentcreate_display' %}" >
+                                                        <span class="nav-text"><i class="fa fa-plus"></i> Add</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    {% else %}
+                                        <li>
+                                            <a href="{% url 'iotmodule_componentlist_display' %}">
+                                                <span class="nav-icon"><i class="fa fa-gears"></i></span><span class="nav-text">My Components</span>
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                    {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
+                                        <li>
+                                            <a href="#">
+                                                <span class="nav-icon"><i class="fa fa-gears"></i></span><span class="nav-text">Sensor Types</span>
+                                            </a>
+                                            <ul class="nav-sub">
+                                                <li>
+                                                    <a href="#" >
+                                                        <span class="nav-text"><i class="fa fa-list"></i> List</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" >
+                                                        <span class="nav-text"><i class="fa fa-plus"></i> Add</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                    {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
+                                        <li>
+                                            <a href="#">
+                                                <span class="nav-icon"><i class="fa fa-gears"></i></span><span class="nav-text">Sensors</span>
+                                            </a>
+                                            <ul class="nav-sub">
+                                                <li>
+                                                    <a href="#" >
+                                                        <span class="nav-text"><i class="fa fa-list"></i> List</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" >
+                                                        <span class="nav-text"><i class="fa fa-plus"></i> Add</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    {% else %}
+                                        <li>
+                                            <a href="#">
+                                                <span class="nav-icon"><i class="fa fa-gears"></i></span><span class="nav-text">My Sensors</span>
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                {% endif %}
                                 {% if request.user.is_authenticated %}
                                     <li>
-                                        <a id="to_homemenu_from_iotmodulepanel" href="{% url 'logout' %}" onclick='addTmpUserToLink("to_homemenu_from_iotmodulepanel")'>
+                                        <a id="to_homemenu_from_iotmodulepanel" href="{% url 'home' %}" onclick='addTmpUserToLink("to_homemenu_from_iotmodulepanel")'>
+                                            <span class="nav-icon"><i class="fa fa-home"></i></span><span class="nav-text">Go to Home</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a id="to_homemenulogout_from_iotmodulepanel" href="{% url 'logout' %}" onclick='addTmpUserToLink("to_homemenulogout_from_iotmodulepanel")'>
                                             <span class="nav-icon"><i class="fa fa-sign-out"></i></span><span class="nav-text">Sign Out</span>
                                         </a>
                                     </li>
@@ -246,7 +411,12 @@
         <script src="{% static 'celery_tasks/celerytasks_menu/scripts/app.js' %}"></script>
         <script src="{% static 'celery_tasks/celerytasks_menu/libs/jquery/jquery-pjax/jquery.pjax.js' %}"></script>
         <script src="{% static 'celery_tasks/celerytasks_menu/scripts/ajax.js' %}"></script>
+        <!-- Javascript for mqtt connections -->
         <script src="{% static 'core/mqtt/mqtt.min.js' %}"></script>
         <script src="{% static 'core/mqtt/iot_module/dashboard.js' %}"></script>
+        <!-- Javascript for datetimepicker -->
+        <script src="{% static 'core/jqueryDateTimePicker/jquery-1.9.1.js' %}"></script>
+        <script src="{% static 'core/jqueryDateTimePicker/jquery-ui.js' %}"></script>
+        <script src="{% static 'core/jqueryDateTimePicker/pickerInitialization.js' %}"></script>
     </body>
 </html>

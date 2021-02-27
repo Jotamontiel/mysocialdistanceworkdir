@@ -1,0 +1,69 @@
+{% extends 'iot_module/includes/iotmodule_menu.html' %}
+{% load static %}
+{% block title %}Create Profile{% endblock %}
+{% block content %}  
+<div class="padding">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="box">
+                <div class="box-header" style="text-align: center;">
+                    <h1><b style="color:#6887ff;">{{request.user.username}} - Profile</b></h1>
+                </div>
+                <div class="box-body">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <!-- Previa del avatar -->
+                        <div class="form-group text-center">
+                            {% if request.user.profile.avatar %}
+                                <img src="{{request.user.profile.avatar.url}}" class="img-fluid" style="border-radius: 10%;border: 5px solid #f0ad4e;">
+                                <p class="mt-1">¿Borrar? <input type="checkbox" id="avatar-clear" name="avatar-clear" /></p>
+                            {% else %}
+                                <img src="{% static 'registration/img/no-avatar.jpg' %}" class="img-fluid" style="border-radius: 10%;border: 5px solid #f0ad4e;">
+                            {% endif %}
+                        </div>
+                        <!-- Formulario -->
+                        <div class="form-group">
+                            <div class="form-group row has-success">
+                                <div class="col-sm-12">
+                                    <p style="color:#5cb85c;"><b>Autocomplete fields:</b></p>
+                                    <input type="email" value="ID: {{request.user.id}}" class="form-control mt-3 form-control-success" readonly style="text-transform:none;color:#5cb85c;background: black;">
+                                    <input type="email" value="Email: {{request.user.email}}" class="form-control mt-3 form-control-success" readonly style="text-transform:none;color:#5cb85c;background: black;">
+                                </div>
+                            </div>
+                            <div class="form-group row has-danger">
+                                <div class="col-sm-12">
+                                    <p style="color:#d9534f;"><b>Required fields:</b></p>
+                                    {{ form.nickName }}
+                                    {{ form.nickName.errors }}
+                                </div>
+                                <div class="col-sm-12">
+                                    {{ form.rut }}
+                                    {{ form.rut.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group row has-warning">
+                                <div class="col-sm-12">
+                                    <p style="color:#f0ad4e;"><b>Optional fields:</b></p>
+                                    {{ form.birthDate }}
+                                    {{ form.birthDate.errors }}
+                                    {{ form.gender }}
+                                    {{ form.position }}
+                                    {{ form.workPhone }}
+                                    {{ form.phone }}
+                                    {{ form.nationality }}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <input type="file" name="avatar" class="col-md-12 form-control-file mt-3 btn info" id="id_avatar" style='color:#f0ad4e;background: black;'>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn info btn-block">Create Profile</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

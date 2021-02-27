@@ -1,0 +1,83 @@
+{% extends 'iot_module/includes/iotmodule_menu.html' %}
+{% load static %}
+{% block title %}Component Creation{% endblock %}
+{% block content %}
+<div class="padding">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box">
+        <div class="box-header">
+          <h2>Create component</h2>
+        </div>
+        <div class="box-divider m-0"></div>
+        <div class="box-body">
+          <form action="" method="post">
+            {% csrf_token %}
+            <div class="form-group row">
+                <label class="col-sm-2 form-control-label">Component Alias</label>
+                <div class="col-sm-10">
+                    {{ form.alias }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 form-control-label">Component Serial Code</label>
+                <div class="col-sm-10">
+                    {{ form.serialCode }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 form-control-label">Component Description</label>
+                <div class="col-sm-10">
+                    {{ form.description }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 form-control-label">Component IMEI Record</label>
+                <div class="col-sm-10">
+                    {{ form.imeiRecord }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 form-control-label">Component Type</label>
+                <div class="col-sm-10">
+                    {{ form.componentType }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 form-control-label">Component Connection Type</label>
+                <div class="col-sm-10">
+                    {{ form.connectionType }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 form-control-label">Component Supply Type</label>
+                <div class="col-sm-10">
+                    {{ form.supplyType }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 form-control-label">Component Latitude</label>
+                <div class="col-sm-10">
+                    {{ form.latitude }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 form-control-label">Component Longitude</label>
+                <div class="col-sm-10">
+                    {{ form.longitude }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 form-control-label">Component Status</label>
+                <div class="col-sm-10">
+                    {{ form.isEnabled }}
+                </div>
+            </div>
+            <button type="submit" class="btn white m-b">Create component</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

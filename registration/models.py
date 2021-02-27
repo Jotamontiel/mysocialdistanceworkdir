@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from .choices import COUNTRY_CHOICES, GENDER_CHOICES
 # from django.dispatch import receiver
 # from django.db.models.signals import post_save
 
@@ -15,11 +16,11 @@ class Profile(models.Model):
     avatar = models.ImageField(verbose_name="Profile Image", upload_to=avatar_custom_upload_to, blank=True)
     rut = models.CharField(verbose_name="Profile Rut", max_length=50, null=False, blank=False, unique=True)
     birthDate = models.DateField(verbose_name="Profile Birthday", null=True, blank=True)
-    gender = models.CharField(verbose_name="Profile Gender", max_length=20, null=True, blank=True)
+    gender = models.CharField(verbose_name="Profile Gender", max_length=7, choices=GENDER_CHOICES, default="N/A", null=True, blank=False)
     position = models.CharField(verbose_name="Profile Company Position", max_length=100, null=True, blank=True)
     workPhone = models.CharField(verbose_name="Profile Work Phone", max_length=100, null=True, blank=True)
     phone = models.CharField(verbose_name="Profile Phone", max_length=100, null=True, blank=True)
-    nationality = models.CharField(verbose_name="Profile Nationality", max_length=100, null=True, blank=True)
+    nationality = models.CharField(verbose_name="Profile Nationality", max_length=100, choices=COUNTRY_CHOICES, default="N/A", null=True, blank=False)
     created = models.DateTimeField(auto_now_add=True, verbose_name="Creation Date")
     updated = models.DateTimeField(auto_now=True, verbose_name="Update Date")
 
