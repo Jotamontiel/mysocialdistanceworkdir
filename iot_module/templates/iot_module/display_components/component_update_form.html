@@ -23,78 +23,91 @@
                 <label class="col-sm-2 form-control-label">Component Serial Code</label>
                 <div class="col-sm-10">
                     {{ component.serialCode }}
+                    {{ form.serialCode }}
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 form-control-label">Component Profile Owner</label>
                 <div class="col-sm-10">
                     {{ component.profile.user }}
+                    {{ form.profile }}
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 form-control-label">Component Updated</label>
                 <div class="col-sm-10">
                     {{ component.updated.date }}
+                    {{ form.updated }}
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 form-control-label">Component Created</label>
                 <div class="col-sm-10">
                     {{ component.created.date }}
+                    {{ form.created }}
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 form-control-label">Component Alias</label>
                 <div class="col-sm-10">
                     {{ form.alias }}
+                    {{ form.alias.errors }}
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 form-control-label">Component Description</label>
                 <div class="col-sm-10">
                     {{ form.description }}
+                    {{ form.description.errors }}
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 form-control-label">Component IMEI Record</label>
                 <div class="col-sm-10">
                     {{ form.imeiRecord }}
+                    {{ form.imeiRecord.errors }}
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 form-control-label">Component Type</label>
                 <div class="col-sm-10">
                     {{ form.componentType }}
+                    {{ form.componentType.errors }}
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 form-control-label">Component Connection Type</label>
                 <div class="col-sm-10">
                     {{ form.connectionType }}
+                    {{ form.connectionType.errors }}
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 form-control-label">Component Supply Type</label>
                 <div class="col-sm-10">
                     {{ form.supplyType }}
+                    {{ form.supplyType.errors }}
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 form-control-label">Component Latitude</label>
                 <div class="col-sm-10">
                     {{ form.latitude }}
+                    {{ form.latitude.errors }}
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 form-control-label">Component Longitude</label>
                 <div class="col-sm-10">
                     {{ form.longitude }}
+                    {{ form.longitude.errors }}
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 form-control-label">Component Status</label>
                 <div class="col-sm-10">
                     {{ form.isEnabled }}
+                    {{ form.isEnabled.errors }}
                 </div>
             </div>
             <button type="submit" class="btn white m-b">Edit Component</button>

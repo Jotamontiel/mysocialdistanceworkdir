@@ -1,0 +1,40 @@
+{% extends 'iot_module/includes/iotmodule_menu.html' %}
+{% load static %}
+{% block title %}Profile Email Editor{% endblock %}
+{% block content %}
+<style>.errorlist{color:red;} label{display:none}</style>
+<div class="padding">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="box">
+                <div class="box-header" style="text-align: center;">
+                    <h2><b style="color:#6887ff;">Update {{ user.username }} Email</b></h2>
+                </div>
+                <div class="box-divider m-0"></div>
+                <div class="box-body">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <p>Do you want to change your email? Update your email below.</p>
+                        {{ form.as_p }}
+                        <div class="col-md-12">
+                            <button type="submit" class="btn info btn-block">Update Email</button>
+                        </div>
+                    </form>
+                    <div class="form-group">
+                        <br>
+                        <div class="col-md-12">
+                            {% if view.kwargs.flag == '1' %}
+                                <a href="{% url 'iotmodule_profileupdate_display' user.profile.id user.profile.nickName|slugify %}" class="btn info btn-round btn-b btn-block" style="font-size:120%;color:white;">Return</a>
+                            {% elif view.kwargs.flag == '2' %}
+                                <a href="{% url 'iotmodule_profileupdateaux_display' user.profile.id user.profile.nickName|slugify %}" class="btn info btn-round btn-b btn-block" style="font-size:120%;color:white;">Return</a>
+                            {% else %}
+                                <a href="{% url 'iotmodule_profileupdateaux_display' user.profile.id user.profile.nickName|slugify %}" class="btn info btn-round btn-b btn-block" style="font-size:120%;color:white;">Return</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

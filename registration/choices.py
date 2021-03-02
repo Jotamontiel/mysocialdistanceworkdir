@@ -1,5 +1,5 @@
 COUNTRY_CHOICES = (
-('N/A','Enter your Country'),
+('N/A','Enter Country'),
 ('Afghanistan','Afghanistan'),
 ('Åland Islands','Åland Islands'),
 ('Albania','Albania'),
@@ -247,7 +247,7 @@ COUNTRY_CHOICES = (
 )
 
 GENDER_CHOICES = (
-('N/A','Enter your Gender'),
+('N/A','Enter Gender'),
 ('Male','Male'),
 ('Female','Female'),
 ('Other','Other'),

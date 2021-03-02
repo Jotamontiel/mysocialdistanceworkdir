@@ -43,6 +43,19 @@
 {% else %}
   <div class="padding">
     <div class="row">
+      <div class="col-xs-12 col-sm-12">
+        {% if 'okCreateProfile' in request.GET %}
+          <div class="box">
+            <div class="form-group row has-success">
+              <div class="col-sm-12">
+                <input type="text" class="form-control form-control-success" value="Your Profile has been created successfully !!">
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row">
       <div class="col-xs-12 col-sm-4">
         <div class="box p-a">
           <div class="pull-left m-r">

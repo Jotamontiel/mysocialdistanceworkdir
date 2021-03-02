@@ -1,38 +1,38 @@
 {% extends 'iot_module/includes/iotmodule_menu.html' %}
 {% load static %}
-{% block title %}Component List{% endblock %}
+{% block title %}Profile Admin List{% endblock %}
 {% block content %}
 <div class="padding">
     <div class="row">
         <div class="col-md-12">
-            {% if 'okEditComponent' in request.GET %}
+            {% if 'okEditProfile' in request.GET %}
                 <div class="box">
                     <div class="form-group row has-success">
                         <div class="col-sm-12">
-                            <input type="text" class="form-control form-control-success" value="A component has been updated successfully !!">
+                            <input type="text" class="form-control form-control-success" value="The profile has been updated successfully !!">
                         </div>
                     </div>
                 </div>
-            {% elif 'okDeleteComponent' in request.GET %}
+            {% elif 'okDeleteProfile' in request.GET %}
                 <div class="box">
                     <div class="form-group row has-danger">
                         <div class="col-sm-12">
-                            <input type="text" class="form-control form-control-danger" value="A component has been removed successfully !!">
+                            <input type="text" class="form-control form-control-danger" value="The profile has been removed successfully !!">
                         </div>
                     </div>
                 </div>
-            {% elif 'okCreateComponent' in request.GET %}
+            {% elif 'okCreateProfile' in request.GET %}
                 <div class="box">
                     <div class="form-group row has-success">
                         <div class="col-sm-12">
-                            <input type="text" class="form-control form-control-success" value="A component has been created successfully !!">
+                            <input type="text" class="form-control form-control-success" value="The profile has been created successfully !!">
                         </div>
                     </div>
                 </div>
             {% endif %}
             <div class="box">
-                <div class="box-header">
-                    <h3>Component Summary</h3>
+                <div class="box-header" style="text-align: center;">
+                    <h2><b style="color:#6887ff;">Profile Admin Summary</b></h2>
                 </div>
                 <!--div class="row p-a">
                     <div class="col-sm-5">
@@ -57,48 +57,54 @@
                 </div-->
                 <div class="table-responsive">
                     <table class="table table-striped b-t">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Alias</th>
-                            <th>Serial Code</th>
-                            <th>IMEI Record</th>
-                            <th>Component Profile Owner</th>
-                            <th>Component Type</th>
-                            <th>Connection Type</th>
-                            <th>Supply Type</th>
-                            <th>Status</th>
-                            <th>Updated</th>
-                            <th>Created</th>
-                            <th style="width:50px;"></th>
-                            {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
-                                <th style="width:50px;"></th>
-                                <th style="width:50px;"></th>
-                            {% endif %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for component in component_list %}
+                        <thead>
                             <tr>
-                                <td>{{ component.id }}</td>
-                                <td>{{ component.alias }}</td>
-                                <td>{{ component.serialCode }}</td>
-                                <td>{{ component.imeiRecord }}</td>
-                                <td>{{ component.profile.user }}</td>
-                                <td>{{ component.componentType }}</td>
-                                <td>{{ component.connectionType }}</td>
-                                <td>{{ component.supplyType }}</td>
-                                <td>{{ component.isEnabled }}</td>
-                                <td>{{ component.updated.date }}</td>
-                                <td>{{ component.created.date }}</td>
-                                <td><a href="{% url 'iotmodule_componentdetail_display' component.id component.alias|slugify %}"><button class="btn btn-fw info">Details</button></a></td>
+                                <th style="width:50px;"></th>
+                                <th>User</th>
+                                <th>Nick Name</th>
+                                <th>Rut</th>
+                                <th>Birth Date</th>
+                                <th>Gender</th>
+                                <th>Position</th>
+                                <th>Work Phone</th>
+                                <th>Phone</th>
+                                <th>Nationality</th>
+                                <th>Updated</th>
+                                <th>Created</th>
+                                <th style="width:50px;"></th>
                                 {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
-                                    <td><a href="{% url 'iotmodule_componentupdate_display' component.id component.alias|slugify %}"><button class="btn btn-fw primary">Edit</button></a></td>
-                                    <td><a href="{% url 'iotmodule_componentdelete_display' component.id %}"><button class="btn btn-fw danger">Delete</button></a></td>
+                                    <th style="width:50px;"></th>
+                                    <th style="width:50px;"></th>
                                 {% endif %}
                             </tr>
-                        {% endfor %}
-                    </tbody>
+                        </thead>
+                        <tbody>
+                            {% for profile in profile_list %}
+                                <tr>
+                                    {% if profile.avatar %}
+                                        <td><img src="{{profile.avatar.url}}" class="img-circle" width="30" height="30"></td>
+                                    {% else %}
+                                        <td><img src="{% static 'registration/img/no-avatar.jpg' %}" class="img-circle" width="30" height="30"></td>
+                                    {% endif %}
+                                    <td>{{ profile.user }}</td>
+                                    <td>{{ profile.nickName }}</td>
+                                    <td>{{ profile.rut }}</td>
+                                    <td>{{ profile.birthDate }}</td>
+                                    <td>{{ profile.gender }}</td>
+                                    <td>{{ profile.position }}</td>
+                                    <td>{{ profile.workPhone }}</td>
+                                    <td>{{ profile.phone }}</td>
+                                    <td>{{ profile.nationality }}</td>
+                                    <td>{{ profile.updated.date }}</td>
+                                    <td>{{ profile.created.date }}</td>
+                                    <td><a href="{% url 'iotmodule_profiledetail_display' profile.id profile.nickName|slugify %}"><button class="btn btn-fw info">Details</button></a></td>
+                                    {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
+                                        <td><a href="{% url 'iotmodule_profileupdate_display' profile.id profile.nickName|slugify %}"><button class="btn btn-fw primary">Edit</button></a></td>
+                                        <td><a href="{% url 'iotmodule_profiledelete_display' profile.id %}"><button class="btn btn-fw danger">Delete</button></a></td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
                     </table>
                 </div>
                 <!--footer class="dker p-a">

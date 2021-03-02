@@ -35,7 +35,7 @@
         <link rel="stylesheet" href="{% static 'celery_tasks/celerytasks_menu/assets/styles/app.css' %}" type="text/css" />
         <link rel="stylesheet" href="{% static 'celery_tasks/celerytasks_menu/assets/styles/font.css' %}" type="text/css" />
         <!-- CSS for datetimepicker -->
-        <link rel="stylesheet" href="{% static 'core/jqueryDateTimePicker/jquery-ui.css' %}" type="text/css" /> 
+        <link rel="stylesheet" href="{% static 'core/jqueryDateTimePicker/jquery-ui.css' %}" type="text/css" />
     </head>
     <body class="pace-done black" ui-class="black">
         <div class="app" id="app">
@@ -73,20 +73,25 @@
                                             </a>
                                             <ul class="nav-sub">
                                                 <li>
-                                                    <a href="#" >
-                                                        <span class="nav-text"><i class="fa fa-list"></i> List</span>
+                                                    <a href="{% url 'iotmodule_profileupdateaux_display' request.user.profile.id request.user.profile.nickName %}" >
+                                                        <span class="nav-text"><i class="fa fa-user"></i> My Profile</span>
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a href="#" >
-                                                        <span class="nav-text"><i class="fa fa-plus"></i> Add</span>
+                                                    <a href="{% url 'iotmodule_profilelist_display' %}" >
+                                                        <span class="nav-text"><i class="fa fa-list"></i> List Profiles</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{% url 'iotmodule_profilecreate_display' %}" >
+                                                        <span class="nav-text"><i class="fa fa-plus"></i> Add Profile</span>
                                                     </a>
                                                 </li>
                                             </ul>
                                         </li>
                                     {% else %}
                                         <li>
-                                            <a href="#">
+                                            <a href="{% url 'iotmodule_profileupdateaux_display' request.user.profile.id request.user.profile.nickName %}">
                                                 <span class="nav-icon"><i class="fa fa-user"></i></span><span class="nav-text">My Profile</span>
                                             </a>
                                         </li>

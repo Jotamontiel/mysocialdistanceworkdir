@@ -98,7 +98,7 @@
                 </li>
               {% else %}
                 <li>
-                  <a id="to_logouthomemenu_from_navbar" class="btn btn-danger btn-round" href="{% url 'logout' %}" onclick='addTmpUserToLink("to_logouthomemenu_from_navbar")'>Sign Out</a>
+                  <a id="to_iotdashboard_from_navbar" class="btn btn-danger btn-round" href="{% url 'iotmodule_dashboard_display' %}" onclick='addTmpUserToLink("to_iotdashboard_from_navbar")'>IoT Panel</a>
                 </li>
               {% endif %}
               <li class="nav-item">
@@ -132,6 +132,11 @@
                   </li>
                 </ul>
               </li>
+              {% if request.user.is_authenticated %}
+                <li>
+                  <a id="to_logouthomemenu_from_navbar" class="btn btn-danger btn-round" href="{% url 'logout' %}" onclick='addTmpUserToLink("to_logouthomemenu_from_navbar")'>Sign Out</a>
+                </li>
+              {% endif %}
             </ul>
           </div>
         </div>

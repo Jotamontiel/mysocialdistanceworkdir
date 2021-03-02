@@ -1,42 +1,26 @@
 {% extends 'iot_module/includes/iotmodule_menu.html' %}
 {% load static %}
-{% block title %}Create Profile{% endblock %}
+{% block title %}Profile Admin Creator{% endblock %}
 {% block content %}  
 <div class="padding">
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <div class="box">
                 <div class="box-header" style="text-align: center;">
-                    <h1><b style="color:#6887ff;">{{request.user.username}} - Profile</b></h1>
+                    <h1><b style="color:#6887ff;">Creating profile</b></h1>
                 </div>
                 <div class="box-body">
                     <form action="" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <!-- Previa del avatar -->
-                        <div class="form-group text-center">
-                            {% if request.user.profile.avatar %}
-                                <img src="{{request.user.profile.avatar.url}}" class="img-fluid" style="border-radius: 10%;border: 3px solid #f0ad4e;">
-                                <p class="mt-1">¿Borrar? <input type="checkbox" id="avatar-clear" name="avatar-clear" /></p>
-                            {% else %}
-                                <img src="{% static 'registration/img/no-avatar.jpg' %}" class="img-fluid" style="border-radius: 10%;border: 3px solid #f0ad4e;">
-                            {% endif %}
-                        </div>
                         <!-- Formulario -->
                         <div class="form-group">
-                            <div class="form-group row has-success">
-                                <div class="col-sm-12">
-                                    <p style="color:#5cb85c;"><b>Autocomplete fields:</b></p>
-                                    <input type="email" value="ID: {{request.user.id}}" class="form-control mt-3 form-control-success" readonly style="text-transform:none;color:#ffffff;background: black;">
-                                    <input type="email" value="Email: {{request.user.email}}" class="form-control mt-3 form-control-success" readonly style="text-transform:none;color:#ffffff;background: black;">
-                                </div>
-                            </div>
                             <div class="form-group row has-danger">
                                 <div class="col-sm-12">
-                                    <p style="color:#d9534f;"><b>Required fields:</b></p>
+                                    <p style="color:#d9534f;"><b>Required fields (First select the User):</b></p>
+                                    {{ form.user }}
+                                    {{ form.user.errors }}
                                     {{ form.nickName }}
                                     {{ form.nickName.errors }}
-                                </div>
-                                <div class="col-sm-12">
                                     {{ form.rut }}
                                     {{ form.rut.errors }}
                                 </div>
