@@ -100,7 +100,11 @@
                                     <td><a href="{% url 'iotmodule_profiledetail_display' profile.id profile.nickName|slugify %}"><button class="btn btn-fw info">Details</button></a></td>
                                     {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
                                         <td><a href="{% url 'iotmodule_profileupdate_display' profile.id profile.nickName|slugify %}"><button class="btn btn-fw primary">Edit</button></a></td>
-                                        <td><a href="{% url 'iotmodule_profiledelete_display' profile.id %}"><button class="btn btn-fw danger">Delete</button></a></td>
+                                        {% if not request.user.id == profile.user.id %}
+                                            <td><a href="{% url 'iotmodule_profiledelete_display' profile.id %}"><button class="btn btn-fw danger">Delete</button></a></td>
+                                        {% else %}
+                                            <td><a href="{% url 'iotmodule_profiledeleteaux_display' profile.id 2|slugify %}"><button class="btn btn-fw danger">Delete</button></a></td>
+                                        {% endif %}
                                     {% endif %}
                                 </tr>
                             {% endfor %}

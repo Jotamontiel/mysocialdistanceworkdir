@@ -30,6 +30,15 @@
   <div class="padding">
     <div class="row">
       <div class="col-md-6 offset-md-3">
+        {% if 'okDeleteProfile' in request.GET %}
+          <div class="box">
+            <div class="form-group row has-danger">
+              <div class="col-sm-12">
+                <input type="text" class="form-control form-control-danger" value="Your Profile has been Deleted successfully !!">
+              </div>
+            </div>
+          </div>
+        {% endif %}
         <div class="box">
           <div class="box-header">
             <h2>Creating your profile</h2>

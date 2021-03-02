@@ -53,7 +53,7 @@ class IotModuleUserEmailUpdateView(UpdateView):
 class IotModuleProfileListView(ListView):
     model = Profile
     template_name = "iot_module/display_profiles/profile_list.html"
-    paginate_by = 10
+    paginate_by = 20
 
 @method_decorator(login_required, name='dispatch')
 class IotModuleProfileDetailView(DetailView):
@@ -87,25 +87,31 @@ class IotModuleProfileDeleteView(DeleteView):
         return reverse_lazy('iotmodule_profilelist_display') + '?okDeleteProfile'
 
 @method_decorator(login_required, name='dispatch')
+class IotModuleProfileDeleteAuxView(DeleteView):
+    model = Profile
+    template_name = "iot_module/display_profiles/profile_aux_confirm_delete.html"
+    
+    def get_success_url(self):
+        return reverse_lazy('iotmodule_dashboard_display') + '?okDeleteProfile'
+
+@method_decorator(login_required, name='dispatch')
 class IotModuleProfileCreateView(CreateView):
     model = Profile
     form_class = ProfileAdminForm
     template_name = "iot_module/display_profiles/profile_form.html"
-    success_url = reverse_lazy('iotmodule_profilelist_display')
 
     def get_success_url(self):
         return reverse_lazy('iotmodule_profilelist_display') + '?okCreateProfile'
 
 @method_decorator(login_required, name='dispatch')
-class IotModuleProfileCreateAuxView(UpdateView):
+class IotModuleProfileCreateAuxView(CreateView):
     model = Profile
     form_class = ProfileForm
     template_name = "iot_module/display_profiles/profile_aux_form.html"
 
-    def get_object(self):
-        # recuperar objeto que se va editar
-        profile, created = Profile.objects.get_or_create(user=self.request.user)
-        return profile
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(IotModuleProfileCreateAuxView, self).form_valid(form)
     
     def get_success_url(self):
         return reverse_lazy('iotmodule_dashboard_display') + '?okCreateProfile'

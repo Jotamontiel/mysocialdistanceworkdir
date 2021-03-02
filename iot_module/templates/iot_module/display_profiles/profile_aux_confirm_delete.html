@@ -1,6 +1,6 @@
 {% extends 'iot_module/includes/iotmodule_menu.html' %}
 {% load static %}
-{% block title %}Profile Admin Deleter{% endblock %}
+{% block title %}Delete Profile{% endblock %}
 {% block content %}
 <div class="padding">
     <div class="row">
@@ -25,7 +25,13 @@
                     <div class="form-group">
                         <br>
                         <div class="col-md-12">
-                            <a href="{% url 'iotmodule_profilelist_display' %}" class="btn info btn-round btn-b btn-block" style="font-size:120%;color:white;">Return</a>
+                            {% if view.kwargs.flag == '1' %}
+                                <a href="{% url 'iotmodule_profileupdateaux_display' request.user.profile.id request.user.profile.nickName|slugify %}" class="btn info btn-round btn-b btn-block" style="font-size:120%;color:white;">Return</a>
+                            {% elif view.kwargs.flag == '2' %}
+                                <a href="{% url 'iotmodule_profilelist_display' %}" class="btn info btn-round btn-b btn-block" style="font-size:120%;color:white;">Return</a>
+                            {% else %}
+                                <a href="{% url 'iotmodule_profileupdateaux_display' request.user.profile.id request.user.profile.nickName|slugify %}" class="btn info btn-round btn-b btn-block" style="font-size:120%;color:white;">Return</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
