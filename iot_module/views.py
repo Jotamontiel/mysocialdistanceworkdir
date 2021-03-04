@@ -7,8 +7,8 @@ from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import Component
-from .forms import ComponentForm
+from .models import Company, Component
+from .forms import CompanyForm, CompanyUpdateForm, ComponentForm
 from registration.models import Profile
 from registration.forms import ProfileForm, ProfileAdminForm, ProfileUpdateForm, UserEmailUpdateForm
 from django import forms
@@ -115,6 +115,58 @@ class IotModuleProfileCreateAuxView(CreateView):
     
     def get_success_url(self):
         return reverse_lazy('iotmodule_dashboard_display') + '?okCreateProfile'
+
+##############################################################################################
+########## COMPANY VIEWS: LIST, DETAIL, UPDATE, DELETE, CREATE ###############################
+##############################################################################################
+@method_decorator(login_required, name='dispatch')
+class IotModuleCompanyListView(ListView):
+    model = Company
+    template_name = "iot_module/display_companies/company_list.html"
+    paginate_by = 20
+
+    def get_context_data(self, **kwargs):
+        context = super(IotModuleCompanyListView, self).get_context_data(**kwargs)
+        if self.request.user.is_staff:
+            context['company_list'] = Company.objects.all().order_by('profile')
+        else:
+            context['company_list'] = Company.objects.filter(profile=self.request.user.profile)
+        return context
+
+@method_decorator(login_required, name='dispatch')
+class IotModuleCompanyDetailView(DetailView):
+    model = Company
+    template_name = "iot_module/display_companies/company_detail.html"
+
+@method_decorator(login_required, name='dispatch')
+class IotModuleCompanyUpdateView(UpdateView):
+    model = Company
+    form_class = CompanyUpdateForm
+    template_name = "iot_module/display_companies/company_update_form.html"
+
+    def get_success_url(self):
+        return reverse_lazy('iotmodule_companylist_display') + '?okEditCompany'
+
+@method_decorator(login_required, name='dispatch')
+class IotModuleCompanyDeleteView(DeleteView):
+    model = Company
+    template_name = "iot_module/display_companies/company_confirm_delete.html"
+    
+    def get_success_url(self):
+        return reverse_lazy('iotmodule_companylist_display') + '?okDeleteCompany'
+
+@method_decorator(login_required, name='dispatch')
+class IotModuleCompanyCreateView(CreateView):
+    model = Company
+    form_class = CompanyForm
+    template_name = "iot_module/display_companies/company_form.html"
+
+    def form_valid(self, form):
+        form.instance.profile = self.request.user.profile
+        return super(IotModuleCompanyCreateView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('iotmodule_companylist_display') + '?okCreateCompany'
 
 ##############################################################################################
 ########## COMPONENT VIEWS: LIST, DETAIL, UPDATE, DELETE, CREATE #############################

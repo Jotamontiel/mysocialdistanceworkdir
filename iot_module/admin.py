@@ -58,9 +58,9 @@ class ComponentAdmin(admin.ModelAdmin):
 
 class CompanyAdmin(admin.ModelAdmin):
     readonly_fields = ('created', 'updated')
-    list_display = ('businessName', 'rut', 'street', 'number', 'office', 'city', 'profile', 'postalCode', 'email', 'updated', 'created')
+    list_display = ('businessName', 'rut', 'address', 'number', 'office', 'country', 'profile', 'postalCode', 'email', 'updated', 'created')
     ordering = ('businessName', 'rut', 'created')
-    search_fields = ('businessName', 'rut', 'street', 'number', 'office', 'city', 'profile', 'postalCode', 'email')
+    search_fields = ('businessName', 'rut', 'address', 'number', 'office', 'country', 'profile', 'postalCode', 'email')
     
     class Media:
         css = {

@@ -63,14 +63,10 @@
                                 <th>User</th>
                                 <th>Nick Name</th>
                                 <th>Rut</th>
-                                <th>Birth Date</th>
                                 <th>Gender</th>
                                 <th>Position</th>
                                 <th>Work Phone</th>
-                                <th>Phone</th>
                                 <th>Nationality</th>
-                                <th>Updated</th>
-                                <th>Created</th>
                                 <th style="width:50px;"></th>
                                 {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
                                     <th style="width:50px;"></th>
@@ -89,14 +85,10 @@
                                     <td>{{ profile.user }}</td>
                                     <td>{{ profile.nickName }}</td>
                                     <td>{{ profile.rut }}</td>
-                                    <td>{{ profile.birthDate }}</td>
                                     <td>{{ profile.gender }}</td>
                                     <td>{{ profile.position }}</td>
                                     <td>{{ profile.workPhone }}</td>
-                                    <td>{{ profile.phone }}</td>
                                     <td>{{ profile.nationality }}</td>
-                                    <td>{{ profile.updated.date }}</td>
-                                    <td>{{ profile.created.date }}</td>
                                     <td><a href="{% url 'iotmodule_profiledetail_display' profile.id profile.nickName|slugify %}"><button class="btn btn-fw info">Details</button></a></td>
                                     {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
                                         <td><a href="{% url 'iotmodule_profileupdate_display' profile.id profile.nickName|slugify %}"><button class="btn btn-fw primary">Edit</button></a></td>

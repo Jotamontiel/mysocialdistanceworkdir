@@ -34,8 +34,6 @@
         <link rel="stylesheet" href="{% static 'celery_tasks/celerytasks_menu/libs/js/dropzone/dist/min/dropzone.min.css' %}" type="text/css" />
         <link rel="stylesheet" href="{% static 'celery_tasks/celerytasks_menu/assets/styles/app.css' %}" type="text/css" />
         <link rel="stylesheet" href="{% static 'celery_tasks/celerytasks_menu/assets/styles/font.css' %}" type="text/css" />
-        <!-- CSS for datetimepicker -->
-        <link rel="stylesheet" href="{% static 'core/jqueryDateTimePicker/jquery-ui.css' %}" type="text/css" />
     </head>
     <body class="pace-done black" ui-class="black">
         <div class="app" id="app">
@@ -57,7 +55,7 @@
                                 {% if not request.user.profile or not request.user.profile.nickName or not request.user.profile.rut %}
                                     <li>
                                         <a id="to_iotdashboard_from_iotmodulepanel" href="{% url 'iotmodule_dashboard_display' %}" onclick='addTmpUserToLink("to_iotdashboard_from_iotmodulepanel")'>
-                                            <span class="nav-icon"><i class="fa fa-user"></i></span><span class="nav-text">Create Profile</span>
+                                            <span class="nav-icon"><i class="fa fa-plus"></i><i class="fa fa-user"></i></span><span class="nav-text">Add My Profile</span>
                                         </a>
                                     </li>
                                 {% else %}
@@ -66,6 +64,7 @@
                                             <span class="nav-icon"><i class="fa fa-bar-chart"></i></span><span class="nav-text">IoT Dashboard</span>
                                         </a>
                                     </li>
+                                    <!-- Profiles Admin Nav [Begin] -->
                                     {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
                                         <li>
                                             <a href="#">
@@ -79,7 +78,7 @@
                                                 </li>
                                                 <li>
                                                     <a href="{% url 'iotmodule_profilelist_display' %}" >
-                                                        <span class="nav-text"><i class="fa fa-list"></i> List Profiles</span>
+                                                        <span class="nav-text"><i class="fa fa-list"></i> Profile List</span>
                                                     </a>
                                                 </li>
                                                 <li>
@@ -96,43 +95,28 @@
                                             </a>
                                         </li>
                                     {% endif %}
-                                    {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
+                                    <!-- Profiles Admin Nav [Finish] -->
+                                    <!-- Companies Admin Nav [Begin] -->
+                                    {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut %}
                                         <li>
                                             <a href="#">
                                                 <span class="nav-icon"><i class="fa fa-building-o"></i></span><span class="nav-text">Companies</span>
                                             </a>
                                             <ul class="nav-sub">
                                                 <li>
-                                                    <a href="#" >
-                                                        <span class="nav-text"><i class="fa fa-list"></i> List</span>
+                                                    <a href="{% url 'iotmodule_companylist_display' %}" >
+                                                        <span class="nav-text"><i class="fa fa-list"></i> Company List</span>
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a href="#" >
-                                                        <span class="nav-text"><i class="fa fa-plus"></i> Add</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    {% else %}
-                                        <li>
-                                            <a href="#">
-                                                <span class="nav-icon"><i class="fa fa-building-o"></i></span><span class="nav-text">My Companies</span>
-                                            </a>
-                                            <ul class="nav-sub">
-                                                <li>
-                                                    <a href="#" >
-                                                        <span class="nav-text"><i class="fa fa-list"></i> List</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" >
-                                                        <span class="nav-text"><i class="fa fa-plus"></i> Add</span>
+                                                    <a href="{% url 'iotmodule_companycreate_display' %}" >
+                                                        <span class="nav-text"><i class="fa fa-plus"></i> Add Company</span>
                                                     </a>
                                                 </li>
                                             </ul>
                                         </li>
                                     {% endif %}
+                                    <!-- Companies Admin Nav [Finish] -->
                                     {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
                                         <li>
                                             <a href="#">
@@ -419,9 +403,5 @@
         <!-- Javascript for mqtt connections -->
         <script src="{% static 'core/mqtt/mqtt.min.js' %}"></script>
         <script src="{% static 'core/mqtt/iot_module/dashboard.js' %}"></script>
-        <!-- Javascript for datetimepicker -->
-        <script src="{% static 'core/jqueryDateTimePicker/jquery-1.9.1.js' %}"></script>
-        <script src="{% static 'core/jqueryDateTimePicker/jquery-ui.js' %}"></script>
-        <script src="{% static 'core/jqueryDateTimePicker/pickerInitialization.js' %}"></script>
     </body>
 </html>

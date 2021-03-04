@@ -1,19 +1,24 @@
 from django.db import models
 from registration.models import Profile
+from registration.choices import COUNTRY_CHOICES
 
-# Create your models here.
+def logolink_custom_upload_to(instance, filename):
+    old_instance = Company.objects.get(pk=instance.pk)
+    old_instance.logoLink.delete()
+    return 'iot_module/companies' + filename
+
 class Company(models.Model):
     businessName = models.CharField(verbose_name="Business Name", max_length=500, null=False, blank=False)
     rut = models.CharField(verbose_name="Rut", max_length=50, null=False, blank=False, unique=True)
-    logoLink = models.ImageField(verbose_name="Logo (400x300 px)", upload_to="iot_module/companies", blank=True)
-    street =  models.CharField(verbose_name="Street", max_length=200, null=True, blank=True)
+    logoLink = models.ImageField(verbose_name="Logo (400x300 px)", upload_to=logolink_custom_upload_to, blank=True)
+    address =  models.CharField(verbose_name="Address", max_length=200, null=True, blank=True)
     number = models.CharField(verbose_name="Number", max_length=100, null=True, blank=True)
     office = models.CharField(verbose_name="Office", max_length=200, null=True, blank=True)
-    city = models.CharField(verbose_name="City", max_length=200, null=False, blank=False)
+    country = models.CharField(verbose_name="Country", max_length=100, choices=COUNTRY_CHOICES, default="N/A", null=False, blank=False)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     postalCode = models.CharField(verbose_name="Postal Code", max_length=200, null=True, blank=True)
     phone = models.CharField(verbose_name="Phone", max_length=200, null=True, blank=True)
-    email = models.EmailField(verbose_name="Email", max_length=300, null=True, blank=True, unique=True)
+    email = models.EmailField(verbose_name="Email", max_length=300, null=False, blank=False, unique=True)
     created = models.DateTimeField(auto_now_add=True, verbose_name="Creation Date")
     updated = models.DateTimeField(auto_now=True, verbose_name="Update Date")
 

@@ -26,7 +26,7 @@
                         <div class="form-group text-center">
                             {% if profile.avatar %}
                                 <img src="{{profile.avatar.url}}" class="img-fluid" style="border-radius: 10%;border: 3px solid #f0ad4e;" width="250" height="250">
-                                <p class="mt-1">¿Delete? <input type="checkbox" id="avatar-clear" name="avatar-clear" /></p>
+                                <p class="mt-1" style="color:#f44455"><input type="checkbox" id="avatar-clear" name="avatar-clear" /> Select to delete</p>
                             {% else %}
                                 <img src="{% static 'registration/img/no-avatar.jpg' %}" class="img-fluid" style="border-radius: 10%;border: 3px solid #f0ad4e;" width="250" height="250">
                             {% endif %}
@@ -35,7 +35,7 @@
                         <div class="form-group">
                             <div class="form-group row has-success">
                                 <div class="col-sm-12">
-                                    <p style="color:#5cb85c;"><b>Non-editable fields:</b></p>
+                                    <p style="color:#5cb85c;"><b>Blocked fields:</b></p>
                                     <input type="email" value="ID: {{profile.user.id}}" class="form-control mt-3 form-control-success" readonly style="text-transform:none;color:#ffffff;background: black;">
                                     <input type="email" value="Email: {{profile.user.email}}" class="form-control mt-3 form-control-success" readonly style="text-transform:none;color:#ffffff;background: black;">
                                     <input type="email" value="Nick Name: {{profile.nickName}}" class="form-control mt-3 form-control-success" readonly style="text-transform:none;color:#ffffff;background: black;">
@@ -43,19 +43,26 @@
                                 </div>
                             </div>
                             <div class="form-group row has-warning">
-                                <div class="col-sm-12">
+                                <div class="col-sm-12" style="color:#f0ad4e;">
                                     <p style="color:#f0ad4e;"><b>Editable fields:</b></p>
                                     {{ form.birthDate }}
+                                    **Enter birthdate
                                     {{ form.birthDate.errors }}
                                     {{ form.gender }}
+                                    **Enter gender or orientation
                                     {{ form.position }}
+                                    **Enter office position
                                     {{ form.workPhone }}
+                                    **Enter work phone
                                     {{ form.phone }}
+                                    **Enter personal phone
                                     {{ form.nationality }}
+                                    **Enter nationality or country
+                                    <div class="col-md-12" style='color:#f0ad4e;'>
+                                        <input type="file" name="avatar" class="col-md-12 form-control-file mt-3 btn" id="id_avatar" style='color:#ffffff;background: black;border: 1px solid #f0ad4e;'>
+                                        **Upload profile picture
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-12" style='color:#f0ad4e;'>
-                                Upload profile picture: <input type="file" name="avatar" class="col-md-12 form-control-file mt-3 btn info" id="id_avatar" style='color:#ffffff;background: black;border: 1px solid #f0ad4e;'>
                             </div>
                         </div>
                         <div class="col-md-12">

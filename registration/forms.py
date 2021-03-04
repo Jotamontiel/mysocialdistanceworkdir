@@ -1,22 +1,24 @@
 from django import forms
 from .models import Profile
+from iot_module.models import Company
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+
+class DateInput(forms.DateInput):
+    input_type = 'date'
 
 class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ['nickName', 'avatar', 'rut', 'birthDate', 'gender', 'position', 'workPhone', 'phone', 'nationality']
+        fields = ['nickName', 'rut', 'gender', 'position', 'workPhone', 'phone', 'nationality']
         widgets = {
-            'nickName': forms.TextInput(attrs={'class':'form-control mt-3 form-control-danger', 'placeholder':'Enter your NickName', 'style': 'text-transform:none;color:#ffffff;background: black;'}),
-            'avatar': forms.ClearableFileInput(attrs={'class':'form-control-file mt-3'}),
-            'rut': forms.TextInput(attrs={'class':'form-control mt-3 form-control-danger', 'placeholder':'Enter Rut, e.g. 11222333-k', 'style': 'text-transform:none;color:#ffffff;background: black;'}),
-            'birthDate': forms.DateInput(attrs={'class':'form-control mt-3 date has-value datepicker', 'placeholder':'Enter Birthday, e.g. YYYY-MM-DD', 'style': 'text-transform:none;color:#ffffff;background: black;'}),
+            'nickName': forms.TextInput(attrs={'class':'form-control mt-3 form-control-danger', 'placeholder':'Enter your NickName', 'style': 'text-transform:none;color:#ffffff;'}),
+            'rut': forms.TextInput(attrs={'class':'form-control mt-3 form-control-danger', 'placeholder':'Enter Rut, e.g. 11222333-k', 'style': 'text-transform:none;color:#ffffff;'}),
             'gender': forms.Select(attrs={'class':'form-control mt-3 form-control-warning', 'style': 'color:#ffffff;background: black;'}),
-            'position': forms.TextInput(attrs={'class':'form-control mt-3 form-control-warning', 'placeholder':'Enter Office Position', 'style': 'text-transform:none;color:#ffffff;background: black;'}),
-            'workPhone': forms.TextInput(attrs={'class':'form-control mt-3 form-control-warning', 'placeholder':'Enter WorkPhone, e.g. +56999123002', 'style': 'text-transform:none;color:#ffffff;background: black;'}),
-            'phone': forms.TextInput(attrs={'class':'form-control mt-3 form-control-warning', 'placeholder':'Enter Phone, e.g. +56999123002', 'style': 'text-transform:none;color:#ffffff;background: black;'}),
+            'position': forms.TextInput(attrs={'class':'form-control mt-3 form-control-warning', 'placeholder':'Enter Office Position', 'style': 'text-transform:none;color:#ffffff;'}),
+            'workPhone': forms.TextInput(attrs={'class':'form-control mt-3 form-control-warning', 'placeholder':'Enter WorkPhone, e.g. +56999123002', 'style': 'text-transform:none;color:#ffffff;'}),
+            'phone': forms.TextInput(attrs={'class':'form-control mt-3 form-control-warning', 'placeholder':'Enter Phone, e.g. +56999123002', 'style': 'text-transform:none;color:#ffffff;'}),
             'nationality': forms.Select(attrs={'class':'form-control mt-3 form-control-warning', 'style': 'color:#ffffff;background: black;'}),
         }
     
@@ -28,7 +30,7 @@ class ProfileForm(forms.ModelForm):
     
     def clean_rut(self):
         rut = self.cleaned_data.get("rut")
-        if Profile.objects.filter(rut=rut).exists():
+        if Profile.objects.filter(rut=rut).exists() or Company.objects.filter(rut=rut).exists():
             raise ValidationError("The Rut you want to use already exists, try another please.")
         return rut    
     
@@ -44,18 +46,13 @@ class ProfileUpdateForm(forms.ModelForm):
         fields = ['avatar', 'birthDate', 'gender', 'position', 'workPhone', 'phone', 'nationality']
         widgets = {
             'avatar': forms.ClearableFileInput(attrs={'class':'form-control-file mt-3'}),
-            'birthDate': forms.DateInput(attrs={'class':'form-control mt-3 date has-value datepicker', 'placeholder':'Enter Birthday, e.g. YYYY-MM-DD', 'style': 'text-transform:none;color:#ffffff;background: black;'}),
+            'birthDate': DateInput(attrs={'class':'form-control mt-3', 'style': 'color:#ffffff;'}),
             'gender': forms.Select(attrs={'class':'form-control mt-3 form-control-warning', 'style': 'color:#ffffff;background: black;'}),
-            'position': forms.TextInput(attrs={'class':'form-control mt-3 form-control-warning', 'placeholder':'Enter Office Position', 'style': 'text-transform:none;color:#ffffff;background: black;'}),
-            'workPhone': forms.TextInput(attrs={'class':'form-control mt-3 form-control-warning', 'placeholder':'Enter WorkPhone, e.g. +56999123002', 'style': 'text-transform:none;color:#ffffff;background: black;'}),
-            'phone': forms.TextInput(attrs={'class':'form-control mt-3 form-control-warning', 'placeholder':'Enter Phone, e.g. +56999123002', 'style': 'text-transform:none;color:#ffffff;background: black;'}),
+            'position': forms.TextInput(attrs={'class':'form-control mt-3 form-control-warning', 'placeholder':'Enter Office Position', 'style': 'text-transform:none;color:#ffffff;'}),
+            'workPhone': forms.TextInput(attrs={'class':'form-control mt-3 form-control-warning', 'placeholder':'Enter WorkPhone, e.g. +56999123002', 'style': 'text-transform:none;color:#ffffff;'}),
+            'phone': forms.TextInput(attrs={'class':'form-control mt-3 form-control-warning', 'placeholder':'Enter Phone, e.g. +56999123002', 'style': 'text-transform:none;color:#ffffff;'}),
             'nationality': forms.Select(attrs={'class':'form-control mt-3 form-control-warning', 'style': 'color:#ffffff;background: black;'}),
         }
-    
-    def __init__(self, *args, **kwargs):
-        super(ProfileUpdateForm, self).__init__(*args, **kwargs)
-        self.initial['gender'] = 'N/A'
-        self.initial['nationality'] = 'N/A'
 
 class UserEmailUpdateForm(forms.ModelForm):
     email = forms.EmailField(required=True, help_text="Required, 254 characters maximum and must be valid.")
@@ -75,17 +72,15 @@ class ProfileAdminForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ['user', 'nickName', 'avatar', 'rut', 'birthDate', 'gender', 'position', 'workPhone', 'phone', 'nationality']
+        fields = ['user', 'nickName', 'rut', 'gender', 'position', 'workPhone', 'phone', 'nationality']
         widgets = {
             'user': forms.Select(attrs={'class':'form-control mt-3 form-control-danger', 'style': 'color:#ffffff;background: black;'}),
-            'nickName': forms.TextInput(attrs={'class':'form-control mt-3 form-control-danger', 'placeholder':'Enter NickName', 'style': 'text-transform:none;color:#ffffff;background: black;'}),
-            'avatar': forms.ClearableFileInput(attrs={'class':'form-control-file mt-3'}),
-            'rut': forms.TextInput(attrs={'class':'form-control mt-3 form-control-danger', 'placeholder':'Enter Rut, e.g. 11222333-k', 'style': 'text-transform:none;color:#ffffff;background: black;'}),
-            'birthDate': forms.DateInput(attrs={'class':'form-control mt-3 date has-value datepicker', 'placeholder':'Enter Birthday, e.g. YYYY-MM-DD', 'style': 'text-transform:none;color:#ffffff;background: black;'}),
+            'nickName': forms.TextInput(attrs={'class':'form-control mt-3 form-control-danger', 'placeholder':'Enter NickName', 'style': 'text-transform:none;color:#ffffff;'}),
+            'rut': forms.TextInput(attrs={'class':'form-control mt-3 form-control-danger', 'placeholder':'Enter Rut, e.g. 11222333-k', 'style': 'text-transform:none;color:#ffffff;'}),
             'gender': forms.Select(attrs={'class':'form-control mt-3 form-control-warning', 'style': 'color:#ffffff;background: black;'}),
-            'position': forms.TextInput(attrs={'class':'form-control mt-3 form-control-warning', 'placeholder':'Enter Office Position', 'style': 'text-transform:none;color:#ffffff;background: black;'}),
-            'workPhone': forms.TextInput(attrs={'class':'form-control mt-3 form-control-warning', 'placeholder':'Enter WorkPhone, e.g. +56999123002', 'style': 'text-transform:none;color:#ffffff;background: black;'}),
-            'phone': forms.TextInput(attrs={'class':'form-control mt-3 form-control-warning', 'placeholder':'Enter Phone, e.g. +56999123002', 'style': 'text-transform:none;color:#ffffff;background: black;'}),
+            'position': forms.TextInput(attrs={'class':'form-control mt-3 form-control-warning', 'placeholder':'Enter Office Position', 'style': 'text-transform:none;color:#ffffff;'}),
+            'workPhone': forms.TextInput(attrs={'class':'form-control mt-3 form-control-warning', 'placeholder':'Enter WorkPhone, e.g. +56999123002', 'style': 'text-transform:none;color:#ffffff;'}),
+            'phone': forms.TextInput(attrs={'class':'form-control mt-3 form-control-warning', 'placeholder':'Enter Phone, e.g. +56999123002', 'style': 'text-transform:none;color:#ffffff;'}),
             'nationality': forms.Select(attrs={'class':'form-control mt-3 form-control-warning', 'style': 'color:#ffffff;background: black;'}),
         }
     
@@ -97,7 +92,7 @@ class ProfileAdminForm(forms.ModelForm):
     
     def clean_rut(self):
         rut = self.cleaned_data.get("rut")
-        if Profile.objects.filter(rut=rut).exists():
+        if Profile.objects.filter(rut=rut).exists() or Company.objects.filter(rut=rut).exists():
             raise ValidationError("The Rut you want to use already exists, try another please.")
         return rut    
     

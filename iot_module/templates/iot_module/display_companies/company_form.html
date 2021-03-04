@@ -1,0 +1,49 @@
+{% extends 'iot_module/includes/iotmodule_menu.html' %}
+{% load static %}
+{% block title %}Company Admin Creator{% endblock %}
+{% block content %}  
+<div class="padding">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="box">
+                <div class="box-header" style="text-align: center;">
+                    <h1><b style="color:#6887ff;">Creating company</b></h1>
+                </div>
+                <div class="box-body">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <!-- Formulario -->
+                        <div class="form-group">
+                            <div class="form-group row has-danger">
+                                <div class="col-sm-12">
+                                    <p style="color:#d9534f;"><b>Required fields:</b></p>
+                                    {{ form.businessName }}
+                                    {{ form.businessName.errors }}
+                                    {{ form.rut }}
+                                    {{ form.rut.errors }}
+                                    {{ form.country }}
+                                    {{ form.email }}
+                                    {{ form.email.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group row has-warning">
+                                <div class="col-sm-12">
+                                    <p style="color:#f0ad4e;"><b>Optional fields:</b></p>
+                                    {{ form.address }}
+                                    {{ form.number }}
+                                    {{ form.office }}
+                                    {{ form.postalCode }}
+                                    {{ form.phone }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn info btn-block">Create Company</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

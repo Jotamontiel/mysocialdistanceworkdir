@@ -1,0 +1,129 @@
+{% extends 'iot_module/includes/iotmodule_menu.html' %}
+{% load static %}
+{% block title %}Companies Admin List{% endblock %}
+{% block content %}
+<div class="padding">
+    <div class="row">
+        <div class="col-md-12">
+            {% if 'okEditCompany' in request.GET %}
+                <div class="box">
+                    <div class="form-group row has-success">
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control form-control-success" value="The company has been updated successfully !!">
+                        </div>
+                    </div>
+                </div>
+            {% elif 'okDeleteCompany' in request.GET %}
+                <div class="box">
+                    <div class="form-group row has-danger">
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control form-control-danger" value="The company has been removed successfully !!">
+                        </div>
+                    </div>
+                </div>
+            {% elif 'okCreateCompany' in request.GET %}
+                <div class="box">
+                    <div class="form-group row has-success">
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control form-control-success" value="The company has been created successfully !!">
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="box">
+                <div class="box-header" style="text-align: center;">
+                    <h2><b style="color:#6887ff;">Company Admin Summary</b></h2>
+                </div>
+                <!--div class="row p-a">
+                    <div class="col-sm-5">
+                    <select class="input-sm form-control w-sm inline v-middle">
+                        <option value="0">Bulk action</option>
+                        <option value="1">Delete selected</option>
+                        <option value="2">Bulk edit</option>
+                        <option value="3">Export</option>
+                    </select>
+                    <button class="btn btn-sm white">Apply</button>                
+                    </div>
+                    <div class="col-sm-4">
+                    </div>
+                    <div class="col-sm-3">
+                    <div class="input-group input-group-sm">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <span class="input-group-btn">
+                        <button class="btn b-a white" type="button">Go!</button>
+                        </span>
+                    </div>
+                    </div>
+                </div-->
+                <div class="table-responsive">
+                    <table class="table table-striped b-t">
+                        <thead>
+                            <tr>
+                                <th style="width:50px;"></th>
+                                <th>Profile Owner</th>
+                                <th>Business Name</th>
+                                <th>Rut</th>
+                                <th>Address</th>
+                                <th>Country</th>
+                                <th>Email</th>
+                                <th style="width:50px;"></th>
+                                {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
+                                    <th style="width:50px;"></th>
+                                    <th style="width:50px;"></th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for company in company_list %}
+                                <tr>
+                                    {% if company.logoLink %}
+                                        <td><img src="{{company.logoLink.url}}" class="img-circle" width="30" height="30"></td>
+                                    {% else %}
+                                        <td><img src="{% static 'registration/img/no-logo-company.png' %}" class="img-circle" width="30" height="30"></td>
+                                    {% endif %}
+                                    <td>{{ company.profile }}</td>
+                                    <td>{{ company.businessName }}</td>
+                                    <td>{{ company.rut }}</td>
+                                    <td>{{ company.address }}</td>
+                                    <td>{{ company.country }}</td>
+                                    <td>{{ company.email }}</td>
+                                    <td><a href="{% url 'iotmodule_companydetail_display' company.id company.businessName|slugify %}"><button class="btn btn-fw info">Details</button></a></td>
+                                    <td><a href="{% url 'iotmodule_companyupdate_display' company.id company.businessName|slugify %}"><button class="btn btn-fw primary">Edit</button></a></td>
+                                    <td><a href="{% url 'iotmodule_companydelete_display' company.id %}"><button class="btn btn-fw danger">Delete</button></a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!--footer class="dker p-a">
+                    <div class="row">
+                    <div class="col-sm-4 hidden-xs">
+                        <select class="input-sm form-control w-sm inline v-middle">
+                        <option value="0">Bulk action</option>
+                        <option value="1">Delete selected</option>
+                        <option value="2">Bulk edit</option>
+                        <option value="3">Export</option>
+                        </select>
+                        <button class="btn btn-sm white">Apply</button>                  
+                    </div>
+                    <div class="col-sm-4 text-center">
+                        <small class="text-muted inline m-t-sm m-b-sm">showing 20-30 of 50 items</small>
+                    </div>
+                    <div class="col-sm-4 text-right text-center-xs">                
+                        <ul class="pagination pagination-sm m-0">
+                        <li><a href=""><i class="fa fa-chevron-left"></i></a></li>
+                        <li class="active"><a href="">1</a></li>
+                        <li><a href="">2</a></li>
+                        <li><a href="">3</a></li>
+                        <li><a href="">4</a></li>
+                        <li><a href="">5</a></li>
+                        <li><a href=""><i class="fa fa-chevron-right"></i></a></li>
+                        </ul>
+                    </div>
+                    </div>
+                </footer-->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

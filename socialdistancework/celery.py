@@ -15,13 +15,13 @@ app.conf.beat_schedule = {
         'schedule': crontab(minute=0, hour='*/3'),
     },
     # Execute: daily at midnight
-    'scraping-nytimesnews-task-daily-at-midnight-with-30-min': {
-        'task': 'celery_tasks.tasks.nytimesnews_mostpopular_viewed_api_scraper',
-        'schedule': crontab(minute=30, hour=0),
-    },
+    # 'scraping-nytimesnews-task-daily-at-midnight-with-30-min': {
+    #     'task': 'celery_tasks.tasks.nytimesnews_mostpopular_viewed_api_scraper',
+    #     'schedule': crontab(minute=30, hour=0),
+    # },
     # Execute: weekly on Fridays at 20:15 pm
-    'sftp-download-liketrading-tikers-weekly': {
-        'task': 'celery_tasks.tasks.liketrading_tickers_automatic_update',
-        'schedule': crontab(minute=15, hour='17,20,23'),
-    },
+    # 'sftp-download-liketrading-tikers-weekly': {
+    #     'task': 'celery_tasks.tasks.liketrading_tickers_automatic_update',
+    #     'schedule': crontab(minute=15, hour='17,20,23'),
+    # },
 }

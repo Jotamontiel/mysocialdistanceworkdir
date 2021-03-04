@@ -1,0 +1,73 @@
+{% extends 'iot_module/includes/iotmodule_menu.html' %}
+{% load static %}
+{% block title %}Company Admin Editor{% endblock %}
+{% block content %}
+<div class="padding">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="box">
+                <div class="box-header" style="text-align: center;">
+                    <h2><b style="color:#6887ff;">Editing {{ company.businessName }} company</b></h2>
+                </div>
+                <div class="box-divider m-0"></div>
+                <div class="box-body">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <!-- Previa del avatar -->
+                        <div class="form-group text-center">
+                            {% if company.logoLink %}
+                                <img src="{{company.logoLink.url}}" class="img-fluid" style="border-radius: 10%;border: 3px solid #f0ad4e;" width="250" height="250">
+                                <p class="mt-1" style="color:#f44455"><input type="checkbox" id="logoLink-clear" name="logoLink-clear" /> Select to delete</p>
+                            {% else %}
+                                <img src="{% static 'registration/img/no-logo-company.png' %}" class="img-fluid" style="border-radius: 10%;border: 3px solid #f0ad4e;" width="250" height="250">
+                            {% endif %}
+                        </div>
+                        <!-- Formulario -->
+                        <div class="form-group">
+                            <div class="form-group row has-success">
+                                <div class="col-sm-12">
+                                    <p style="color:#5cb85c;"><b>Blocked fields:</b></p>
+                                    <input type="email" value="Company ID: {{company.id}}" class="form-control mt-3 form-control-success" readonly style="text-transform:none;color:#ffffff;background: black;">
+                                    <input type="email" value="Company Rut: {{company.rut}}" class="form-control mt-3 form-control-success" readonly style="text-transform:none;color:#ffffff;background: black;">
+                                    <input type="email" value="Company Business Name: {{company.businessName}}" class="form-control mt-3 form-control-success" readonly style="text-transform:none;color:#ffffff;background: black;">
+                                    <input type="email" value="Company Email: {{company.email}}" class="form-control mt-3 form-control-success" readonly style="text-transform:none;color:#ffffff;background: black;">
+                                </div>
+                            </div>
+                            <div class="form-group row has-warning">
+                                <div class="col-sm-12" style="color:#f0ad4e;">
+                                    <p style="color:#f0ad4e;"><b>Editable fields:</b></p>
+                                    {{ form.address }}
+                                    **Enter company address
+                                    {{ form.number }}
+                                    **Enter company street number 
+                                    {{ form.office }}
+                                    **Enter company office
+                                    {{ form.country }}
+                                    **Enter company country
+                                    {{ form.postalCode }}
+                                    **Enter company postal code
+                                    {{ form.phone }}
+                                    **Enter company phone
+                                    <div class="col-md-12" style='color:#f0ad4e;'>
+                                        <input type="file" name="logoLink" class="col-md-12 form-control-file mt-3 btn" id="id_logoLink" style='color:#ffffff;background: black;border: 1px solid #f0ad4e;'>
+                                        **Upload company logo
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn info btn-block">Edit Company</button>
+                        </div>
+                    </form>
+                    <div class="form-group">
+                        <br>
+                        <div class="col-md-12">
+                            <a href="{% url 'iotmodule_companylist_display' %}" class="btn btn-round info btn-b btn-block" style="font-size:120%;color:white;">Return</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

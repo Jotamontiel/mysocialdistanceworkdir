@@ -12,20 +12,10 @@
                 <div class="box-body">
                     <form action="" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <!-- Previa del avatar -->
-                        <div class="form-group text-center">
-                            {% if request.user.profile.avatar %}
-                                <img src="{{request.user.profile.avatar.url}}" class="img-fluid" style="border-radius: 10%;border: 3px solid #f0ad4e;">
-                                <p class="mt-1">¿Borrar? <input type="checkbox" id="avatar-clear" name="avatar-clear" /></p>
-                            {% else %}
-                                <img src="{% static 'registration/img/no-avatar.jpg' %}" class="img-fluid" style="border-radius: 10%;border: 3px solid #f0ad4e;">
-                            {% endif %}
-                        </div>
-                        <!-- Formulario -->
                         <div class="form-group">
                             <div class="form-group row has-success">
                                 <div class="col-sm-12">
-                                    <p style="color:#5cb85c;"><b>Autocomplete fields:</b></p>
+                                    <p style="color:#5cb85c;"><b>Blocked fields:</b></p>
                                     <input type="email" value="ID: {{request.user.id}}" class="form-control mt-3 form-control-success" readonly style="text-transform:none;color:#ffffff;background: black;">
                                     <input type="email" value="Email: {{request.user.email}}" class="form-control mt-3 form-control-success" readonly style="text-transform:none;color:#ffffff;background: black;">
                                 </div>
@@ -44,17 +34,12 @@
                             <div class="form-group row has-warning">
                                 <div class="col-sm-12">
                                     <p style="color:#f0ad4e;"><b>Optional fields:</b></p>
-                                    {{ form.birthDate }}
-                                    {{ form.birthDate.errors }}
                                     {{ form.gender }}
                                     {{ form.position }}
                                     {{ form.workPhone }}
                                     {{ form.phone }}
                                     {{ form.nationality }}
                                 </div>
-                            </div>
-                            <div class="col-md-12" style='color:#f0ad4e;'>
-                                Upload profile picture: <input type="file" name="avatar" class="col-md-12 form-control-file mt-3 btn info" id="id_avatar" style='color:#ffffff;background: black;border: 1px solid #f0ad4e;'>
                             </div>
                         </div>
                         <div class="col-md-12">
