@@ -1,0 +1,45 @@
+{% extends 'iot_module/includes/iotmodule_login_menu.html' %}
+{% load static %}
+{% block title %}Sign Up{% endblock %}
+{% block content %}
+    <div class="center-block w-xxl w-auto-xs p-y-md">
+        <div class="navbar">
+            <div class="pull-center">
+                <div ui-include="{% static 'celery_tasks/celerytasks_menu/views/blocks/navbar.brand.html' %}"></div>
+            </div>
+        </div>
+        <div class="p-a-md box-color r box-shadow-z1 text-color m-a">
+            <div class="m-b text-sm">
+                Sign up to your IoT Module Account
+            </div>
+            <form name="form" action="" method="post">{% csrf_token %}
+                <div class="md-form-group">
+                    <label>{{ form.username }}</label>
+                    {{ form.username.errors }}
+                </div>
+                <div class="md-form-group">
+                    <label>{{ form.email }}</label>
+                    {{ form.email.errors }}
+                </div>
+                <div class="md-form-group">
+                    <label>{{ form.password1 }}</label>
+                    {{ form.password1.errors }}
+                </div>
+                <div class="md-form-group">
+                    <label>{{ form.password2 }}</label>
+                    {{ form.password2.errors }}
+                </div>
+                <!-- div class="m-b-md">
+                    <label class="md-check">
+                        <input type="checkbox" required><i class="primary"></i> Agree the <a href>terms and policy</a>
+                    </label>
+                </div-->
+                <button type="submit" class="btn primary btn-block p-x-md">Sign up</button>
+                <a ui-sref="access.forgot-password" href="{% url 'home' %}" class="btn b-primary btn-block p-x-md" style="color:#0cc2aa">Return to Home</a>
+            </form>
+        </div>
+        <div class="p-v-lg text-center">
+            <div>Already have an account? <a ui-sref="access.signin" href="{% url 'login' %}" class="text-primary _600">Sign in</a></div>
+        </div>
+    </div>
+{% endblock %}

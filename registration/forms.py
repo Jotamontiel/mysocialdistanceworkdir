@@ -3,6 +3,7 @@ from .models import Profile
 from iot_module.models import Company
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.contrib.auth.forms import UserCreationForm
 
 class DateInput(forms.DateInput):
     input_type = 'date'
@@ -54,20 +55,6 @@ class ProfileUpdateForm(forms.ModelForm):
             'nationality': forms.Select(attrs={'class':'form-control mt-3 form-control-warning', 'style': 'color:#ffffff;background: black;'}),
         }
 
-class UserEmailUpdateForm(forms.ModelForm):
-    email = forms.EmailField(required=True, help_text="Required, 254 characters maximum and must be valid.")
-
-    class Meta:
-        model = User
-        fields = ['email']
-    
-    def clean_email(self):
-        email = self.cleaned_data.get("email")
-        if 'email' in self.changed_data:
-            if User.objects.filter(email=email).exists():
-                raise forms.ValidationError("The email is already registered, try another please.")
-        return email
-
 class ProfileAdminForm(forms.ModelForm):
 
     class Meta:
@@ -100,3 +87,31 @@ class ProfileAdminForm(forms.ModelForm):
         super(ProfileAdminForm, self).__init__(*args, **kwargs)
         self.initial['gender'] = 'N/A'
         self.initial['nationality'] = 'N/A'
+
+class UserCreationFormWithEmail(UserCreationForm):
+    email = forms.EmailField(required=True, help_text="Required, 254 characters maximum and must be valid.")
+
+    class Meta:
+        model = User
+        fields = ("username", "email", "password1", "password2")
+
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        if User.objects.filter(email=email).exists() or Company.objects.filter(email=email).exists():
+            raise forms.ValidationError("The email is already registered, try another please.")
+        return email
+
+class UserEmailUpdateForm(forms.ModelForm):
+    email = forms.EmailField(required=True, help_text="Required, 254 characters maximum and must be valid.")
+
+    class Meta:
+        model = User
+        fields = ['email']
+    
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        if 'email' in self.changed_data:
+            if User.objects.filter(email=email).exists() or Company.objects.filter(email=email).exists():
+                raise forms.ValidationError("The email is already registered, try another please.")
+        return email
+

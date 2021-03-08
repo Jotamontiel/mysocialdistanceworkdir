@@ -1,38 +1,38 @@
 {% extends 'iot_module/includes/iotmodule_menu.html' %}
 {% load static %}
-{% block title %}Profile Admin List{% endblock %}
+{% block title %}Component Types Admin List{% endblock %}
 {% block content %}
 <div class="padding">
     <div class="row">
         <div class="col-md-12">
-            {% if 'okEditProfile' in request.GET %}
+            {% if 'okEditComponentType' in request.GET %}
                 <div class="box">
                     <div class="form-group row has-success">
                         <div class="col-sm-12">
-                            <input type="text" class="form-control form-control-success" value="The profile has been updated successfully !!">
+                            <input type="text" class="form-control form-control-success" value="The component type has been updated successfully !!">
                         </div>
                     </div>
                 </div>
-            {% elif 'okDeleteProfile' in request.GET %}
+            {% elif 'okDeleteComponentType' in request.GET %}
                 <div class="box">
                     <div class="form-group row has-danger">
                         <div class="col-sm-12">
-                            <input type="text" class="form-control form-control-danger" value="The profile has been removed successfully !!">
+                            <input type="text" class="form-control form-control-danger" value="The component type has been removed successfully !!">
                         </div>
                     </div>
                 </div>
-            {% elif 'okCreateProfile' in request.GET %}
+            {% elif 'okCreateComponentType' in request.GET %}
                 <div class="box">
                     <div class="form-group row has-success">
                         <div class="col-sm-12">
-                            <input type="text" class="form-control form-control-success" value="The profile has been created successfully !!">
+                            <input type="text" class="form-control form-control-success" value="The component type has been created successfully !!">
                         </div>
                     </div>
                 </div>
             {% endif %}
             <div class="box">
                 <div class="box-header" style="text-align: center;">
-                    <h2><b style="color:#6887ff;">Profile Admin Summary</b></h2>
+                    <h2><b style="color:#6887ff;">Component Types Admin Summary</b></h2>
                 </div>
                 <!--div class="row p-a">
                     <div class="col-sm-5">
@@ -59,14 +59,9 @@
                     <table class="table table-striped b-t">
                         <thead>
                             <tr>
-                                <th style="width:50px;"></th>
-                                <th>User</th>
-                                <th>Nick Name</th>
-                                <th>Rut</th>
-                                <th>Gender</th>
-                                <th>Position</th>
-                                <th>Work Phone</th>
-                                <th>Nationality</th>
+                                <th>Component Type Name</th>
+                                <th>Component Type Initials</th>
+                                <th>Component Type Description</th>
                                 <th style="width:50px;"></th>
                                 {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
                                     <th style="width:50px;"></th>
@@ -75,29 +70,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for profile in profile_list %}
+                            {% for componenttype in componenttype_list %}
                                 <tr>
-                                    {% if profile.avatar %}
-                                        <td><img src="{{profile.avatar.url}}" class="img-circle" width="30" height="30"></td>
-                                    {% else %}
-                                        <td><img src="{% static 'registration/img/no-avatar.jpg' %}" class="img-circle" width="30" height="30"></td>
-                                    {% endif %}
-                                    <td>{{ profile.user }}</td>
-                                    <td>{{ profile.nickName }}</td>
-                                    <td>{{ profile.rut }}</td>
-                                    <td>{{ profile.gender }}</td>
-                                    <td>{{ profile.position }}</td>
-                                    <td>{{ profile.workPhone }}</td>
-                                    <td>{{ profile.nationality }}</td>
-                                    <td><a href="{% url 'iotmodule_profiledetail_display' profile.id profile.nickName|slugify %}"><button class="btn btn-fw info">Details</button></a></td>
-                                    {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
-                                        <td><a href="{% url 'iotmodule_profileupdate_display' profile.id profile.nickName|slugify %}"><button class="btn btn-fw primary">Edit</button></a></td>
-                                        {% if not request.user.id == profile.user.id %}
-                                            <td><a href="{% url 'iotmodule_profiledelete_display' profile.id %}"><button class="btn btn-fw danger">Delete</button></a></td>
-                                        {% else %}
-                                            <td><a href="{% url 'iotmodule_profiledeleteaux_display' profile.id 2|slugify %}"><button class="btn btn-fw danger">Delete</button></a></td>
-                                        {% endif %}
-                                    {% endif %}
+                                    <td>{{ componenttype.name }}</td>
+                                    <td>{{ componenttype.initials }}</td>
+                                    <td>{{ componenttype.description|striptags|safe|truncatechars:"80" }}</td>
+                                    <td><a href="{% url 'iotmodule_componenttypesdetail_display' componenttype.id componenttype.name|slugify %}"><button class="btn btn-fw info">Details</button></a></td>
+                                    <td><a href="{% url 'iotmodule_componenttypesupdate_display' componenttype.id componenttype.name|slugify %}"><button class="btn btn-fw primary">Edit</button></a></td>
+                                    <td><a href="{% url 'iotmodule_componenttypesdelete_display' componenttype.id %}"><button class="btn btn-fw danger">Delete</button></a></td>
                                 </tr>
                             {% endfor %}
                         </tbody>

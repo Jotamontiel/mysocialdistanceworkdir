@@ -1,5 +1,5 @@
 from django import forms
-from .models import Company, Component
+from .models import Company, ComponentType, Component
 from registration.models import Profile
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -50,6 +50,31 @@ class CompanyUpdateForm(forms.ModelForm):
             'postalCode': forms.TextInput(attrs={'class':'form-control mt-3 form-control-warning', 'placeholder':'Enter Postal Code', 'style': 'text-transform:none;color:#ffffff;'}),
             'phone': forms.TextInput(attrs={'class':'form-control mt-3 form-control-warning', 'placeholder':'Enter Phone', 'style': 'text-transform:none;color:#ffffff;'}),
             'logoLink': forms.ClearableFileInput(attrs={'class':'form-control-file mt-3'}),
+        }
+
+class CompanyEmailUpdateForm(forms.ModelForm):
+    email = forms.EmailField(required=True, help_text="Required, 254 characters maximum and must be valid.")
+
+    class Meta:
+        model = Company
+        fields = ['email']
+    
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        if 'email' in self.changed_data:
+            if Company.objects.filter(email=email).exists() or User.objects.filter(email=email).exists():
+                raise forms.ValidationError("The email is already registered, try another please.")
+        return email
+
+class ComponentTypeForm(forms.ModelForm):
+
+    class Meta:
+        model = ComponentType
+        fields = ['name', 'initials', 'description']
+        widgets = {
+            'name': forms.TextInput(attrs={'class':'form-control mt-3 form-control-danger', 'placeholder':'Enter Component Type Name', 'style': 'text-transform:none;color:#ffffff;'}),
+            'initials': forms.TextInput(attrs={'class':'form-control mt-3 form-control-danger', 'placeholder':'Enter Component Type Initials', 'style': 'text-transform:none;color:#ffffff;'}),
+            'description': forms.Textarea(attrs={'class':'form-control mt-3 form-control-warning', 'placeholder':'Enter Component Type Description', 'style': 'text-transform:none;color:#ffffff;'}),
         }
 
 class ComponentForm(forms.ModelForm):

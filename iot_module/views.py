@@ -7,19 +7,41 @@ from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import Company, Component
-from .forms import CompanyForm, CompanyUpdateForm, ComponentForm
+from .models import Company, ComponentType, Component
+from .forms import CompanyForm, CompanyUpdateForm, CompanyEmailUpdateForm, ComponentTypeForm, ComponentForm
 from registration.models import Profile
-from registration.forms import ProfileForm, ProfileAdminForm, ProfileUpdateForm, UserEmailUpdateForm
+from registration.forms import ProfileForm, ProfileAdminForm, ProfileUpdateForm, UserCreationFormWithEmail, UserEmailUpdateForm
 from django import forms
+from django.core.paginator import Paginator
+from django.core.paginator import EmptyPage
+from django.core.paginator import PageNotAnInteger
 
+##############################################################################################
+########## DASHBOARD VIEWS ###################################################################
+##############################################################################################
 @method_decorator(login_required, name='dispatch')
 class IotModuleDashboardView(TemplateView):
     template_name = "iot_module/display_dashboard/iotmodule_dashboard.html"
 
 ##############################################################################################
-########## USER VIEWS: USER EMAIL UPDATE #####################################################
+########## USER VIEWS: USER EMAIL UPDATE, SIGN UP ############################################
 ##############################################################################################
+class SignUpView(CreateView):
+    form_class = UserCreationFormWithEmail
+    template_name = 'registration/signup.html'
+
+    def get_success_url(self):
+        return reverse_lazy('login') + '?register'
+
+    def get_form(self, form_class=None):
+        form = super(SignUpView, self).get_form()
+        # Modificar en tiempo real
+        form.fields['username'].widget = forms.TextInput(attrs={'class':'md-input', 'placeholder':'Username', 'style': 'text-transform:none'})
+        form.fields['email'].widget = forms.EmailInput(attrs={'class':'md-input', 'placeholder':'Email', 'style': 'text-transform:none'})
+        form.fields['password1'].widget = forms.PasswordInput(attrs={'class':'md-input', 'placeholder':'Password', 'style': 'text-transform:none'})
+        form.fields['password2'].widget = forms.PasswordInput(attrs={'class':'md-input', 'placeholder':'Repeat Password', 'style': 'text-transform:none'})
+        return form
+
 @method_decorator(login_required, name='dispatch')
 class IotModuleUserEmailUpdateView(UpdateView):
     form_class = UserEmailUpdateForm
@@ -53,7 +75,7 @@ class IotModuleUserEmailUpdateView(UpdateView):
 class IotModuleProfileListView(ListView):
     model = Profile
     template_name = "iot_module/display_profiles/profile_list.html"
-    paginate_by = 20
+    paginate_by = 10
 
 @method_decorator(login_required, name='dispatch')
 class IotModuleProfileDetailView(DetailView):
@@ -120,10 +142,27 @@ class IotModuleProfileCreateAuxView(CreateView):
 ########## COMPANY VIEWS: LIST, DETAIL, UPDATE, DELETE, CREATE ###############################
 ##############################################################################################
 @method_decorator(login_required, name='dispatch')
+class IotModuleCompanyEmailUpdateView(UpdateView):
+    form_class = CompanyEmailUpdateForm
+    template_name = 'iot_module/display_companies/company_email_form.html'
+
+    def get_object(self):
+        return Company.objects.get(id=self.kwargs['pk'])
+    
+    def get_success_url(self):
+        return reverse_lazy('iotmodule_companyupdate_display', kwargs={'pk': self.kwargs['pk'], 'slug': self.kwargs['slug']}) + '?okCompanyEmailUpdate'
+
+    def get_form(self, form_class=None):
+        form = super(IotModuleCompanyEmailUpdateView, self).get_form()
+        # Modificar en tiempo real
+        form.fields['email'].widget = forms.EmailInput(attrs={'class':'form-control mb-2', 'placeholder':'Email', 'style': 'text-transform:none'})
+        return form
+
+@method_decorator(login_required, name='dispatch')
 class IotModuleCompanyListView(ListView):
     model = Company
     template_name = "iot_module/display_companies/company_list.html"
-    paginate_by = 20
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super(IotModuleCompanyListView, self).get_context_data(**kwargs)
@@ -131,6 +170,18 @@ class IotModuleCompanyListView(ListView):
             context['company_list'] = Company.objects.all().order_by('profile')
         else:
             context['company_list'] = Company.objects.filter(profile=self.request.user.profile)
+
+        paginator = Paginator(list(context['company_list']), self.paginate_by)
+        page_number = self.request.GET.get('page')
+        try:
+            page_obj = paginator.get_page(page_number)
+        except PageNotAnInteger:
+            page_obj = paginator.get_page(1)
+        except EmptyPage:
+            page_obj = paginator.get_page(paginator.num_pages)
+        context['company_list'] = page_obj
+        context['page_obj'] = page_obj
+        
         return context
 
 @method_decorator(login_required, name='dispatch')
@@ -167,6 +218,46 @@ class IotModuleCompanyCreateView(CreateView):
 
     def get_success_url(self):
         return reverse_lazy('iotmodule_companylist_display') + '?okCreateCompany'
+
+##############################################################################################
+########## COMPONENT TYPES VIEWS: LIST, DETAIL, UPDATE, DELETE, CREATE #######################
+##############################################################################################
+@method_decorator(login_required, name='dispatch')
+class IotModuleComponentTypeListView(ListView):
+    model = ComponentType
+    template_name = "iot_module/display_component_types/component_types_list.html"
+    paginate_by = 10
+
+@method_decorator(login_required, name='dispatch')
+class IotModuleComponentTypeDetailView(DetailView):
+    model = ComponentType
+    template_name = "iot_module/display_component_types/component_types_detail.html"
+
+@method_decorator(login_required, name='dispatch')
+class IotModuleComponentTypeUpdateView(UpdateView):
+    model = ComponentType
+    form_class = ComponentTypeForm
+    template_name = "iot_module/display_component_types/component_types_update_form.html"
+
+    def get_success_url(self):
+        return reverse_lazy('iotmodule_componenttypeslist_display') + '?okEditComponentType'
+
+@method_decorator(login_required, name='dispatch')
+class IotModuleComponentTypeDeleteView(DeleteView):
+    model = ComponentType
+    template_name = "iot_module/display_component_types/component_types_confirm_delete.html"
+    
+    def get_success_url(self):
+        return reverse_lazy('iotmodule_componenttypeslist_display') + '?okDeleteComponentType'
+
+@method_decorator(login_required, name='dispatch')
+class IotModuleComponentTypeCreateView(CreateView):
+    model = ComponentType
+    form_class = ComponentTypeForm
+    template_name = "iot_module/display_component_types/component_types_form.html"
+
+    def get_success_url(self):
+        return reverse_lazy('iotmodule_componenttypeslist_display') + '?okCreateComponentType'
 
 ##############################################################################################
 ########## COMPONENT VIEWS: LIST, DETAIL, UPDATE, DELETE, CREATE #############################

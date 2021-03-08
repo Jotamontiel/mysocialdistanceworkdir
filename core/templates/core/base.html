@@ -94,7 +94,7 @@
               </li>
               {% if not request.user.is_authenticated %}
                 <li class="nav-item">
-                  <a id="to_login_from_navbar" class="btn btn-danger btn-round" href="{% url 'login' %}" onclick='addTmpUserToLink("to_login_from_navbar")'>Login</a>
+                  <a id="to_signin_from_navbar" class="btn btn-danger btn-round" href="{% url 'login' %}" onclick='addTmpUserToLink("to_signin_from_navbar")'>Sign In</a>
                 </li>
               {% else %}
                 <li>
@@ -135,6 +135,10 @@
               {% if request.user.is_authenticated %}
                 <li>
                   <a id="to_logouthomemenu_from_navbar" class="btn btn-danger btn-round" href="{% url 'logout' %}" onclick='addTmpUserToLink("to_logouthomemenu_from_navbar")'>Sign Out</a>
+                </li>
+              {% else %}
+                <li>
+                  <a id="to_signup_from_navbar" class="btn btn-danger btn-round" href="{% url 'signup' %}" onclick='addTmpUserToLink("to_signup_from_navbar")'>Sign Up</a>
                 </li>
               {% endif %}
             </ul>
