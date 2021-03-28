@@ -1,13 +1,13 @@
 {% extends 'iot_module/includes/iotmodule_menu.html' %}
 {% load static %}
-{% block title %}Component Admin Deleter{% endblock %}
+{% block title %}Sensor Admin Deleter{% endblock %}
 {% block content %}
 <div class="padding">
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <div class="box">
                 <div class="box-header" style="text-align: center;">
-                    <h2><b style="color:#6887ff;">Removing {{ component.alias }} component</b></h2>
+                    <h2><b style="color:#6887ff;">Removing {{ sensor.alias }} sensor</b></h2>
                 </div>
                 <div class="box-divider m-0"></div>
                 <div class="box-body">
@@ -15,17 +15,17 @@
                         {% csrf_token %}
                         <div class="form-group row">
                             <label class="col-sm-12 form-control-label" style="text-align: center;">
-                                Are you sure you want to delete the <span class="color-golden">"{{ component.alias }}"</span> component ?
+                                Are you sure you want to delete the <span class="color-golden">"{{ sensor.alias }}"</span> sensor ?
                             </label>
                         </div>
                         <div class="col-md-12">
-                            <button type="submit" class="btn danger btn-block">Remove Component</button>
+                            <button type="submit" class="btn danger btn-block">Remove Sensor</button>
                         </div>
                     </form>
                     <div class="form-group">
                         <br>
                         <div class="col-md-12">
-                            <a href="{% url 'iotmodule_componentlist_display' %}" class="btn info btn-round btn-b btn-block" style="font-size:120%;color:white;">Return</a>
+                            <a href="{% url 'iotmodule_sensorlist_display' %}" class="btn info btn-round btn-b btn-block" style="font-size:120%;color:white;">Return</a>
                         </div>
                     </div>
                 </div>

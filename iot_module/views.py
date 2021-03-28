@@ -7,8 +7,8 @@ from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import Company, ComponentType, Component
-from .forms import CompanyForm, CompanyUpdateForm, CompanyEmailUpdateForm, ComponentTypeForm, ComponentForm
+from .models import Company, ComponentType, Component, SensorType, Sensor
+from .forms import CompanyForm, CompanyUpdateForm, CompanyEmailUpdateForm, ComponentTypeForm, ComponentForm, ComponentUpdateForm, SensorTypeForm, SensorForm, SensorUpdateForm
 from registration.models import Profile
 from registration.forms import ProfileForm, ProfileAdminForm, ProfileUpdateForm, UserCreationFormWithEmail, UserEmailUpdateForm
 from django import forms
@@ -268,6 +268,26 @@ class IotModuleComponentListView(ListView):
     template_name = "iot_module/display_components/component_list.html"
     paginate_by = 10
 
+    def get_context_data(self, **kwargs):
+        context = super(IotModuleComponentListView, self).get_context_data(**kwargs)
+        if self.request.user.is_staff:
+            context['component_list'] = Component.objects.all().order_by('profile')
+        else:
+            context['component_list'] = Component.objects.filter(profile=self.request.user.profile)
+
+        paginator = Paginator(list(context['component_list']), self.paginate_by)
+        page_number = self.request.GET.get('page')
+        try:
+            page_obj = paginator.get_page(page_number)
+        except PageNotAnInteger:
+            page_obj = paginator.get_page(1)
+        except EmptyPage:
+            page_obj = paginator.get_page(paginator.num_pages)
+        context['component_list'] = page_obj
+        context['page_obj'] = page_obj
+        
+        return context
+
 @method_decorator(login_required, name='dispatch')
 class IotModuleComponentDetailView(DetailView):
     model = Component
@@ -276,7 +296,7 @@ class IotModuleComponentDetailView(DetailView):
 @method_decorator(login_required, name='dispatch')
 class IotModuleComponentUpdateView(UpdateView):
     model = Component
-    form_class = ComponentForm
+    form_class = ComponentUpdateForm
     template_name = "iot_module/display_components/component_update_form.html"
 
     def get_success_url(self):
@@ -295,11 +315,106 @@ class IotModuleComponentCreateView(CreateView):
     model = Component
     form_class = ComponentForm
     template_name = "iot_module/display_components/component_form.html"
-
-    # Search for profile instance
-    def form_valid(self, form):
-        form.instance.profile = Profile.objects.get(user__id=self.request.user.id)
-        return super(IotModuleComponentCreateView, self).form_valid(form)
     
     def get_success_url(self):
         return reverse_lazy('iotmodule_componentlist_display') + '?okCreateComponent'
+
+##############################################################################################
+########## SENSOR TYPES VIEWS: LIST, DETAIL, UPDATE, DELETE, CREATE ##########################
+##############################################################################################
+@method_decorator(login_required, name='dispatch')
+class IotModuleSensorTypeListView(ListView):
+    model = SensorType
+    template_name = "iot_module/display_sensor_types/sensor_types_list.html"
+    paginate_by = 10
+
+@method_decorator(login_required, name='dispatch')
+class IotModuleSensorTypeDetailView(DetailView):
+    model = SensorType
+    template_name = "iot_module/display_sensor_types/sensor_types_detail.html"
+
+@method_decorator(login_required, name='dispatch')
+class IotModuleSensorTypeUpdateView(UpdateView):
+    model = SensorType
+    form_class = SensorTypeForm
+    template_name = "iot_module/display_sensor_types/sensor_types_update_form.html"
+
+    def get_success_url(self):
+        return reverse_lazy('iotmodule_sensortypeslist_display') + '?okEditSensorType'
+
+@method_decorator(login_required, name='dispatch')
+class IotModuleSensorTypeDeleteView(DeleteView):
+    model = SensorType
+    template_name = "iot_module/display_sensor_types/sensor_types_confirm_delete.html"
+    
+    def get_success_url(self):
+        return reverse_lazy('iotmodule_sensortypeslist_display') + '?okDeleteSensorType'
+
+@method_decorator(login_required, name='dispatch')
+class IotModuleSensorTypeCreateView(CreateView):
+    model = SensorType
+    form_class = SensorTypeForm
+    template_name = "iot_module/display_sensor_types/sensor_types_form.html"
+
+    def get_success_url(self):
+        return reverse_lazy('iotmodule_sensortypeslist_display') + '?okCreateSensorType'
+
+##############################################################################################
+########## SENSOR VIEWS: LIST, DETAIL, UPDATE, DELETE, CREATE ################################
+##############################################################################################
+@method_decorator(login_required, name='dispatch')
+class IotModuleSensorListView(ListView):
+    model = Sensor
+    template_name = "iot_module/display_sensors/sensor_list.html"
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super(IotModuleSensorListView, self).get_context_data(**kwargs)
+        if self.request.user.is_staff:
+            context['sensor_list'] = Sensor.objects.all().order_by('component')
+        else:
+            context['sensor_list'] = Sensor.objects.filter(component__profile=self.request.user.profile)
+
+        paginator = Paginator(list(context['sensor_list']), self.paginate_by)
+        page_number = self.request.GET.get('page')
+        try:
+            page_obj = paginator.get_page(page_number)
+        except PageNotAnInteger:
+            page_obj = paginator.get_page(1)
+        except EmptyPage:
+            page_obj = paginator.get_page(paginator.num_pages)
+        context['sensor_list'] = page_obj
+        context['page_obj'] = page_obj
+        
+        return context
+
+@method_decorator(login_required, name='dispatch')
+class IotModuleSensorDetailView(DetailView):
+    model = Sensor
+    template_name = "iot_module/display_sensors/sensor_detail.html"
+
+@method_decorator(login_required, name='dispatch')
+class IotModuleSensorUpdateView(UpdateView):
+    model = Sensor
+    form_class = SensorUpdateForm
+    template_name = "iot_module/display_sensors/sensor_update_form.html"
+
+    def get_success_url(self):
+        return reverse_lazy('iotmodule_sensorlist_display') + '?okEditSensor'
+
+@method_decorator(login_required, name='dispatch')
+class IotModuleSensorDeleteView(DeleteView):
+    model = Sensor
+    template_name = "iot_module/display_sensors/sensor_confirm_delete.html"
+    
+    def get_success_url(self):
+        return reverse_lazy('iotmodule_sensorlist_display') + '?okDeleteSensor'
+
+@method_decorator(login_required, name='dispatch')
+class IotModuleSensorCreateView(CreateView):
+    model = Sensor
+    form_class = SensorForm
+    template_name = "iot_module/display_sensors/sensor_form.html"
+    
+    def get_success_url(self):
+        return reverse_lazy('iotmodule_sensorlist_display') + '?okCreateSensor'

@@ -1,13 +1,13 @@
 {% extends 'iot_module/includes/iotmodule_menu.html' %}
 {% load static %}
-{% block title %}Component Types Admin Editor{% endblock %}
+{% block title %}Sensor Admin Editor{% endblock %}
 {% block content %}
 <div class="padding">
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <div class="box">
                 <div class="box-header" style="text-align: center;">
-                    <h2><b style="color:#6887ff;">Editing {{ componenttype.name }} component type</b></h2>
+                    <h2><b style="color:#6887ff;">Editing {{ sensor.alias }} sensor</b></h2>
                 </div>
                 <div class="box-divider m-0"></div>
                 <div class="box-body">
@@ -18,23 +18,32 @@
                             <div class="form-group row has-warning">
                                 <div class="col-sm-12" style="color:#f0ad4e;">
                                     <p style="color:#f0ad4e;"><b>Editable fields:</b></p>
-                                    {{ form.name }}
-                                    **Edit component type name
-                                    {{ form.initials }}
-                                    **Edit component type initials
+                                    {{ form.measurementUnit }}
+                                    {{ form.measurementUnit.errors }}
+                                    **Edit sensor measurement unit
+                                    {{ form.brand }}
+                                    {{ form.brand.errors }}
+                                    **Edit sensor brand
+                                    {{ form.sensorType }}
+                                    {{ form.sensorType.errors }}
+                                    **Edit sensor type
+                                    {{ form.isEnabled }}
+                                    {{ form.isEnabled.errors }}
+                                    **Edit sensor status
                                     {{ form.description }}
-                                    **Edit component type description
+                                    {{ form.description.errors }}
+                                    **Edit sensor description
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <button type="submit" class="btn info btn-block">Edit Component Type</button>
+                            <button type="submit" class="btn info btn-block">Edit Sensor</button>
                         </div>
                     </form>
                     <div class="form-group">
                         <br>
                         <div class="col-md-12">
-                            <a href="{% url 'iotmodule_componenttypeslist_display' %}" class="btn btn-round info btn-b btn-block" style="font-size:120%;color:white;">Return</a>
+                            <a href="{% url 'iotmodule_sensorlist_display' %}" class="btn btn-round info btn-b btn-block" style="font-size:120%;color:white;">Return</a>
                         </div>
                     </div>
                 </div>

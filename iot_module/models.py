@@ -1,6 +1,6 @@
 from django.db import models
 from registration.models import Profile
-from registration.choices import COUNTRY_CHOICES
+from registration.choices import COUNTRY_CHOICES, GRAPHED_CHOICES, COMPT_CONN_TYPES_CHOICES, COMPT_SUPP_TYPES_CHOICES, COMPT_ENABLED_CHOICES, SENSOR_ENABLED_CHOICES
 
 def logolink_custom_upload_to(instance, filename):
     old_instance = Company.objects.get(pk=instance.pk)
@@ -46,17 +46,17 @@ class ComponentType(models.Model):
         return self.name
 
 class Component(models.Model):
-    alias = models.CharField(verbose_name="Component Alias", max_length=200, null=False, blank=False)
-    serialCode = models.CharField(verbose_name="Component Serial Code", max_length=500, null=False, blank=False)
+    alias = models.CharField(verbose_name="Component Alias", max_length=200, null=False, blank=False, unique=True)
+    serialCode = models.CharField(verbose_name="Component Serial Code", max_length=500, null=False, blank=False, unique=True)
     description = models.TextField(verbose_name="Component Description", null=True, blank=True)
     imeiRecord = models.CharField(verbose_name="Component IMEI Record", max_length=300, null=True, blank=True)
     componentType = models.ForeignKey(ComponentType, on_delete=models.CASCADE)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    connectionType = models.CharField(verbose_name="Component Connection Type", max_length=300, null=True, blank=True)
-    supplyType = models.CharField(verbose_name="Component Supply Type", max_length=300, null=True, blank=True)
+    connectionType = models.CharField(verbose_name="Component Connection Type", max_length=300, choices=COMPT_CONN_TYPES_CHOICES, default='N/A', null=True, blank=False)
+    supplyType = models.CharField(verbose_name="Component Supply Type", max_length=300, choices=COMPT_SUPP_TYPES_CHOICES, default='N/A', null=True, blank=False)
     latitude = models.FloatField(verbose_name="Component Latitude", null=True, blank=True)
     longitude = models.FloatField(verbose_name="Component Longitude", null=True, blank=True)
-    isEnabled = models.BooleanField(verbose_name="Component Status", default=False, null=False, blank=False)
+    isEnabled = models.BooleanField(verbose_name="Component Status", choices=COMPT_ENABLED_CHOICES, default=False, null=False, blank=False)
     created = models.DateTimeField(auto_now_add=True, verbose_name="Creation Date")
     updated = models.DateTimeField(auto_now=True, verbose_name="Update Date")
 
@@ -73,7 +73,7 @@ class SensorType(models.Model):
     initials = models.CharField(verbose_name="Sensor Type Initials", max_length=200, null=False, blank=False)
     measurementUnit = models.CharField(verbose_name="Sensor Type Measurement Unit", max_length=100, null=True, blank=True)
     description = models.TextField(verbose_name="Sensor Type Description", null=True, blank=True)
-    isGraphical = models.BooleanField(verbose_name="Is Graphical", default=False, null=False, blank=False)
+    isGraphical = models.BooleanField(verbose_name="Is Graphical", choices=GRAPHED_CHOICES, default=False, null=False, blank=False)
     created = models.DateTimeField(auto_now_add=True, verbose_name="Creation Date")
     updated = models.DateTimeField(auto_now=True, verbose_name="Update Date")
 
@@ -86,14 +86,14 @@ class SensorType(models.Model):
         return self.name
 
 class Sensor(models.Model):
-    alias = models.CharField(verbose_name="Sensor Alias", max_length=200, null=False, blank=False)
-    serialCode = models.CharField(verbose_name="Sensor Serial Code", max_length=500, null=False, blank=False)
+    alias = models.CharField(verbose_name="Sensor Alias", max_length=200, null=False, blank=False, unique=True)
+    serialCode = models.CharField(verbose_name="Sensor Serial Code", max_length=500, null=False, blank=False, unique=True)
     measurementUnit = models.CharField(verbose_name="Sensor Measurement Unit", max_length=100, null=True, blank=True)
     description = models.TextField(verbose_name="Sensor Description", null=True, blank=True)
     sensorType = models.ForeignKey(SensorType, on_delete=models.CASCADE)
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
     brand = models.CharField(verbose_name="Sensor Brand", max_length=200, null=True, blank=True)
-    isEnabled = models.BooleanField(verbose_name="Sensor Status", default=False, null=False, blank=False)
+    isEnabled = models.BooleanField(verbose_name="Sensor Status", choices=SENSOR_ENABLED_CHOICES, default=False, null=False, blank=False)
     created = models.DateTimeField(auto_now_add=True, verbose_name="Creation Date")
     updated = models.DateTimeField(auto_now=True, verbose_name="Update Date")
 

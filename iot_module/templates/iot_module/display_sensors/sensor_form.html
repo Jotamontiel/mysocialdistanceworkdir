@@ -1,13 +1,13 @@
 {% extends 'iot_module/includes/iotmodule_menu.html' %}
 {% load static %}
-{% block title %}Component Admin Creator{% endblock %}
+{% block title %}Sensor Admin Creator{% endblock %}
 {% block content %}  
 <div class="padding">
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <div class="box">
                 <div class="box-header" style="text-align: center;">
-                    <h1><b style="color:#6887ff;">Creating component</b></h1>
+                    <h1><b style="color:#6887ff;">Creating sensor</b></h1>
                 </div>
                 <div class="box-body">
                     <form action="" method="post" enctype="multipart/form-data">
@@ -22,31 +22,28 @@
                                     {{ form.serialCode }}
                                     {{ form.serialCode.errors }}
                                     **Use Version 4 UUID Generator <a href="https://www.uuidgenerator.net/version4" target="_blank" style="color: #3399ff;">click here to generate the Serial-Code</a>
-                                    {{ form.componentType }}
-                                    {{ form.componentType.errors }}
-                                    **Select component type
-                                    {{ form.profile }}
-                                    {{ form.profile.errors }}
-                                    **Select component profile owner
+                                    {{ form.sensorType }}
+                                    {{ form.sensorType.errors }}
+                                    **Select sensor type
+                                    {{ form.component }}
+                                    {{ form.component.errors }}
+                                    **Select component owner
                                     {{ form.isEnabled }}
                                     {{ form.isEnabled.errors }}
-                                    **Select component Enabled/Disabled status
+                                    **Select sensor Enabled/Disabled status
                                 </div>
                             </div>
                             <div class="form-group row has-warning">
                                 <div class="col-sm-12">
                                     <p style="color:#f0ad4e;"><b>Optional field:</b></p>
-                                    {{ form.connectionType }}
-                                    {{ form.supplyType }}
-                                    {{ form.imeiRecord }}
-                                    {{ form.latitude }}
-                                    {{ form.longitude }}
+                                    {{ form.measurementUnit }}
+                                    {{ form.brand }}
                                     {{ form.description }}
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <button type="submit" class="btn info btn-block">Create Component</button>
+                            <button type="submit" class="btn info btn-block">Create Sensor</button>
                         </div>
                     </form>
                 </div>

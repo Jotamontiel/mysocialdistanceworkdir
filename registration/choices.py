@@ -252,3 +252,36 @@ GENDER_CHOICES = (
 ('Female','Female'),
 ('Other','Other'),
 )
+
+GRAPHED_CHOICES = (
+(False,'No-Graphical'),
+(True,'Graphical'),
+)
+
+COMPT_CONN_TYPES_CHOICES = (
+('N/A','Enter Connection Type'),
+('WiFi','WiFi'),
+('LiFi','LiFi'),
+('LoRa','LoRa'),
+('3G','3G'),
+('4G','4G'),
+('5G','5G'),
+('Other','Other'),
+)
+
+COMPT_SUPP_TYPES_CHOICES = (
+('N/A','Enter Supply Type'),
+('Power-Bank','Power-Bank'),
+('Power-Plug','Power-Plug'),
+('Other','Other'),
+)
+
+COMPT_ENABLED_CHOICES = (
+(False,'Disabled'),
+(True,'Enabled'),
+)
+
+SENSOR_ENABLED_CHOICES = (
+(False,'Disabled'),
+(True,'Enabled'),
+)

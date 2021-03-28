@@ -1,38 +1,38 @@
 {% extends 'iot_module/includes/iotmodule_menu.html' %}
 {% load static %}
-{% block title %}Component Admin List{% endblock %}
+{% block title %}Sensor Admin List{% endblock %}
 {% block content %}
 <div class="padding">
     <div class="row">
         <div class="col-md-12">
-            {% if 'okEditComponent' in request.GET %}
+            {% if 'okEditSensor' in request.GET %}
                 <div class="box">
                     <div class="form-group row has-success">
                         <div class="col-sm-12">
-                            <input type="text" class="form-control form-control-success" value="A component has been updated successfully !!">
+                            <input type="text" class="form-control form-control-success" value="A sensor has been updated successfully !!">
                         </div>
                     </div>
                 </div>
-            {% elif 'okDeleteComponent' in request.GET %}
+            {% elif 'okDeleteSensor' in request.GET %}
                 <div class="box">
                     <div class="form-group row has-danger">
                         <div class="col-sm-12">
-                            <input type="text" class="form-control form-control-danger" value="A component has been removed successfully !!">
+                            <input type="text" class="form-control form-control-danger" value="A sensor has been removed successfully !!">
                         </div>
                     </div>
                 </div>
-            {% elif 'okCreateComponent' in request.GET %}
+            {% elif 'okCreateSensor' in request.GET %}
                 <div class="box">
                     <div class="form-group row has-success">
                         <div class="col-sm-12">
-                            <input type="text" class="form-control form-control-success" value="A component has been created successfully !!">
+                            <input type="text" class="form-control form-control-success" value="A sensor has been created successfully !!">
                         </div>
                     </div>
                 </div>
             {% endif %}
             <div class="box">
                 <div class="box-header" style="text-align: center;">
-                    <h2><b style="color:#6887ff;">Component Admin Summary</b></h2>
+                    <h2><b style="color:#6887ff;">Sensor Admin Summary</b></h2>
                 </div>
                 <!--div class="row p-a">
                     <div class="col-sm-5">
@@ -63,10 +63,10 @@
                                     <th>ID</th>
                                 {% endif %}
                                 <th>Alias</th>
-                                <th>Owner User</th>
+                                <th>Owner Compt</th>
                                 <th>Serial Code</th>
-                                <th>Compt Type</th>
-                                <th>Connection Type</th>
+                                <th>Measurement Unit</th>
+                                <th>Sensor Type</th>
                                 <th>Status</th>
                                 <th style="width:50px;"></th>
                                 {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
@@ -76,25 +76,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for component in component_list %}
+                            {% for sensor in sensor_list %}
                                 <tr>
                                     {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
-                                        <td>{{ component.id }}</td>
+                                        <td>{{ sensor.id }}</td>
                                     {% endif %}
-                                    <td>{{ component.alias }}</td>
-                                    <td>{{ component.profile.user }}</td>
-                                    <td>{{ component.serialCode }}</td>
-                                    <td>{{ component.componentType }}</td>
-                                    <td>{{ component.connectionType }}</td>
-                                    {% if component.isEnabled %}
+                                    <td>{{ sensor.alias }}</td>
+                                    <td>{{ sensor.component }}</td>
+                                    <td>{{ sensor.serialCode }}</td>
+                                    <td>{{ sensor.measurementUnit }}</td>
+                                    <td>{{ sensor.sensorType }}</td>
+                                    {% if sensor.isEnabled %}
                                         <td><i class="fa fa-rss" style="color: green"></i></td>
                                     {% else %}
                                         <td><i class="fa fa-rss" style="color: red"></i></td>
                                     {% endif %}
-                                    <td><a href="{% url 'iotmodule_componentdetail_display' component.id component.alias|slugify %}"><button class="btn btn-fw info">Details</button></a></td>
+                                    <td><a href="{% url 'iotmodule_sensordetail_display' sensor.id sensor.alias|slugify %}"><button class="btn btn-fw info">Details</button></a></td>
                                     {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
-                                        <td><a href="{% url 'iotmodule_componentupdate_display' component.id component.alias|slugify %}"><button class="btn btn-fw primary">Edit</button></a></td>
-                                        <td><a href="{% url 'iotmodule_componentdelete_display' component.id %}"><button class="btn btn-fw danger">Delete</button></a></td>
+                                        <td><a href="{% url 'iotmodule_sensorupdate_display' sensor.id sensor.alias|slugify %}"><button class="btn btn-fw primary">Edit</button></a></td>
+                                        <td><a href="{% url 'iotmodule_sensordelete_display' sensor.id %}"><button class="btn btn-fw danger">Delete</button></a></td>
                                     {% endif %}
                                 </tr>
                             {% endfor %}

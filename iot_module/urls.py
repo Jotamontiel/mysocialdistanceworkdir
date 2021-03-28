@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from .views import IotModuleDashboardView, IotModuleProfileCreateAuxView, IotModuleProfileUpdateAuxView, IotModuleComponentListView, IotModuleComponentDetailView, IotModuleComponentCreateView, IotModuleComponentUpdateView, IotModuleComponentDeleteView, IotModuleProfileListView, IotModuleProfileDeleteView, IotModuleProfileDetailView, IotModuleProfileUpdateView, IotModuleUserEmailUpdateView, IotModuleProfileCreateView, IotModuleProfileDeleteAuxView, IotModuleCompanyListView, IotModuleCompanyDetailView, IotModuleCompanyDeleteView, IotModuleCompanyCreateView, IotModuleCompanyUpdateView, IotModuleCompanyEmailUpdateView, SignUpView, IotModuleComponentTypeListView, IotModuleComponentTypeCreateView, IotModuleComponentTypeUpdateView, IotModuleComponentTypeDeleteView, IotModuleComponentTypeDetailView
+from .views import IotModuleDashboardView, IotModuleProfileCreateAuxView, IotModuleProfileUpdateAuxView, IotModuleComponentListView, IotModuleComponentDetailView, IotModuleComponentCreateView, IotModuleComponentUpdateView, IotModuleComponentDeleteView, IotModuleProfileListView, IotModuleProfileDeleteView, IotModuleProfileDetailView, IotModuleProfileUpdateView, IotModuleUserEmailUpdateView, IotModuleProfileCreateView, IotModuleProfileDeleteAuxView, IotModuleCompanyListView, IotModuleCompanyDetailView, IotModuleCompanyDeleteView, IotModuleCompanyCreateView, IotModuleCompanyUpdateView, IotModuleCompanyEmailUpdateView, SignUpView, IotModuleComponentTypeListView, IotModuleComponentTypeCreateView, IotModuleComponentTypeUpdateView, IotModuleComponentTypeDeleteView, IotModuleComponentTypeDetailView, IotModuleSensorTypeListView, IotModuleSensorTypeDetailView, IotModuleSensorTypeUpdateView, IotModuleSensorTypeDeleteView, IotModuleSensorTypeCreateView, IotModuleSensorListView, IotModuleSensorDetailView, IotModuleSensorUpdateView, IotModuleSensorDeleteView, IotModuleSensorCreateView
 
 urlpatterns = [
     path('signup/', SignUpView.as_view(), name="signup"),
@@ -30,4 +30,14 @@ urlpatterns = [
     path('iotmodule_componentcreate_display/', IotModuleComponentCreateView.as_view(), name='iotmodule_componentcreate_display'),
     path('iotmodule_componentupdate_display/<int:pk>/<slug:slug>/', IotModuleComponentUpdateView.as_view(), name='iotmodule_componentupdate_display'),
     path('iotmodule_componentdelete_display/<int:pk>/', IotModuleComponentDeleteView.as_view(), name='iotmodule_componentdelete_display'),
+    path('iotmodule_sensortypeslist_display/', IotModuleSensorTypeListView.as_view(), name="iotmodule_sensortypeslist_display"),
+    path('iotmodule_sensortypesdetail_display/<int:pk>/<slug:slug>/', IotModuleSensorTypeDetailView.as_view(), name='iotmodule_sensortypesdetail_display'),
+    path('iotmodule_sensortypescreate_display/', IotModuleSensorTypeCreateView.as_view(), name="iotmodule_sensortypescreate_display"),
+    path('iotmodule_sensortypesupdate_display/<int:pk>/<slug:slug>/', IotModuleSensorTypeUpdateView.as_view(), name='iotmodule_sensortypesupdate_display'),
+    path('iotmodule_sensortypesdelete_display/<int:pk>/', IotModuleSensorTypeDeleteView.as_view(), name='iotmodule_sensortypesdelete_display'),
+    path('iotmodule_sensorlist_display/', IotModuleSensorListView.as_view(), name="iotmodule_sensorlist_display"),
+    path('iotmodule_sensordetail_display/<int:pk>/<slug:slug>/', IotModuleSensorDetailView.as_view(), name='iotmodule_sensordetail_display'),
+    path('iotmodule_sensorcreate_display/', IotModuleSensorCreateView.as_view(), name='iotmodule_sensorcreate_display'),
+    path('iotmodule_sensorupdate_display/<int:pk>/<slug:slug>/', IotModuleSensorUpdateView.as_view(), name='iotmodule_sensorupdate_display'),
+    path('iotmodule_sensordelete_display/<int:pk>/', IotModuleSensorDeleteView.as_view(), name='iotmodule_sensordelete_display'),
 ]

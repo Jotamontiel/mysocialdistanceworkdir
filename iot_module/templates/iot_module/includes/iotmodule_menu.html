@@ -138,6 +138,7 @@
                                         </li>
                                     {% endif %}
                                     <!-- Component Types Admin Nav [Finish] -->
+                                    <!-- Components Admin Nav [Begin] -->
                                     {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
                                         <li>
                                             <a href="#">
@@ -146,12 +147,12 @@
                                             <ul class="nav-sub">
                                                 <li>
                                                     <a href="{% url 'iotmodule_componentlist_display' %}" >
-                                                        <span class="nav-text"><i class="fa fa-list"></i> List</span>
+                                                        <span class="nav-text"><i class="fa fa-list"></i> Compt List</span>
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a href="{% url 'iotmodule_componentcreate_display' %}" >
-                                                        <span class="nav-text"><i class="fa fa-plus"></i> Add</span>
+                                                        <span class="nav-text"><i class="fa fa-plus"></i> Add Compt</span>
                                                     </a>
                                                 </li>
                                             </ul>
@@ -163,6 +164,8 @@
                                             </a>
                                         </li>
                                     {% endif %}
+                                    <!-- Components Admin Nav [Finish] -->
+                                    <!-- Sensor Types Admin Nav [Begin] -->
                                     {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
                                         <li>
                                             <a href="#">
@@ -170,18 +173,20 @@
                                             </a>
                                             <ul class="nav-sub">
                                                 <li>
-                                                    <a href="#" >
-                                                        <span class="nav-text"><i class="fa fa-list"></i> List</span>
+                                                    <a href="{% url 'iotmodule_sensortypeslist_display' %}" >
+                                                        <span class="nav-text"><i class="fa fa-list"></i> Sensor Type List</span>
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a href="#" >
-                                                        <span class="nav-text"><i class="fa fa-plus"></i> Add</span>
+                                                    <a href="{% url 'iotmodule_sensortypescreate_display' %}" >
+                                                        <span class="nav-text"><i class="fa fa-plus"></i> Add Sensor Type</span>
                                                     </a>
                                                 </li>
                                             </ul>
                                         </li>
                                     {% endif %}
+                                    <!-- Sensor Types Admin Nav [Finish] -->
+                                    <!-- Sensors Admin Nav [Begin] -->
                                     {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
                                         <li>
                                             <a href="#">
@@ -189,24 +194,25 @@
                                             </a>
                                             <ul class="nav-sub">
                                                 <li>
-                                                    <a href="#" >
-                                                        <span class="nav-text"><i class="fa fa-list"></i> List</span>
+                                                    <a href="{% url 'iotmodule_sensorlist_display' %}" >
+                                                        <span class="nav-text"><i class="fa fa-list"></i> Sensor List</span>
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a href="#" >
-                                                        <span class="nav-text"><i class="fa fa-plus"></i> Add</span>
+                                                    <a href="{% url 'iotmodule_sensorcreate_display' %}" >
+                                                        <span class="nav-text"><i class="fa fa-plus"></i> Add Sensor</span>
                                                     </a>
                                                 </li>
                                             </ul>
                                         </li>
                                     {% else %}
                                         <li>
-                                            <a href="#">
+                                            <a href="{% url 'iotmodule_sensorlist_display' %}">
                                                 <span class="nav-icon"><i class="fa fa-gears"></i></span><span class="nav-text">My Sensors</span>
                                             </a>
                                         </li>
                                     {% endif %}
+                                    <!-- Sensors Admin Nav [Finish] -->
                                 {% endif %}
                                 {% if request.user.is_authenticated %}
                                     <li>
