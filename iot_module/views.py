@@ -27,7 +27,7 @@ class IotModuleDashboardView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(IotModuleDashboardView, self).get_context_data(**kwargs)
-        if self.request.user.profile:
+        if Profile.objects.filter(user=self.request.user):
             my_user = User.objects.filter(id=self.request.user.id)
             my_profile = Profile.objects.filter(id=self.request.user.profile.id)
             my_components = Component.objects.filter(profile=self.request.user.profile).order_by('alias')
@@ -40,6 +40,10 @@ class IotModuleDashboardView(TemplateView):
             context["profile_info_json"] = json.dumps(serialize('json', my_profile))
             context["component_list_json"] = json.dumps(serialize('json', my_components))
             context["sensor_list_json"] = json.dumps(serialize('json', my_sensors))
+        else:
+            my_user = User.objects.filter(id=self.request.user.id)
+            context["user_info"] = my_user
+            context["user_info_json"] = json.dumps(serialize('json', my_user))
         return context
 
 ##############################################################################################
