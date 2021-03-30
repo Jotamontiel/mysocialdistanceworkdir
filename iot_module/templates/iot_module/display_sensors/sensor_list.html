@@ -59,15 +59,21 @@
                     <table class="table table-striped b-t">
                         <thead>
                             <tr>
+                                <th>Status</th>
                                 {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
                                     <th>ID</th>
                                 {% endif %}
                                 <th>Alias</th>
                                 <th>Owner Compt</th>
+                                {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
+                                    <th>Owner User</th>
+                                {% endif %}
                                 <th>Serial Code</th>
                                 <th>Measurement Unit</th>
                                 <th>Sensor Type</th>
-                                <th>Status</th>
+                                {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and not request.user.is_staff %}
+                                    <th>Sensor Brand</th>
+                                {% endif %}
                                 <th style="width:50px;"></th>
                                 {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
                                     <th style="width:50px;"></th>
@@ -78,18 +84,24 @@
                         <tbody>
                             {% for sensor in sensor_list %}
                                 <tr>
+                                    {% if sensor.isEnabled %}
+                                        <td><i class="fa fa-rss" style="color: #1aff1a"></i></td>
+                                    {% else %}
+                                        <td><i class="fa fa-rss" style="color: white"></i></td>
+                                    {% endif %}
                                     {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
                                         <td>{{ sensor.id }}</td>
                                     {% endif %}
                                     <td>{{ sensor.alias }}</td>
                                     <td>{{ sensor.component }}</td>
+                                    {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}
+                                        <td>{{ sensor.component.profile.user }}</td>
+                                    {% endif %}
                                     <td>{{ sensor.serialCode }}</td>
                                     <td>{{ sensor.measurementUnit }}</td>
                                     <td>{{ sensor.sensorType }}</td>
-                                    {% if sensor.isEnabled %}
-                                        <td><i class="fa fa-rss" style="color: green"></i></td>
-                                    {% else %}
-                                        <td><i class="fa fa-rss" style="color: red"></i></td>
+                                    {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and not request.user.is_staff %}
+                                        <td>{{sensor.brand}}</td>
                                     {% endif %}
                                     <td><a href="{% url 'iotmodule_sensordetail_display' sensor.id sensor.alias|slugify %}"><button class="btn btn-fw info">Details</button></a></td>
                                     {% if request.user.profile and request.user.profile.nickName and request.user.profile.rut and request.user.is_staff %}

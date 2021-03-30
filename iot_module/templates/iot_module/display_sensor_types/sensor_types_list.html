@@ -77,7 +77,11 @@
                                     <td>{{ sensortype.name }}</td>
                                     <td>{{ sensortype.initials }}</td>
                                     <td>{{ sensortype.measurementUnit }}</td>
-                                    <td>{{ sensortype.isGraphical }}</td>
+                                    {% if sensortype.isGraphical %}
+                                        <td><i class="fa fa-area-chart" style="color: #1aff1a"></i></td>
+                                    {% else %}
+                                        <td><i class="fa fa-area-chart" style="color: #ff0000"></i></td>
+                                    {% endif %}
                                     <td>{{ sensortype.description|striptags|safe|truncatechars:"40" }}</td>
                                     <td><a href="{% url 'iotmodule_sensortypesdetail_display' sensortype.id sensortype.name|slugify %}"><button class="btn btn-fw info">Details</button></a></td>
                                     <td><a href="{% url 'iotmodule_sensortypesupdate_display' sensortype.id sensortype.name|slugify %}"><button class="btn btn-fw primary">Edit</button></a></td>

@@ -15,6 +15,8 @@ from django import forms
 from django.core.paginator import Paginator
 from django.core.paginator import EmptyPage
 from django.core.paginator import PageNotAnInteger
+from django.core.serializers import serialize
+import json
 
 ##############################################################################################
 ########## DASHBOARD VIEWS ###################################################################
@@ -22,6 +24,23 @@ from django.core.paginator import PageNotAnInteger
 @method_decorator(login_required, name='dispatch')
 class IotModuleDashboardView(TemplateView):
     template_name = "iot_module/display_dashboard/iotmodule_dashboard.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(IotModuleDashboardView, self).get_context_data(**kwargs)
+        if self.request.user.profile:
+            my_user = User.objects.filter(id=self.request.user.id)
+            my_profile = Profile.objects.filter(id=self.request.user.profile.id)
+            my_components = Component.objects.filter(profile=self.request.user.profile).order_by('alias')
+            my_sensors = Sensor.objects.filter(component__profile=self.request.user.profile)
+            context["user_info"] = my_user
+            context["profile_info"] = my_profile
+            context["component_list"] = my_components
+            context["sensor_list"] = my_sensors
+            context["user_info_json"] = json.dumps(serialize('json', my_user))
+            context["profile_info_json"] = json.dumps(serialize('json', my_profile))
+            context["component_list_json"] = json.dumps(serialize('json', my_components))
+            context["sensor_list_json"] = json.dumps(serialize('json', my_sensors))
+        return context
 
 ##############################################################################################
 ########## USER VIEWS: USER EMAIL UPDATE, SIGN UP ############################################
