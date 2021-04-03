@@ -65,699 +65,801 @@
         {% endif %}
       </div>
     </div>
-    {% if component_list and sensor_list %}
-      <div class="row">
-        {% for sensor in sensor_list %}
-          <div class="col-xs-6 col-sm-4">
-            <div class="box p-a">
-              <div class="pull-left m-r">
-                <span class="w-48 rounded primary">
-                  <i class="fa fa-laptop"></i>
-                </span>
-              </div>
-              <div class="clear">
-                <h4 class="m-0 text-lg _300"><b id="{{sensor.serialCode}}-simplekpi">-- </b><span class="text-sm">{{sensor.measurementUnit}}</span></h4>
-                <small class="text-muted">Temp Pico: 100 {{sensor.measurementUnit}}</small>
-              </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="box">
+          <div class="item">
+            <div class="item-bg">
+              {% if request.user.profile.avatar %} 
+                <img src="{{request.user.profile.avatar.url}}" class="blur">
+              {% else %}
+                <img src="{% static 'registration/img/no-avatar.jpg' %}" class="blur">
+              {% endif %}
+            </div>
+            <div class="p-a-lg pos-rlt text-center">
+              {% if request.user.profile.avatar %} 
+                <img src="{{request.user.profile.avatar.url}}" class="img-circle w-56" style="margin-bottom: -7rem">
+              {% else %}
+                <img src="{% static 'registration/img/no-avatar.jpg' %}" class="img-circle w-56" style="margin-bottom: -7rem">
+              {% endif %}
             </div>
           </div>
-        {% endfor %}
-        <!--div class="col-xs-12 col-sm-4">
-          <div class="box p-a">
-            <div class="pull-left m-r">
-              <span class="w-48 rounded  accent">
-                <i class="fa fa-desktop"></i>
-              </span>
-            </div>
-            <div class="clear">
-              <h4 class="m-0 text-lg _300"><b id="display_temp1">-- </b><span class="text-sm">C</span></h4>
-              <small class="text-muted">Promedio: 500 C</small>
-            </div>
-          </div>
-        </div>
-        <div class="col-xs-6 col-sm-4">
-          <div class="box p-a">
-            <div class="pull-left m-r">
-              <span class="w-48 rounded primary">
-                <i class="fa fa-laptop"></i>
-              </span>
-            </div>
-            <div class="clear">
-              <h4 class="m-0 text-lg _300"><b id="display_temp2">-- </b><span class="text-sm">C</span></h4>
-              <small class="text-muted">Temp Pico: 100 C</small>
-            </div>
-          </div>
-        </div>
-        <div class="col-xs-6 col-sm-4">
-          <div class="box p-a">
-            <div class="pull-left m-r">
-              <span class="w-48 rounded warn">
-                <i class="fa fa-flash"></i>
-              </span>
-            </div>
-            <div class="clear">
-              <h4 class="m-0 text-lg _300"><b id="display_volt">-- </b><span class="text-sm">V</span></h4>
-              <small class="text-muted">Tensión Pico: 10 V</small>
-            </div>
-          </div>
-        </div-->
-      </div>
-      <div class="row">
-        <div class="col-xs-12 col-sm-4">
-          <div class="box p-a">
-            <div class="pull-left m-r">
-              <span class="w-48 rounded warn">
-                <i class="fa fa-flag"></i>
-              </span>
-            </div>
-            <div class="form-group row">
-              <label class="col-sm-2 form-control-label">LED 1</label>
-              <div class="col-sm-10">
-                <label class="ui-switch ui-switch-md info m-t-xs">
-                  <input id="input_led1" onchange="process_led1()" type="checkbox">
-                  <i></i>
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-xs-12 col-sm-4">
-          <div class="box p-a">
-            <div class="pull-left m-r">
-              <span class="w-48 rounded warn">
-                <i class="fa fa-flag"></i>
-              </span>
-            </div>
-            <div class="form-group row">
-              <label class="col-sm-2 form-control-label">LED 2</label>
-              <div class="col-sm-10">
-                <label class="ui-switch ui-switch-md info m-t-xs">
-                  <input id="input_led2" onchange="process_led2()" type="checkbox">
-                  <i></i>
-                </label>
-              </div>
+          <div class="p-a text-center">
+            <span class="pull-right label dark-white text-color">Last Update: {{request.user.profile.updated.date}}</span>
+            <a href="" class="text-md m-t block">User: {{request.user}}</a>
+            <p><small>User: {{request.user}}</small></p>
+            <p><small>NickName: {{request.user.profile}}</small></p>
+            <p><small>Rut: {{request.user.profile.rut}}</small></p>
+            <p><small>Office Position: {{request.user.profile.position}}</small></p>
+            <p><small>Country: {{request.user.profile.nationality}}</small></p>
+            <p><small>Birth Date: {{request.user.profile.birthDate}}</small></p>
+            <p><small>Gender: {{request.user.profile.gender}}</small></p>
+            <p><small>Work Phone: {{request.user.profile.workPhone}}</small></p>
+            <p><small>Phone: {{request.user.profile.phone}}</small></p>
+            <p><a href="" class="btn btn-sm primary">Follow</a></p>
+            <div class="text-xs">
+              <em>N° Components: <strong>{{component_list.count}}</strong> - N° Sensors: <strong>{{sensor_list.count}}</strong></em>
             </div>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-xs-12 col-sm-4">
-          <div class="box">
-            <div class="box-header">
-              <h3>Estatus Temperatura1 Computador</h3>
-              <small>Temperatura GPU en °C</small>
-            </div>
-            <div class="box-body">
-              <div id="placeholder1" ui-jp="plot" ui-refresh="app.setting.color" style="height: 200px; padding: 0px; position: relative;">
+    </div>
+    {% if component_list %}
+      {% if sensor_list %}
+        {% for component in component_list %}
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+              <div class="box">
+                <div class="item">
+                  <div class="item-overlay active p-a">
+                    <span class="pull-right label dark-white text-color">Last Update: {{component.updated.date}}</span>
+                    <a href="" class="pull-left text-u-c label label-md info">Component</a>
+                  </div>
+                  <img src="{% static 'celery_tasks/celerytasks_menu/assets/images/c2.jpg' %}" class="w-medium">
+                </div>
+                <div class="p-a">
+                  <div class="text-muted m-b-xs">
+                    <span class="m-r">May 12</span>
+                    <a href="" class="m-r"><i class="fa fa-heart-o"></i> 34</a>
+                    <a href=""><i class="fa fa-share"></i></a>
+                  </div>
+                  <div class="m-b h-2x"><a href="" class="_800">{{component.alias}}</a></div>
+                  <p class="h-3x">{{component.componentType}}</p>
+                  <p class="h-3x">{{component.profile}}</p>
+                  <p class="h-3x">{{component.isEnabled}}</p>
+                  <p class="h-3x">{{component.description}}</p>
+                  <div><a href="{% url 'iotmodule_componentdetail_display' component.id component.alias|slugify %}" class="btn btn-xs white">Details</a></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-xs-12 col-sm-4">
-          <div class="box">
+          <div class="row">
             <div class="box-header">
-              <h3>Estatus Temperatura2 Computador</h3>
-              <small>Temperatura CPU en °C</small>
-            </div>
-            <div class="box-body">
-              <div id="placeholder2" ui-jp="plot" ui-refresh="app.setting.color" style="height: 200px; padding: 0px; position: relative;">
-              </div>
+              <h2>{{component.alias}} - Simple KPI per sensor</h2>
+              <small>Get the reading in real time with a maximum and minimum per sensor in {{component.alias}}</small>
             </div>
           </div>
-        </div>
-        <div class="col-xs-12 col-sm-4">
-          <div class="box">
-            <div class="box-header">
-              <h3>Estatus Voltaje Computador</h3>
-              <small>Voltaje en V</small>
-            </div>
-            <div class="box-body">
-              <div id="placeholder3" ui-jp="plot" ui-refresh="app.setting.color" style="height: 200px; padding: 0px; position: relative;">
+          <div class="row">
+            {% for sensor in sensor_list %}
+              {% if sensor.component.id == component.id %}
+                <div class="col-xs-4 col-sm-4">
+                  <div class="box p-a">
+                    <div class="pull-left m-r">
+                      <span class="w-48 rounded primary" style="background:#ff6666;color:white;">
+                        <i class="fa fa-tachometer fa-lg"></i>
+                      </span>
+                    </div>
+                    <div class="clear">
+                      {{sensor.alias}}
+                      <h4 class="m-0 text-lg _300"><b id="{{sensor.serialCode}}-simplekpi">-- </b><span class="text-sm">{{sensor.measurementUnit}}</span></h4>
+                      <small class="text-muted">Sensor Type: {{sensor.sensorType}}</small><br>
+                      <small class="text-muted">Max Variation: -- {{sensor.measurementUnit}}</small><br>
+                      <small class="text-muted">Min Variation: -- {{sensor.measurementUnit}}</small>
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+            <!--div class="col-xs-12 col-sm-4">
+              <div class="box p-a">
+                <div class="pull-left m-r">
+                  <span class="w-48 rounded  accent">
+                    <i class="fa fa-desktop"></i>
+                  </span>
+                </div>
+                <div class="clear">
+                  <h4 class="m-0 text-lg _300"><b id="display_temp1">-- </b><span class="text-sm">C</span></h4>
+                  <small class="text-muted">Promedio: 500 C</small>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12 col-sm-12">
-          <div class="box">
-            <div class="box-header">
-              <h3>Estatus General</h3>
-              <small>Temperatura Corporal en °C</small>
-            </div>
-            <div class="box-body">
-              <div id="placeholder" ui-jp="plot" ui-refresh="app.setting.color" style="height: 200px; padding: 0px; position: relative;">
+            <div class="col-xs-6 col-sm-4">
+              <div class="box p-a">
+                <div class="pull-left m-r">
+                  <span class="w-48 rounded primary">
+                    <i class="fa fa-laptop"></i>
+                  </span>
+                </div>
+                <div class="clear">
+                  <h4 class="m-0 text-lg _300"><b id="display_temp2">-- </b><span class="text-sm">C</span></h4>
+                  <small class="text-muted">Temp Pico: 100 C</small>
+                </div>
               </div>
             </div>
+            <div class="col-xs-6 col-sm-4">
+              <div class="box p-a">
+                <div class="pull-left m-r">
+                  <span class="w-48 rounded warn">
+                    <i class="fa fa-flash"></i>
+                  </span>
+                </div>
+                <div class="clear">
+                  <h4 class="m-0 text-lg _300"><b id="display_volt">-- </b><span class="text-sm">V</span></h4>
+                  <small class="text-muted">Tensión Pico: 10 V</small>
+                </div>
+              </div>
+            </div-->
           </div>
-        </div>
-      </div>
-      <!--div class="row">
-        <div class="col-sm-6 col-md-4">
+          <!--add general led [begin]-->
+          <!--div class="row">
+            <div class="col-xs-12 col-sm-4">
+              <div class="box p-a">
+                <div class="pull-left m-r">
+                  <span class="w-48 rounded warn">
+                    <i class="fa fa-flag"></i>
+                  </span>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 form-control-label">LED 1</label>
+                  <div class="col-sm-10">
+                    <label class="ui-switch ui-switch-md info m-t-xs">
+                      <input id="input_led1" onchange="process_led1()" type="checkbox">
+                      <i></i>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+              <div class="box p-a">
+                <div class="pull-left m-r">
+                  <span class="w-48 rounded warn">
+                    <i class="fa fa-flag"></i>
+                  </span>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 form-control-label">LED 2</label>
+                  <div class="col-sm-10">
+                    <label class="ui-switch ui-switch-md info m-t-xs">
+                      <input id="input_led2" onchange="process_led2()" type="checkbox">
+                      <i></i>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div-->
+          <!--add general led [finish]-->
+          <div class="row">
+            <div class="box-header">
+              <h2>{{component.alias}} - Simple Graphic per sensor</h2>
+              <small>Graph that obtains a history of last minute readings per sensor in {{component.alias}}</small>
+            </div>
+          </div>
+          <div class="row">
+            {% for sensor in sensor_list %}
+              {% if sensor.component.id == component.id %}
+                <div class="col-xs-12 col-sm-12">
+                  <div class="box">
+                    <div class="box-header">
+                      <h2>{{sensor.alias}}</h2>
+                      <p>(Historical Status Last Minute)</p>
+                      <small>X-Axis -> Per second unit<br>Y-Axis -> {{sensor.sensorType}} in {{sensor.measurementUnit}} unit</small>
+                    </div>
+                    <div class="box-body">
+                      <div id="{{sensor.serialCode}}-simpleGraphic" ui-jp="plot" ui-refresh="app.setting.color" style="height: 200px; padding: 0px; position: relative;">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+            <!--div class="col-xs-12 col-sm-4">
               <div class="box">
                 <div class="box-header">
-                  <h3>Projects monitor</h3>
-                  <small>Calculated in last 30 days</small>
+                  <h3>Estatus Temperatura2 Computador</h3>
+                  <small>Temperatura CPU en °C</small>
                 </div>
-                <div class="box-tool">
-                <ul class="nav">
-                  <li class="nav-item inline">
-                    <a class="nav-link">
-                      <i class="material-icons md-18">&#xe863;</i>
-                    </a>
-                  </li>
-                  <li class="nav-item inline dropdown">
-                    <a class="nav-link" data-toggle="dropdown">
-                      <i class="material-icons md-18">&#xe5d4;</i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-scale pull-right">
-                      <a class="dropdown-item" href>This week</a>
-                      <a class="dropdown-item" href>This month</a>
-                      <a class="dropdown-item" href>This week</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item">Today</a>
-                    </div>
-                  </li>
-                </ul>
-              </div>
                 <div class="box-body">
-                  <div class="text-center m-b">
-                    <div class="btn-group" data-toggle="buttons">
-                <label class="btn btn-sm white">
-                  <input type="radio" name="options" autocomplete="off"> Month
-                </label>
-                <label class="btn btn-sm white">
-                  <input type="radio" name="options" autocomplete="off"> Day
-                </label>
+                  <div id="placeholder2" ui-jp="plot" ui-refresh="app.setting.color" style="height: 200px; padding: 0px; position: relative;">
+                  </div>
+                </div>
               </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+              <div class="box">
+                <div class="box-header">
+                  <h3>Estatus Voltaje Computador</h3>
+                  <small>Voltaje en V</small>
+                </div>
+                <div class="box-body">
+                  <div id="placeholder3" ui-jp="plot" ui-refresh="app.setting.color" style="height: 200px; padding: 0px; position: relative;">
                   </div>
+                </div>
+              </div>
+            </div-->
+          </div>
+          <div class="row">
+            <div class="box-header">
+              <h2>{{component.alias}} - General Behavior</h2>
+              <small>Sensor charts comparison to monitor the overall status of changes in the {{component.alias}} component</small>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12">
+              <div class="box">
+                <div class="box-header">
+                  <h2>General Behavior</h2>
+                  <p>(Historical Status Last Minute)</p>
+                  <small>X-Axis -> Per second unit<br>Y-Axis -> No measure unit specified</small>
+                </div>
+                <div class="box-body">
+                  <div id="graphicsSet" ui-jp="plot" ui-refresh="app.setting.color" style="height: 200px; padding: 0px; position: relative;">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--div class="row">
+            <div class="col-sm-6 col-md-4">
+                  <div class="box">
+                    <div class="box-header">
+                      <h3>Projects monitor</h3>
+                      <small>Calculated in last 30 days</small>
+                    </div>
+                    <div class="box-tool">
+                    <ul class="nav">
+                      <li class="nav-item inline">
+                        <a class="nav-link">
+                          <i class="material-icons md-18">&#xe863;</i>
+                        </a>
+                      </li>
+                      <li class="nav-item inline dropdown">
+                        <a class="nav-link" data-toggle="dropdown">
+                          <i class="material-icons md-18">&#xe5d4;</i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-scale pull-right">
+                          <a class="dropdown-item" href>This week</a>
+                          <a class="dropdown-item" href>This month</a>
+                          <a class="dropdown-item" href>This week</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item">Today</a>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                    <div class="box-body">
+                      <div class="text-center m-b">
+                        <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-sm white">
+                      <input type="radio" name="options" autocomplete="off"> Month
+                    </label>
+                    <label class="btn btn-sm white">
+                      <input type="radio" name="options" autocomplete="off"> Day
+                    </label>
+                  </div>
+                      </div>
+                      <div ui-jp="plot" ui-refresh="app.setting.color" ui-options="
+                        [
+                          { data: [[1, 3.6], [2, 3.5], [3, 6], [4, 4], [5, 4.3], [6, 3.5], [7, 3.6]], 
+                            points: { show: true, radius: 0}, 
+                              splines: { show: true, tension: 0.45, lineWidth: 2, fill: 1 }
+                          },
+                          { data: [[1, 3], [2, 2.6], [3, 3.2], [4, 3], [5, 3.5], [6, 3], [7, 3.5]], 
+                            points: { show: true, radius: 0}, 
+                              splines: { show: true, tension: 0.45, lineWidth: 2, fill: 1 } 
+                          },
+                          { data: [[1, 2], [2, 1.6], [3, 2.4], [4, 2.1], [5, 1.7], [6, 1.5], [7, 1.7]], 
+                            points: { show: true, radius: 0}, 
+                              splines: { show: true, tension: 0.45, lineWidth: 2, fill: 1 } 
+                          }
+                        ], 
+                        {
+                          colors: ['#a88add','#0cc2aa','#fcc100'],
+                          series: { shadowSize: 3 },
+                          xaxis: { show: true, font: { color: '#ccc' }, position: 'bottom' },
+                          yaxis:{ show: true, font: { color: '#ccc' }},
+                          grid: { hoverable: true, clickable: true, borderWidth: 0, color: 'rgba(120,120,120,0.5)' },
+                          tooltip: true,
+                          tooltipOpts: { content: '%x.0 is %y.4',  defaultTheme: false, shifts: { x: 0, y: -40 } }
+                        }
+                      " style="height:188px" >
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="col-sm-6 col-md-4">
+                  <div class="box">
+                    <div class="box-header">
+                      <h3>Tasks</h3>
+                      <small>Calculated in last 7 days</small>
+                    </div>
+                    <div class="box-tool">
+                    <ul class="nav">
+                      <li class="nav-item inline">
+                        <a class="nav-link">
+                          <i class="material-icons md-18">&#xe863;</i>
+                        </a>
+                      </li>
+                      <li class="nav-item inline dropdown">
+                        <a class="nav-link" data-toggle="dropdown">
+                          <i class="material-icons md-18">&#xe5d4;</i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-scale pull-right">
+                          <a class="dropdown-item" href>This week</a>
+                          <a class="dropdown-item" href>This month</a>
+                          <a class="dropdown-item" href>This week</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item">Today</a>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                    <div class="box-body">
+                      <div class="text-center m-b">
+                        <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-sm rounded white">
+                      <input type="radio" name="options" autocomplete="off"> This Month
+                    </label>
+                    <label class="btn btn-sm rounded white">
+                      <input type="radio" name="options" autocomplete="off"> This Week
+                    </label>
+                  </div>
+                      </div>
+                      <div ui-jp="plot" ui-refresh="app.setting.color" ui-options="
+                        [
+                          { data: [[1, 2], [2, 4], [3, 5], [4, 7], [5, 6], [6, 4], [7, 5], [8, 4]] }
+                        ], 
+                        {
+                          bars: { show: true, fill: true,  barWidth: 0.25, lineWidth: 1, fillColor: { colors: [{ opacity: 0.8 }, { opacity: 1}] }, align: 'center' },
+                          colors: ['#a88add'],
+                          series: { shadowSize: 3 },
+                          xaxis: { show: true, font: { color: '#ccc' }, position: 'bottom' },
+                          yaxis:{ show: true, font: { color: '#ccc' }},
+                          grid: { hoverable: true, clickable: true, borderWidth: 0, color: 'rgba(120,120,120,0.5)' },
+                          tooltip: true,
+                          tooltipOpts: { content: '%x.0 is %y.4',  defaultTheme: false, shifts: { x: 0, y: -40 } }
+                        }
+                      " style="height:188px" >
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="col-sm-12 col-md-4">
+                <div class="box">
+                    <div class="box-header">
+                      <h3>Sales</h3>
+                      <small>Calculated in last 7 days</small>
+                    </div>
+                    <div class="box-tool">
+                    <ul class="nav">
+                      <li class="nav-item inline">
+                        <a class="nav-link">
+                          <i class="material-icons md-18">&#xe863;</i>
+                        </a>
+                      </li>
+                      <li class="nav-item inline dropdown">
+                        <a class="nav-link" data-toggle="dropdown">
+                          <i class="material-icons md-18">&#xe5d4;</i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-scale pull-right">
+                          <a class="dropdown-item" href>This week</a>
+                          <a class="dropdown-item" href>This month</a>
+                          <a class="dropdown-item" href>This week</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item">Today</a>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                    <div class="box-body">
+                      <div class="text-center m-b">
+                        <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-sm rounded white">
+                      <input type="radio" name="options" autocomplete="off"> Market
+                    </label>
+                    <label class="btn btn-sm rounded white">
+                      <input type="radio" name="options" autocomplete="off"> Referral
+                    </label>
+                  </div>
+                      </div>
                   <div ui-jp="plot" ui-refresh="app.setting.color" ui-options="
-                    [
-                      { data: [[1, 3.6], [2, 3.5], [3, 6], [4, 4], [5, 4.3], [6, 3.5], [7, 3.6]], 
-                        points: { show: true, radius: 0}, 
-                          splines: { show: true, tension: 0.45, lineWidth: 2, fill: 1 }
-                      },
-                      { data: [[1, 3], [2, 2.6], [3, 3.2], [4, 3], [5, 3.5], [6, 3], [7, 3.5]], 
-                        points: { show: true, radius: 0}, 
-                          splines: { show: true, tension: 0.45, lineWidth: 2, fill: 1 } 
-                      },
-                      { data: [[1, 2], [2, 1.6], [3, 2.4], [4, 2.1], [5, 1.7], [6, 1.5], [7, 1.7]], 
-                        points: { show: true, radius: 0}, 
-                          splines: { show: true, tension: 0.45, lineWidth: 2, fill: 1 } 
-                      }
-                    ], 
-                    {
-                      colors: ['#a88add','#0cc2aa','#fcc100'],
-                      series: { shadowSize: 3 },
-                      xaxis: { show: true, font: { color: '#ccc' }, position: 'bottom' },
-                      yaxis:{ show: true, font: { color: '#ccc' }},
-                      grid: { hoverable: true, clickable: true, borderWidth: 0, color: 'rgba(120,120,120,0.5)' },
-                      tooltip: true,
-                      tooltipOpts: { content: '%x.0 is %y.4',  defaultTheme: false, shifts: { x: 0, y: -40 } }
-                    }
-                  " style="height:188px" >
+                        [
+                          { data: [[3, 1], [2, 2], [6, 3], [5, 4], [7, 5]] }
+                        ], 
+                        {
+                          bars: { horizontal: true, show: true, fill: true,  barWidth: 0.3, lineWidth: 1, fillColor: { colors: [{ opacity: 0.8 }, { opacity: 1}] }, align: 'center' },
+                          colors: ['#0cc2aa'],
+                          series: { shadowSize: 3 },
+                          xaxis: { show: true, font: { color: '#ccc' }, position: 'bottom' },
+                          yaxis:{ show: true, font: { color: '#ccc' }},
+                          grid: { hoverable: true, clickable: true, borderWidth: 0, color: 'rgba(120,120,120,0.5)' },
+                          tooltip: true,
+                          tooltipOpts: { content: '%x.0 is %y.4',  defaultTheme: false, shifts: { x: 0, y: -40 } }
+                        }
+                      " style="height:188px" >
+                      </div>
+                    </div>
                   </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="box">
+                  <div class="box-header">
+                    <h3>Open Projects <span class="label warning">9</span></h3>
+                    <small>Your data status</small>
+                  </div>
+                  <ul class="list inset">
+                      <li class="list-item">
+                        <a herf class="list-left">
+                          <span class="w-40 r-2x _600 text-lg accent">
+                            B
+                          </apan>
+                        </a>
+                        <div class="list-body">
+                          <div class="m-y-sm pull-right">
+                            <a href class="btn btn-xs white">Manage</a>
+                            <a href class="btn btn-xs white btn-icon"><i class="fa fa-pencil"></i></a>
+                          </div>
+                          <div><a href>Broadcast web app mockup</a></div>
+                          <div class="text-sm">
+                            <span class="text-muted"><strong>5</strong> tasks, <strong>3</strong> issues</span> 
+                            <span class="label"></span>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-item">
+                        <a herf class="list-left">
+                          <span class="w-40 r-2x _600 text-lg success">
+                            G
+                          </apan>
+                        </a>
+                        <div class="list-body">
+                          <div class="m-y-sm pull-right">
+                            <a href class="btn btn-xs white">Manage</a>
+                            <a href class="btn btn-xs white btn-icon"><i class="fa fa-pencil"></i></a>
+                          </div>
+                          <div><a href>GoodDesign Bootstrap 4 migration</a></div>
+                          <div class="text-sm">
+                            <span class="text-muted"><strong>35</strong> tasks, <strong>6</strong> issues</span> 
+                            <span class="label"></span>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-item">
+                        <a herf class="list-left">
+                          <span class="w-40 r-2x _600 text-lg purple">
+                            #
+                          </apan>
+                        </a>
+                        <div class="list-body">
+                          <div class="m-y-sm pull-right">
+                            <a href class="btn btn-xs white">Manage</a>
+                            <a href class="btn btn-xs white btn-icon"><i class="fa fa-pencil"></i></a>
+                          </div>
+                          <div><a href>#Hashtag android app develop</a></div>
+                          <div class="text-sm">
+                            <span class="text-muted"><strong>52</strong> tasks, <strong>13</strong> issues</span> 
+                            <span class="label"></span>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-item">
+                        <a herf class="list-left">
+                          <span class="w-40 r-2x _600 blue">
+                            <i class="fa fa-lg fa-google"></i>
+                          </apan>
+                        </a>
+                        <div class="list-body">
+                          <div class="m-y-sm pull-right">
+                            <a href class="btn btn-xs white">Manage</a>
+                            <a href class="btn btn-xs white btn-icon"><i class="fa fa-pencil"></i></a>
+                          </div>
+                          <div><a href>Google material design application</a></div>
+                          <div class="text-sm">
+                            <span class="text-muted"><strong>15</strong> tasks, <strong>3</strong> issues</span> 
+                            <span class="label"></span>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-item">
+                        <a herf class="list-left">
+                          <span class="w-40 r-2x _600 blue-800">
+                            <i class="fa fa-lg fa-facebook"></i>
+                          </apan>
+                        </a>
+                        <div class="list-body">
+                          <div class="m-y-sm pull-right">
+                            <a href class="btn btn-xs white">Manage</a>
+                            <a href class="btn btn-xs white btn-icon"><i class="fa fa-pencil"></i></a>
+                          </div>
+                          <div><a href>Facebook connection web application</a></div>
+                          <div class="text-sm">
+                            <span class="text-muted"><strong>30</strong> tasks, <strong>5</strong> issues</span> 
+                            <span class="label"></span>
+                          </div>
+                        </div>
+                      </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div class="box">
+                  <div class="box-header">
+                    <h3>Stats</h3>
+                    <small>Your data status</small>
+                  </div>
+                  <div class="box-tool">
+                    <ul class="nav">
+                      <li class="nav-item inline">
+                        <a class="nav-link">
+                          <i class="material-icons md-18">&#xe863;</i>
+                        </a>
+                      </li>
+                      <li class="nav-item inline dropdown">
+                        <a class="nav-link" data-toggle="dropdown">
+                          <i class="material-icons md-18">&#xe5d4;</i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-scale pull-right">
+                          <a class="dropdown-item" href>This week</a>
+                          <a class="dropdown-item" href>This month</a>
+                          <a class="dropdown-item" href>This week</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item">Today</a>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th style="width:60px;" class="text-center">Graph</th>
+                        <th>Item</th>                    
+                        <th style="width:70px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <div ui-jp="sparkline" ui-refresh="app.setting.color" ui-options="[ 16,15,15,14,17,18,16,15,16 ], {type:'bar', height:19, barWidth:4, barSpacing:2, barColor:'#0cc2aa'}" class="sparkline inline">loading...</div>
+                        </td>
+                        <td>App downloads</td>
+                        <td class="text-success">
+                          <i class="fa fa-level-up"></i> 40%
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="text-center">
+                          <div ui-jp="sparkline" ui-refresh="app.setting.color" ui-options="[ 60,30,10 ], {type:'pie', height:19, sliceColors:['#fcc100','#fff','#0cc2aa']}" class="sparkline inline">loading...</div>
+                        </td>
+                        <td>Social connection</td>
+                        <td class="text-success">
+                          <i class="fa fa-level-up"></i> 20%
+                        </td>
+                      </tr>
+                      <tr>                    
+                        <td>
+                          <div ui-jp="sparkline" ui-refresh="app.setting.color" ui-options="[ 16,15,15,14,17,18,16,15,16 ], {type:'line', height:19, width:60, lineColor:'#0cc2aa', fillColor:'transparent'}" class="sparkline inline">loading...</div>
+                        </td>
+                        <td>Revenue</td>
+                        <td class="text-warning">
+                          <i class="fa fa-level-down"></i> 5%
+                        </td>
+                      </tr>
+                      <tr>                    
+                        <td>
+                          <div ui-jp="sparkline" ui-refresh="app.setting.color" ui-options="[ 16,15,15,14,17,18,16,15,16 ], {type:'discrete', height:19, width:60, lineColor:'#6cc788'}" class="sparkline inline">loading...</div>
+                        </td>
+                        <td>Customer increase</td>
+                        <td class="text-danger">
+                          <i class="fa fa-level-down"></i> 20%
+                        </td>
+                      </tr>
+                      <tr>                    
+                        <td>
+                          <div ui-jp="sparkline" ui-refresh="app.setting.color" ui-options="[ 16,15,15,14,17,18,16,15,16 ], {type:'line', height:19, width:60, lineColor:'#fcc100', fillColor:'#fcc100'}" class="sparkline inline">loading...</div>
+                        </td>
+                        <td>Order placed</td>
+                        <td class="text-warning">
+                          <i class="fa fa-level-down"></i> 5%
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div ui-jp="sparkline" ui-refresh="app.setting.color" ui-options="[ 16,15,15,16,15,16,14,17,18 ], {type:'line', height:19, width:60, lineColor:'#fcc100', fillColor:'transparent'}" class="sparkline inline">loading...</div>
+                        </td>
+                        <td>Visitors</td>
+                        <td class="text-warning">
+                          <i class="fa fa-level-down"></i> 8%
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
           </div>
-          <div class="col-sm-6 col-md-4">
+          <div class="row">
+              <div class="col-sm-6 col-md-4">
+                  <div class="box">
+                      <div class="box-header">
+                        <h3>Members</h3>
+                      </div>
+                      <ul class="list no-border p-b">
+                        <li class="list-item">
+                          <a herf class="list-left">
+                            <span class="w-40 avatar">
+                              <img src="{% static 'iotmodule/assets/images/a4.jpg' %}" alt="...">
+                              <i class="on b-white bottom"></i>
+                              </span>
+                          </a>
+                          <div class="list-body">
+                            <div><a href>Chris Fox</a></div>
+                            <small class="text-muted text-ellipsis">Designer, Blogger</small>
+                          </div>
+                        </li>
+                        <li class="list-item">
+                          <a herf class="list-left">
+                            <span class="w-40 avatar">
+                              <img src="{% static 'iotmodule/assets/images/a5.jpg' %}" alt="...">
+                              <i class="on b-white bottom"></i>
+                            </span>
+                          </a>
+                          <div class="list-body">
+                            <div><a href>Mogen Polish</a></div>
+                            <small class="text-muted text-ellipsis">Writter, Mag Editor</small>
+                          </div>
+                        </li>
+                        <li class="list-item">
+                          <a herf class="list-left">
+                            <span class="w-40 avatar">
+                              <img src="{% static 'iotmodule/assets/images/a6.jpg' %}" alt="...">
+                              <i class="away b-white bottom"></i>
+                            </span>
+                          </a>
+                          <div class="list-body">
+                            <div><a href>Joge Lucky</a></div>
+                            <small class="text-muted text-ellipsis">Art director, Movie Cut</small>
+                          </div>
+                        </li>
+                        <li class="list-item">
+                          <a herf class="list-left">
+                            <span class="w-40 avatar">
+                              <img src="{% static 'iotmodule/assets/images/a7.jpg' %}" alt="...">
+                              <i class="busy b-white bottom"></i>
+                            </span>
+                          </a>
+                          <div class="list-body">
+                            <div><a href>Folisise Chosielie</a></div>
+                            <small class="text-muted text-ellipsis">Musician, Player</small>
+                          </div>
+                        </li>
+                        <li class="list-item">
+                          <a herf class="list-left">
+                            <span class="w-40 avatar success">
+                              <span>P</span>
+                              <i class="away b-white bottom"></i>
+                            </span>
+                          </a>
+                          <div class="list-body">
+                            <div><a href>Peter</a></div>
+                            <small class="text-muted text-ellipsis">Musician, Player</small>
+                          </div>
+                        </li>
+                      </ul>
+                  </div>
+              </div>
+              <div class="col-sm-6 col-md-4">
               <div class="box">
                 <div class="box-header">
                   <h3>Tasks</h3>
-                  <small>Calculated in last 7 days</small>
+                  <small>20 finished, 5 remaining</small>
                 </div>
                 <div class="box-tool">
-                <ul class="nav">
-                  <li class="nav-item inline">
-                    <a class="nav-link">
-                      <i class="material-icons md-18">&#xe863;</i>
-                    </a>
-                  </li>
-                  <li class="nav-item inline dropdown">
-                    <a class="nav-link" data-toggle="dropdown">
-                      <i class="material-icons md-18">&#xe5d4;</i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-scale pull-right">
-                      <a class="dropdown-item" href>This week</a>
-                      <a class="dropdown-item" href>This month</a>
-                      <a class="dropdown-item" href>This week</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item">Today</a>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-                <div class="box-body">
-                  <div class="text-center m-b">
-                    <div class="btn-group" data-toggle="buttons">
-                <label class="btn btn-sm rounded white">
-                  <input type="radio" name="options" autocomplete="off"> This Month
-                </label>
-                <label class="btn btn-sm rounded white">
-                  <input type="radio" name="options" autocomplete="off"> This Week
-                </label>
-              </div>
+                      <ul class="nav">
+                        <li class="nav-item inline dropdown">
+                          <a class="nav-link text-muted p-x-xs" data-toggle="dropdown">
+                            <i class="fa fa-ellipsis-v"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-scale pull-right">
+                            <a class="dropdown-item" href>New task</a>
+                            <a class="dropdown-item" href>Make all finished</a>
+                            <a class="dropdown-item" href>Make all unfinished</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item">Settings</a>
+                          </div>
+                        </li>
+                      </ul>
                   </div>
-                  <div ui-jp="plot" ui-refresh="app.setting.color" ui-options="
-                    [
-                      { data: [[1, 2], [2, 4], [3, 5], [4, 7], [5, 6], [6, 4], [7, 5], [8, 4]] }
-                    ], 
-                    {
-                      bars: { show: true, fill: true,  barWidth: 0.25, lineWidth: 1, fillColor: { colors: [{ opacity: 0.8 }, { opacity: 1}] }, align: 'center' },
-                      colors: ['#a88add'],
-                      series: { shadowSize: 3 },
-                      xaxis: { show: true, font: { color: '#ccc' }, position: 'bottom' },
-                      yaxis:{ show: true, font: { color: '#ccc' }},
-                      grid: { hoverable: true, clickable: true, borderWidth: 0, color: 'rgba(120,120,120,0.5)' },
-                      tooltip: true,
-                      tooltipOpts: { content: '%x.0 is %y.4',  defaultTheme: false, shifts: { x: 0, y: -40 } }
-                    }
-                  " style="height:188px" >
+                <div class="box-body">
+                    <div class="streamline b-l m-l">
+                        <div class="sl-item b-success">
+                          <div class="sl-icon">
+                            <i class="fa fa-check"></i>
+                          </div>
+                          <div class="sl-content">
+                            <div class="sl-date text-muted">8:30</div>
+                            <div>Call to customer <a href class="text-info">Jacob</a> and discuss the detail about the AP project.</div>
+                          </div>
+                        </div>
+                        <div class="sl-item b-info">
+                          <div class="sl-content">
+                            <div class="sl-date text-muted">Sat, 5 Mar</div>
+                            <div>Prepare for presentation</div>
+                          </div>
+                        </div>
+                        <div class="sl-item b-warning">
+                          <div class="sl-content">
+                            <div class="sl-date text-muted">Sun, 11 Feb</div>
+                            <div><a href class="text-info">Jessi</a> assign you a task <a href class="text-info">Mockup Design</a>.</div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                  <div class="box-footer">
+                    <a href class="btn btn-sm warn text-u-c pull-right">Add one</a>
+                    <a href class="btn btn-sm white text-u-c">More</a>
                   </div>
                 </div>
-              </div>
-          </div>
-          <div class="col-sm-12 col-md-4">
-            <div class="box">
+            </div>
+              <div class="col-sm-12 col-md-4">
+                <div class="box">
                 <div class="box-header">
-                  <h3>Sales</h3>
-                  <small>Calculated in last 7 days</small>
+                  <span class="label success pull-right">5</span>
+                  <h3>Activity</h3>
+                  <small>10 members update their activies.</small>
                 </div>
-                <div class="box-tool">
-                <ul class="nav">
-                  <li class="nav-item inline">
-                    <a class="nav-link">
-                      <i class="material-icons md-18">&#xe863;</i>
-                    </a>
-                  </li>
-                  <li class="nav-item inline dropdown">
-                    <a class="nav-link" data-toggle="dropdown">
-                      <i class="material-icons md-18">&#xe5d4;</i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-scale pull-right">
-                      <a class="dropdown-item" href>This week</a>
-                      <a class="dropdown-item" href>This month</a>
-                      <a class="dropdown-item" href>This week</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item">Today</a>
-                    </div>
-                  </li>
-                </ul>
-              </div>
                 <div class="box-body">
-                  <div class="text-center m-b">
-                    <div class="btn-group" data-toggle="buttons">
-                <label class="btn btn-sm rounded white">
-                  <input type="radio" name="options" autocomplete="off"> Market
-                </label>
-                <label class="btn btn-sm rounded white">
-                  <input type="radio" name="options" autocomplete="off"> Referral
-                </label>
-              </div>
+                    <div class="streamline b-l m-b m-l">
+                          <div class="sl-item">
+                            <div class="sl-left">
+                              <img src="{% static 'iotmodule/assets/images/a2.jpg' %}" class="img-circle">
+                            </div>
+                            <div class="sl-content">
+                              <a href class="text-info">Louis Elliott</a><span class="m-l-sm sl-date">5 min ago</span>
+                              <div>assign you a task <a href class="text-info">Mockup Design</a>.</div>
+                            </div>
+                          </div>
+                          <div class="sl-item">
+                            <div class="sl-left">
+                              <img src="{% static 'iotmodule/assets/images/a5.jpg' %}" class="img-circle">
+                            </div>
+                            <div class="sl-content">
+                              <a href class="text-info">Terry Moore</a><span class="m-l-sm sl-date">10 min ago</span>
+                              <div>Follow up to close deal</div>
+                            </div>
+                          </div>
+                          <div class="sl-item">
+                            <div class="sl-left">
+                              <img src="{% static 'iotmodule/assets/images/a8.jpg' %}" class="img-circle">
+                            </div>
+                            <div class="sl-content">
+                              <a href class="text-info">Walter Paler</a><span class="m-l-sm sl-date">1 hour ago</span>
+                              <div>was added to Repo</div>
+                            </div>
+                          </div>
+                        </div>
+                        <a href class="btn btn-sm white text-u-c m-y-xs">Load More</a>
                   </div>
-              <div ui-jp="plot" ui-refresh="app.setting.color" ui-options="
-                    [
-                      { data: [[3, 1], [2, 2], [6, 3], [5, 4], [7, 5]] }
-                    ], 
-                    {
-                      bars: { horizontal: true, show: true, fill: true,  barWidth: 0.3, lineWidth: 1, fillColor: { colors: [{ opacity: 0.8 }, { opacity: 1}] }, align: 'center' },
-                      colors: ['#0cc2aa'],
-                      series: { shadowSize: 3 },
-                      xaxis: { show: true, font: { color: '#ccc' }, position: 'bottom' },
-                      yaxis:{ show: true, font: { color: '#ccc' }},
-                      grid: { hoverable: true, clickable: true, borderWidth: 0, color: 'rgba(120,120,120,0.5)' },
-                      tooltip: true,
-                      tooltipOpts: { content: '%x.0 is %y.4',  defaultTheme: false, shifts: { x: 0, y: -40 } }
-                    }
-                  " style="height:188px" >
-                  </div>
-                </div>
               </div>
-          </div>
-      </div>
-      <div class="row">
-          <div class="col-sm-12 col-md-6">
-            <div class="box">
-              <div class="box-header">
-                <h3>Open Projects <span class="label warning">9</span></h3>
-                <small>Your data status</small>
               </div>
-              <ul class="list inset">
-                  <li class="list-item">
-                    <a herf class="list-left">
-                      <span class="w-40 r-2x _600 text-lg accent">
-                        B
-                      </apan>
-                    </a>
-                    <div class="list-body">
-                      <div class="m-y-sm pull-right">
-                        <a href class="btn btn-xs white">Manage</a>
-                        <a href class="btn btn-xs white btn-icon"><i class="fa fa-pencil"></i></a>
-                      </div>
-                      <div><a href>Broadcast web app mockup</a></div>
-                      <div class="text-sm">
-                        <span class="text-muted"><strong>5</strong> tasks, <strong>3</strong> issues</span> 
-                        <span class="label"></span>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-item">
-                    <a herf class="list-left">
-                      <span class="w-40 r-2x _600 text-lg success">
-                        G
-                      </apan>
-                    </a>
-                    <div class="list-body">
-                      <div class="m-y-sm pull-right">
-                        <a href class="btn btn-xs white">Manage</a>
-                        <a href class="btn btn-xs white btn-icon"><i class="fa fa-pencil"></i></a>
-                      </div>
-                      <div><a href>GoodDesign Bootstrap 4 migration</a></div>
-                      <div class="text-sm">
-                        <span class="text-muted"><strong>35</strong> tasks, <strong>6</strong> issues</span> 
-                        <span class="label"></span>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-item">
-                    <a herf class="list-left">
-                      <span class="w-40 r-2x _600 text-lg purple">
-                        #
-                      </apan>
-                    </a>
-                    <div class="list-body">
-                      <div class="m-y-sm pull-right">
-                        <a href class="btn btn-xs white">Manage</a>
-                        <a href class="btn btn-xs white btn-icon"><i class="fa fa-pencil"></i></a>
-                      </div>
-                      <div><a href>#Hashtag android app develop</a></div>
-                      <div class="text-sm">
-                        <span class="text-muted"><strong>52</strong> tasks, <strong>13</strong> issues</span> 
-                        <span class="label"></span>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-item">
-                    <a herf class="list-left">
-                      <span class="w-40 r-2x _600 blue">
-                        <i class="fa fa-lg fa-google"></i>
-                      </apan>
-                    </a>
-                    <div class="list-body">
-                      <div class="m-y-sm pull-right">
-                        <a href class="btn btn-xs white">Manage</a>
-                        <a href class="btn btn-xs white btn-icon"><i class="fa fa-pencil"></i></a>
-                      </div>
-                      <div><a href>Google material design application</a></div>
-                      <div class="text-sm">
-                        <span class="text-muted"><strong>15</strong> tasks, <strong>3</strong> issues</span> 
-                        <span class="label"></span>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-item">
-                    <a herf class="list-left">
-                      <span class="w-40 r-2x _600 blue-800">
-                        <i class="fa fa-lg fa-facebook"></i>
-                      </apan>
-                    </a>
-                    <div class="list-body">
-                      <div class="m-y-sm pull-right">
-                        <a href class="btn btn-xs white">Manage</a>
-                        <a href class="btn btn-xs white btn-icon"><i class="fa fa-pencil"></i></a>
-                      </div>
-                      <div><a href>Facebook connection web application</a></div>
-                      <div class="text-sm">
-                        <span class="text-muted"><strong>30</strong> tasks, <strong>5</strong> issues</span> 
-                        <span class="label"></span>
-                      </div>
-                    </div>
-                  </li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-sm-12 col-md-6">
-            <div class="box">
-              <div class="box-header">
-                <h3>Stats</h3>
-                <small>Your data status</small>
-              </div>
-              <div class="box-tool">
-                <ul class="nav">
-                  <li class="nav-item inline">
-                    <a class="nav-link">
-                      <i class="material-icons md-18">&#xe863;</i>
-                    </a>
-                  </li>
-                  <li class="nav-item inline dropdown">
-                    <a class="nav-link" data-toggle="dropdown">
-                      <i class="material-icons md-18">&#xe5d4;</i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-scale pull-right">
-                      <a class="dropdown-item" href>This week</a>
-                      <a class="dropdown-item" href>This month</a>
-                      <a class="dropdown-item" href>This week</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item">Today</a>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th style="width:60px;" class="text-center">Graph</th>
-                    <th>Item</th>                    
-                    <th style="width:70px;"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <div ui-jp="sparkline" ui-refresh="app.setting.color" ui-options="[ 16,15,15,14,17,18,16,15,16 ], {type:'bar', height:19, barWidth:4, barSpacing:2, barColor:'#0cc2aa'}" class="sparkline inline">loading...</div>
-                    </td>
-                    <td>App downloads</td>
-                    <td class="text-success">
-                      <i class="fa fa-level-up"></i> 40%
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">
-                      <div ui-jp="sparkline" ui-refresh="app.setting.color" ui-options="[ 60,30,10 ], {type:'pie', height:19, sliceColors:['#fcc100','#fff','#0cc2aa']}" class="sparkline inline">loading...</div>
-                    </td>
-                    <td>Social connection</td>
-                    <td class="text-success">
-                      <i class="fa fa-level-up"></i> 20%
-                    </td>
-                  </tr>
-                  <tr>                    
-                    <td>
-                      <div ui-jp="sparkline" ui-refresh="app.setting.color" ui-options="[ 16,15,15,14,17,18,16,15,16 ], {type:'line', height:19, width:60, lineColor:'#0cc2aa', fillColor:'transparent'}" class="sparkline inline">loading...</div>
-                    </td>
-                    <td>Revenue</td>
-                    <td class="text-warning">
-                      <i class="fa fa-level-down"></i> 5%
-                    </td>
-                  </tr>
-                  <tr>                    
-                    <td>
-                      <div ui-jp="sparkline" ui-refresh="app.setting.color" ui-options="[ 16,15,15,14,17,18,16,15,16 ], {type:'discrete', height:19, width:60, lineColor:'#6cc788'}" class="sparkline inline">loading...</div>
-                    </td>
-                    <td>Customer increase</td>
-                    <td class="text-danger">
-                      <i class="fa fa-level-down"></i> 20%
-                    </td>
-                  </tr>
-                  <tr>                    
-                    <td>
-                      <div ui-jp="sparkline" ui-refresh="app.setting.color" ui-options="[ 16,15,15,14,17,18,16,15,16 ], {type:'line', height:19, width:60, lineColor:'#fcc100', fillColor:'#fcc100'}" class="sparkline inline">loading...</div>
-                    </td>
-                    <td>Order placed</td>
-                    <td class="text-warning">
-                      <i class="fa fa-level-down"></i> 5%
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div ui-jp="sparkline" ui-refresh="app.setting.color" ui-options="[ 16,15,15,16,15,16,14,17,18 ], {type:'line', height:19, width:60, lineColor:'#fcc100', fillColor:'transparent'}" class="sparkline inline">loading...</div>
-                    </td>
-                    <td>Visitors</td>
-                    <td class="text-warning">
-                      <i class="fa fa-level-down"></i> 8%
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-      </div>
-      <div class="row">
-          <div class="col-sm-6 col-md-4">
-              <div class="box">
-                  <div class="box-header">
-                    <h3>Members</h3>
-                  </div>
-                  <ul class="list no-border p-b">
-                    <li class="list-item">
-                      <a herf class="list-left">
-                        <span class="w-40 avatar">
-                          <img src="{% static 'iotmodule/assets/images/a4.jpg' %}" alt="...">
-                          <i class="on b-white bottom"></i>
-                          </span>
-                      </a>
-                      <div class="list-body">
-                        <div><a href>Chris Fox</a></div>
-                        <small class="text-muted text-ellipsis">Designer, Blogger</small>
-                      </div>
-                    </li>
-                    <li class="list-item">
-                      <a herf class="list-left">
-                        <span class="w-40 avatar">
-                          <img src="{% static 'iotmodule/assets/images/a5.jpg' %}" alt="...">
-                          <i class="on b-white bottom"></i>
-                        </span>
-                      </a>
-                      <div class="list-body">
-                        <div><a href>Mogen Polish</a></div>
-                        <small class="text-muted text-ellipsis">Writter, Mag Editor</small>
-                      </div>
-                    </li>
-                    <li class="list-item">
-                      <a herf class="list-left">
-                        <span class="w-40 avatar">
-                          <img src="{% static 'iotmodule/assets/images/a6.jpg' %}" alt="...">
-                          <i class="away b-white bottom"></i>
-                        </span>
-                      </a>
-                      <div class="list-body">
-                        <div><a href>Joge Lucky</a></div>
-                        <small class="text-muted text-ellipsis">Art director, Movie Cut</small>
-                      </div>
-                    </li>
-                    <li class="list-item">
-                      <a herf class="list-left">
-                        <span class="w-40 avatar">
-                          <img src="{% static 'iotmodule/assets/images/a7.jpg' %}" alt="...">
-                          <i class="busy b-white bottom"></i>
-                        </span>
-                      </a>
-                      <div class="list-body">
-                        <div><a href>Folisise Chosielie</a></div>
-                        <small class="text-muted text-ellipsis">Musician, Player</small>
-                      </div>
-                    </li>
-                    <li class="list-item">
-                      <a herf class="list-left">
-                        <span class="w-40 avatar success">
-                          <span>P</span>
-                          <i class="away b-white bottom"></i>
-                        </span>
-                      </a>
-                      <div class="list-body">
-                        <div><a href>Peter</a></div>
-                        <small class="text-muted text-ellipsis">Musician, Player</small>
-                      </div>
-                    </li>
-                  </ul>
-              </div>
-          </div>
-          <div class="col-sm-6 col-md-4">
-          <div class="box">
-            <div class="box-header">
-              <h3>Tasks</h3>
-              <small>20 finished, 5 remaining</small>
-            </div>
-            <div class="box-tool">
-                  <ul class="nav">
-                    <li class="nav-item inline dropdown">
-                      <a class="nav-link text-muted p-x-xs" data-toggle="dropdown">
-                        <i class="fa fa-ellipsis-v"></i>
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-scale pull-right">
-                        <a class="dropdown-item" href>New task</a>
-                        <a class="dropdown-item" href>Make all finished</a>
-                        <a class="dropdown-item" href>Make all unfinished</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item">Settings</a>
-                      </div>
-                    </li>
-                  </ul>
-              </div>
-            <div class="box-body">
-                <div class="streamline b-l m-l">
-                    <div class="sl-item b-success">
-                      <div class="sl-icon">
-                        <i class="fa fa-check"></i>
-                      </div>
-                      <div class="sl-content">
-                        <div class="sl-date text-muted">8:30</div>
-                        <div>Call to customer <a href class="text-info">Jacob</a> and discuss the detail about the AP project.</div>
-                      </div>
-                    </div>
-                    <div class="sl-item b-info">
-                      <div class="sl-content">
-                        <div class="sl-date text-muted">Sat, 5 Mar</div>
-                        <div>Prepare for presentation</div>
-                      </div>
-                    </div>
-                    <div class="sl-item b-warning">
-                      <div class="sl-content">
-                        <div class="sl-date text-muted">Sun, 11 Feb</div>
-                        <div><a href class="text-info">Jessi</a> assign you a task <a href class="text-info">Mockup Design</a>.</div>
-                      </div>
-                    </div>
-                </div>
-            </div>
-              <div class="box-footer">
-                <a href class="btn btn-sm warn text-u-c pull-right">Add one</a>
-                <a href class="btn btn-sm white text-u-c">More</a>
-              </div>
-            </div>
-        </div>
-          <div class="col-sm-12 col-md-4">
-            <div class="box">
-            <div class="box-header">
-              <span class="label success pull-right">5</span>
-              <h3>Activity</h3>
-              <small>10 members update their activies.</small>
-            </div>
-            <div class="box-body">
-                <div class="streamline b-l m-b m-l">
-                      <div class="sl-item">
-                        <div class="sl-left">
-                          <img src="{% static 'iotmodule/assets/images/a2.jpg' %}" class="img-circle">
-                        </div>
-                        <div class="sl-content">
-                          <a href class="text-info">Louis Elliott</a><span class="m-l-sm sl-date">5 min ago</span>
-                          <div>assign you a task <a href class="text-info">Mockup Design</a>.</div>
-                        </div>
-                      </div>
-                      <div class="sl-item">
-                        <div class="sl-left">
-                          <img src="{% static 'iotmodule/assets/images/a5.jpg' %}" class="img-circle">
-                        </div>
-                        <div class="sl-content">
-                          <a href class="text-info">Terry Moore</a><span class="m-l-sm sl-date">10 min ago</span>
-                          <div>Follow up to close deal</div>
-                        </div>
-                      </div>
-                      <div class="sl-item">
-                        <div class="sl-left">
-                          <img src="{% static 'iotmodule/assets/images/a8.jpg' %}" class="img-circle">
-                        </div>
-                        <div class="sl-content">
-                          <a href class="text-info">Walter Paler</a><span class="m-l-sm sl-date">1 hour ago</span>
-                          <div>was added to Repo</div>
-                        </div>
-                      </div>
-                    </div>
-                    <a href class="btn btn-sm white text-u-c m-y-xs">Load More</a>
-              </div>
-          </div>
-          </div>
-      </div-->
+          </div-->
+        {% endfor %}
+      {% else %}
+        <!--add message with you need sensors-->
+      {% endif %}
     {% else %}
-      <!--add message with you need components and sensors-->
+      <!--add message with you need components-->
     {% endif %}
   </div>
 {% endif %}
@@ -783,6 +885,47 @@ const my_sensors_data_arr = JSON.parse({{sensor_list_json|safe}});
 
 function generator_simplekpi(sensor_obj, message){
   $(`#${sensor_obj.sensorSerialCode}-simplekpi`).html(message.toString());
+}
+
+function generator_simpleGraphic(sensor_obj, message){
+  if (sensor_obj.sensorData.length < total_cicles ) {
+    var mesag = parseInt(message.toString());
+    var tempo = [chart_now += updateIntervalChart, mesag];
+    
+    //var my_timestamp_fields = Date(chart_now += updateIntervalChart).split(" ");
+    //var my_seconds = my_timestamp_fields[4].replace(":", "");
+    //console.log(my_seconds.replace(":", ""));
+    //var tempo = [my_seconds.replace(":", ""), mesag];
+    //const dateObject = new Date(chart_now += updateIntervalChart)
+    //console.log(dateObject.toLocaleString("en-US", {minute: "numeric", second: "numeric"}));
+    //var tempo = [dateObject.toLocaleString("en-US", {minute: "numeric", second: "numeric"}), mesag];
+
+    sensor_obj.sensorData.push(tempo);
+
+    var dataset_chart = [
+      { 
+        data: sensor_obj.sensorData,
+        points: { show: true, radius: 1}, 
+        splines: { show: true, tension: 0.45, lineWidth: 0, fill: 0.4} 
+      }
+    ];
+
+    var options_chart = {
+      colors: ['#c20c0c'],
+      series: { shadowSize: 3 },
+      xaxis: { show: true, font: { color: '#ccc' }, position: 'bottom' },
+      yaxis:{ show: true, font: { color: '#ccc' }, min:1},
+      grid: { hoverable: true, clickable: true, borderWidth: 0, color: 'rgba(120,120,120,0.5)' },
+      tooltip: true,
+      tooltipOpts: { content: '%x.0 is %y.4',  defaultTheme: false, shifts: { x: 0, y: -40 } }
+    };
+
+    $.plot($(`#${sensor_obj.sensorSerialCode}-simpleGraphic`), dataset_chart, options_chart);
+
+    if (sensor_obj.sensorData.length == total_cicles){
+      sensor_obj.sensorData.shift();
+    }
+  }
 }
 
 const options = {
@@ -815,6 +958,7 @@ client.on('connect', () => {
           sensorTypeId:my_sensors_data_arr[sensor].fields.sensorType,
           sensorSerialCode:my_sensors_data_arr[sensor].fields.serialCode,
           topic:my_components_data_arr[component].fields.serialCode+'-'+my_sensors_data_arr[sensor].fields.serialCode,
+          sensorData:[],
         });
         my_topic = my_components_data_arr[component].fields.serialCode+'-'+my_sensors_data_arr[sensor].fields.serialCode;
         client.subscribe(my_topic, { qos: 0 }, (error) => {
@@ -826,7 +970,8 @@ client.on('connect', () => {
             console.log('For sensor: '+my_sensors_data_arr[sensor].fields.alias)
           }
         })
-        client.publish(my_topic, 'This is a test post across the tropic: '+my_topic+' with sensor: '+my_sensors_data_arr[sensor].fields.alias, (error) => {
+        /*client.publish(my_topic, 'This is a test post across the tropic: '+my_topic+' with sensor: '+my_sensors_data_arr[sensor].fields.alias, (error) => {*/
+        client.publish(my_topic, "0", (error) => {
           console.log(error || 'Message sent successfully to the sensor '+my_sensors_data_arr[sensor].fields.alias)
         })
       }
@@ -850,12 +995,16 @@ client.on('connect', () => {
   }
 })
 
+var total_cicles = 60;
+var updateIntervalChart = 1000;
+var chart_now = new Date().getTime();
 client.on('message', (my_topic, message) => {
   console.log('Message received under the topic: ', my_topic, ' -> ', message.toString());
   for (const component in component_list) {
     for (const sensor in component_list[component].sensors) {
       if(component_list[component].sensors[sensor].topic == my_topic){
         generator_simplekpi(component_list[component].sensors[sensor], message);
+        generator_simpleGraphic(component_list[component].sensors[sensor], message);
       }
     }
   }
@@ -868,6 +1017,46 @@ client.on('reconnect', (error) => {
 client.on('error', (error) => {
   console.log('Connection failed:', error)
 })
+
+/*General Behavior chart*/
+var dataset = [];
+var updateInterval_setgraph = 1000;
+
+var options_del = {
+  colors: ['#ff00ff','#ff0000','#00ff00','#00ccff','#0000ff','#ffff00'],
+  series: { shadowSize: 3 },
+  xaxis: { show: true, font: { color: '#ccc' }, position: 'bottom' },
+  yaxis:{ show: true, font: { color: '#ccc' }},
+  grid: { hoverable: true, clickable: true, borderWidth: 0, color: 'rgba(120,120,120,0.5)' },
+  tooltip: true,
+  tooltipOpts: { content: '%x.0 is %y.4',  defaultTheme: false, shifts: { x: 0, y: -40 } }
+};
+
+function GetData() {
+  dataset = [];
+  for (const component in component_list) {
+    for (const sensor in component_list[component].sensors) {
+      dataset.push(
+        { 
+          data: component_list[component].sensors[sensor].sensorData,
+          points: { show: true, radius: 5}, 
+          splines: { show: true, tension: 0.45, lineWidth: 2, fill: 0.1} 
+        }
+      );
+    }
+  }
+}
+
+$(document).ready(function mytesting () {
+  GetData();
+  $.plot($(`#graphicsSet`), dataset, options_del);
+  function update() {
+    GetData();
+    $.plot($(`#graphicsSet`), dataset, options_del)
+    setTimeout(update, updateInterval_setgraph);
+  }
+  update();
+});
 
 </script>
 {% endblock %}
